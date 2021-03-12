@@ -6,9 +6,13 @@
 //
 
 import Then
+import RxSwift
 import AsyncDisplayKit
+import RxTexture2
 
 class StartViewController: ASDKViewController<StartContainerNode> {
+    
+    lazy var disposeBag = DisposeBag()
     
     override init() {
         super.init(node: StartContainerNode())
@@ -21,7 +25,27 @@ class StartViewController: ASDKViewController<StartContainerNode> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    func bind() {
+        node.startNode
+            .rx.tap
+            .bind(onNext: self.presentLoginView)
+            .disposed(by: disposeBag)
+    }
+    
+    func presentLoginView() {
+        self.navigationController?.pushViewController(LoginViewController(), animated: true)
+    }
+}
+
+extension StartViewController {
     
     private func setupNode() {
         self.node.do {
@@ -38,7 +62,7 @@ class StartViewController: ASDKViewController<StartContainerNode> {
                 color: .black,
                 ofSize: 20
             )
-            $0.descriptionNode.attributedText = "오렌지마켓은 지역별 직거래 마켓이에요. \n 내 지역을 설정하고 시작해보세요!".toAttributed(
+            $0.descriptionNode.attributedText = "오렌지마켓은 지역별 직거래 마켓이에요.\n내 지역을 설정하고 시작해보세요!".toCenterAttributed(
                 color: .darkGray,
                 ofSize: 18
             )
@@ -49,8 +73,6 @@ class StartViewController: ASDKViewController<StartContainerNode> {
                 for: .normal
             )
             $0.startNode.backgroundColor = .primaryColor()
-            
-            $0.startNode.style.preferredSize = CGSize(width: width - 20, height: 50)
         }
     }
 }

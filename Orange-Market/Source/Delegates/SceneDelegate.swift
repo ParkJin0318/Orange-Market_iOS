@@ -5,7 +5,7 @@
 //  Created by 박진 on 2021/03/12.
 //
 
-import UIKit
+import AsyncDisplayKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScence)
         window?.windowScene = windowScence
                     
-        let rootViewController = StartViewController()
+        let rootViewController = ASNavigationController(rootViewController: StartViewController())
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }

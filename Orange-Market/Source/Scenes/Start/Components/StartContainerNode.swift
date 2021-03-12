@@ -25,6 +25,7 @@ class StartContainerNode: ASDisplayNode {
     
     lazy var startNode = ASButtonNode().then {
         $0.cornerRadius = 5
+        $0.style.preferredSize = CGSize(width: width - 20, height: 50)
     }
     
     override init() {

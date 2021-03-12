@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		15BE8846B1B80DD27BB6EFB4 /* Pods_Orange_Market.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CC4D7381A761C52278576A3 /* Pods_Orange_Market.framework */; };
+		8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9D125FAF8F800514930 /* LoginViewController.swift */; };
+		8D0EA9D825FAF95000514930 /* LoginContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9D725FAF95000514930 /* LoginContainerNode.swift */; };
+		8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9DB25FB020100514930 /* LoginViewModel.swift */; };
+		8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9E025FB023E00514930 /* ViewModelType.swift */; };
 		8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */; };
 		8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */; };
 		8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EE25FAE56A00A1CA7E /* StartViewController.swift */; };
@@ -25,6 +29,10 @@
 		2DC87B2BD796EBAA5B3F5A65 /* Pods-Orange-Market.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Orange-Market.debug.xcconfig"; path = "Target Support Files/Pods-Orange-Market/Pods-Orange-Market.debug.xcconfig"; sourceTree = "<group>"; };
 		5CC4D7381A761C52278576A3 /* Pods_Orange_Market.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Orange_Market.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8569ECC66D22DE2FB14ECDC9 /* Pods-Orange-Market.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Orange-Market.release.xcconfig"; path = "Target Support Files/Pods-Orange-Market/Pods-Orange-Market.release.xcconfig"; sourceTree = "<group>"; };
+		8D0EA9D125FAF8F800514930 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8D0EA9D725FAF95000514930 /* LoginContainerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginContainerNode.swift; sourceTree = "<group>"; };
+		8D0EA9DB25FB020100514930 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8D0EA9E025FB023E00514930 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		8DC1E0E725FAE56A00A1CA7E /* Orange-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Orange-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +60,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D0EA9CF25FAF8E600514930 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA9D625FAF93500514930 /* Components */,
+				8D0EA9D125FAF8F800514930 /* LoginViewController.swift */,
+				8D0EA9DB25FB020100514930 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		8D0EA9D625FAF93500514930 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA9D725FAF95000514930 /* LoginContainerNode.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		8D0EA9DF25FB022C00514930 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA9E025FB023E00514930 /* ViewModelType.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		8DC1E0DE25FAE56A00A1CA7E = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +127,7 @@
 		8DC1E11125FAE7AE00A1CA7E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				8D0EA9DF25FB022C00514930 /* Core */,
 				8DC1E12025FAE8FE00A1CA7E /* Scenes */,
 				8DC1E11425FAE82100A1CA7E /* Extensions */,
 				8DC1E11325FAE7FF00A1CA7E /* Delegates */,
@@ -123,6 +158,7 @@
 		8DC1E12025FAE8FE00A1CA7E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				8D0EA9CF25FAF8E600514930 /* Login */,
 				8DC1E12D25FAEA9600A1CA7E /* Start */,
 			);
 			path = Scenes;
@@ -284,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */,
 				8DC1E12925FAEA2100A1CA7E /* StartContainerNode.swift in Sources */,
 				8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */,
 				8DC1E11625FAE87100A1CA7E /* String+Ex.swift in Sources */,
@@ -291,7 +328,10 @@
 				8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */,
 				8DC1E11A25FAE89B00A1CA7E /* Color+Ex.swift in Sources */,
 				8DC1E11E25FAE8B200A1CA7E /* UIView+Ex.swift in Sources */,
+				8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */,
 				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,
+				8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */,
+				8D0EA9D825FAF95000514930 /* LoginContainerNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,16 @@ import AsyncDisplayKit
 extension String {
     
     func toAttributed(color: UIColor, ofSize: CGFloat) -> NSAttributedString {
+        return NSAttributedString(
+            string: self,
+            attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: ofSize),
+                NSAttributedString.Key.foregroundColor: color
+            ]
+        )
+    }
+    
+    func toCenterAttributed(color: UIColor, ofSize: CGFloat) -> NSAttributedString {
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         
