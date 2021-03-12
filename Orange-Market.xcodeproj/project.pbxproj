@@ -3,17 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		15BE8846B1B80DD27BB6EFB4 /* Pods_Orange_Market.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CC4D7381A761C52278576A3 /* Pods_Orange_Market.framework */; };
 		8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */; };
 		8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */; };
-		8DC1E0EF25FAE56A00A1CA7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EE25FAE56A00A1CA7E /* ViewController.swift */; };
-		8DC1E0F225FAE56A00A1CA7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DC1E0F025FAE56A00A1CA7E /* Main.storyboard */; };
+		8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EE25FAE56A00A1CA7E /* StartViewController.swift */; };
 		8DC1E0F425FAE56B00A1CA7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DC1E0F325FAE56B00A1CA7E /* Assets.xcassets */; };
 		8DC1E0F725FAE56B00A1CA7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DC1E0F525FAE56B00A1CA7E /* LaunchScreen.storyboard */; };
+		8DC1E11625FAE87100A1CA7E /* String+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E11525FAE87100A1CA7E /* String+Ex.swift */; };
+		8DC1E11A25FAE89B00A1CA7E /* Color+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E11925FAE89B00A1CA7E /* Color+Ex.swift */; };
+		8DC1E11E25FAE8B200A1CA7E /* UIView+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E11D25FAE8B200A1CA7E /* UIView+Ex.swift */; };
+		8DC1E12925FAEA2100A1CA7E /* StartContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E12825FAEA2100A1CA7E /* StartContainerNode.swift */; };
+		8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E13025FAECF600A1CA7E /* Constants.swift */; };
+		8DC1E13525FAED3000A1CA7E /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8DC1E13425FAED3000A1CA7E /* Jua-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,11 +28,16 @@
 		8DC1E0E725FAE56A00A1CA7E /* Orange-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Orange-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8DC1E0EE25FAE56A00A1CA7E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8DC1E0F125FAE56A00A1CA7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8DC1E0EE25FAE56A00A1CA7E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		8DC1E0F325FAE56B00A1CA7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DC1E0F625FAE56B00A1CA7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8DC1E0F825FAE56B00A1CA7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DC1E11525FAE87100A1CA7E /* String+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ex.swift"; sourceTree = "<group>"; };
+		8DC1E11925FAE89B00A1CA7E /* Color+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ex.swift"; sourceTree = "<group>"; };
+		8DC1E11D25FAE8B200A1CA7E /* UIView+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ex.swift"; sourceTree = "<group>"; };
+		8DC1E12825FAEA2100A1CA7E /* StartContainerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartContainerNode.swift; sourceTree = "<group>"; };
+		8DC1E13025FAECF600A1CA7E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8DC1E13425FAED3000A1CA7E /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,15 +73,84 @@
 		8DC1E0E925FAE56A00A1CA7E /* Orange-Market */ = {
 			isa = PBXGroup;
 			children = (
-				8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */,
-				8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */,
-				8DC1E0EE25FAE56A00A1CA7E /* ViewController.swift */,
-				8DC1E0F025FAE56A00A1CA7E /* Main.storyboard */,
-				8DC1E0F325FAE56B00A1CA7E /* Assets.xcassets */,
-				8DC1E0F525FAE56B00A1CA7E /* LaunchScreen.storyboard */,
+				8DC1E11025FAE7A300A1CA7E /* Resource */,
+				8DC1E11125FAE7AE00A1CA7E /* Source */,
 				8DC1E0F825FAE56B00A1CA7E /* Info.plist */,
 			);
 			path = "Orange-Market";
+			sourceTree = "<group>";
+		};
+		8DC1E11025FAE7A300A1CA7E /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E13425FAED3000A1CA7E /* Jua-Regular.ttf */,
+				8DC1E0F325FAE56B00A1CA7E /* Assets.xcassets */,
+				8DC1E0F525FAE56B00A1CA7E /* LaunchScreen.storyboard */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		8DC1E11125FAE7AE00A1CA7E /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E12025FAE8FE00A1CA7E /* Scenes */,
+				8DC1E11425FAE82100A1CA7E /* Extensions */,
+				8DC1E11325FAE7FF00A1CA7E /* Delegates */,
+				8DC1E12F25FAEC8500A1CA7E /* Utils */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		8DC1E11325FAE7FF00A1CA7E /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */,
+				8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		8DC1E11425FAE82100A1CA7E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E11525FAE87100A1CA7E /* String+Ex.swift */,
+				8DC1E11925FAE89B00A1CA7E /* Color+Ex.swift */,
+				8DC1E11D25FAE8B200A1CA7E /* UIView+Ex.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8DC1E12025FAE8FE00A1CA7E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E12D25FAEA9600A1CA7E /* Start */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		8DC1E12725FAE9F600A1CA7E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E12825FAEA2100A1CA7E /* StartContainerNode.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		8DC1E12D25FAEA9600A1CA7E /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E12725FAE9F600A1CA7E /* Components */,
+				8DC1E0EE25FAE56A00A1CA7E /* StartViewController.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
+		8DC1E12F25FAEC8500A1CA7E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8DC1E13025FAECF600A1CA7E /* Constants.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		9876297D34FE3BCC74DB3A16 /* Pods */ = {
@@ -80,7 +159,6 @@
 				2DC87B2BD796EBAA5B3F5A65 /* Pods-Orange-Market.debug.xcconfig */,
 				8569ECC66D22DE2FB14ECDC9 /* Pods-Orange-Market.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -151,9 +229,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DC1E13525FAED3000A1CA7E /* Jua-Regular.ttf in Resources */,
 				8DC1E0F725FAE56B00A1CA7E /* LaunchScreen.storyboard in Resources */,
 				8DC1E0F425FAE56B00A1CA7E /* Assets.xcassets in Resources */,
-				8DC1E0F225FAE56A00A1CA7E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,23 +284,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DC1E0EF25FAE56A00A1CA7E /* ViewController.swift in Sources */,
+				8DC1E12925FAEA2100A1CA7E /* StartContainerNode.swift in Sources */,
+				8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */,
+				8DC1E11625FAE87100A1CA7E /* String+Ex.swift in Sources */,
 				8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */,
 				8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */,
+				8DC1E11A25FAE89B00A1CA7E /* Color+Ex.swift in Sources */,
+				8DC1E11E25FAE8B200A1CA7E /* UIView+Ex.swift in Sources */,
+				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8DC1E0F025FAE56A00A1CA7E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8DC1E0F125FAE56A00A1CA7E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8DC1E0F525FAE56B00A1CA7E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
