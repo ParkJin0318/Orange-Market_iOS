@@ -8,14 +8,14 @@
 import AsyncDisplayKit
 import RxSwift
 
-class HomeViewController: ASDKViewController<ASDisplayNode> {
+class HomeViewController: ASDKViewController<HomeContainer> {
     
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = HomeViewModel()
     
     override init() {
-        super.init(node: StartContainerNode())
-        self.node.backgroundColor = .systemBackground
+        super.init(node: HomeContainer())
+        self.setupNode()
     }
     
     required init?(coder: NSCoder) {
@@ -30,7 +30,49 @@ class HomeViewController: ASDKViewController<ASDisplayNode> {
     private func bind() {
         viewModel.output.city
             .bind(onNext: { [weak self] value in
-                self?.navigationController?.navigationBar.topItem?.title = value
+                guard let self = self else { return }
+                
+                self.navigationController?.navigationBar.topItem?.title = value
+                self.node.collectionNode.reloadData()
             }).disposed(by: disposeBag)
+    }
+    
+    private func setupNode() {
+        self.node.do {
+            $0.automaticallyManagesSubnodes = true
+            $0.backgroundColor = .systemBackground
+            
+            $0.collectionNode.delegate = self
+            $0.collectionNode.dataSource = self
+        }
+    }
+}
+
+extension HomeViewController: ASCollectionDelegate {
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+        return ASSizeRange(
+            min: CGSize(width: width, height: 0),
+            max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        )
+    }
+}
+
+extension HomeViewController: ASCollectionDataSource {
+    func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+        return 1
+    }
+        
+    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.output.productList.count
+    }
+        
+    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return { [weak self] in
+            let item = self?.viewModel.output.productList[indexPath.row]
+            let cell = ProductCell()
+            cell.setupNode(product: item!)
+            return cell
+        }
     }
 }

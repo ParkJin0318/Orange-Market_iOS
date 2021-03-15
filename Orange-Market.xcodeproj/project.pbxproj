@@ -43,6 +43,13 @@
 		8DC864C025FF06AC0081F52C /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */; };
 		8DC864C325FF06D30081F52C /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864C225FF06D30081F52C /* UserRepository.swift */; };
 		8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864D625FF088E0081F52C /* HomeViewModel.swift */; };
+		8DC864DA25FF18EB0081F52C /* ProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864D925FF18EB0081F52C /* ProductAPI.swift */; };
+		8DC864DD25FF1A430081F52C /* ProductRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864DC25FF1A430081F52C /* ProductRemote.swift */; };
+		8DC864E025FF1AA70081F52C /* ProductData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864DF25FF1AA70081F52C /* ProductData.swift */; };
+		8DC864E325FF1BF50081F52C /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864E225FF1BF50081F52C /* ProductRepository.swift */; };
+		8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864E525FF1C3D0081F52C /* ProductRepositoryImpl.swift */; };
+		8DC864EA25FF1E180081F52C /* HomeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864E925FF1E180081F52C /* HomeContainer.swift */; };
+		8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864EC25FF201E0081F52C /* ProductCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +93,13 @@
 		8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
 		8DC864C225FF06D30081F52C /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		8DC864D625FF088E0081F52C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		8DC864D925FF18EB0081F52C /* ProductAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAPI.swift; sourceTree = "<group>"; };
+		8DC864DC25FF1A430081F52C /* ProductRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRemote.swift; sourceTree = "<group>"; };
+		8DC864DF25FF1AA70081F52C /* ProductData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductData.swift; sourceTree = "<group>"; };
+		8DC864E225FF1BF50081F52C /* ProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
+		8DC864E525FF1C3D0081F52C /* ProductRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryImpl.swift; sourceTree = "<group>"; };
+		8DC864E925FF1E180081F52C /* HomeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainer.swift; sourceTree = "<group>"; };
+		8DC864EC25FF201E0081F52C /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +263,7 @@
 			children = (
 				8DC8647525FEDDB30081F52C /* AuthAPI.swift */,
 				8DC864B625FF04DD0081F52C /* UserAPI.swift */,
+				8DC864D925FF18EB0081F52C /* ProductAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -288,6 +303,7 @@
 			children = (
 				8DC8648425FEE6010081F52C /* AuthRemote.swift */,
 				8DC864B925FF05BE0081F52C /* UserRemote.swift */,
+				8DC864DC25FF1A430081F52C /* ProductRemote.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -298,6 +314,7 @@
 				8DC8648925FEE6D20081F52C /* Response.swift */,
 				8DC8648C25FEE7C10081F52C /* LoginData.swift */,
 				8DC864BC25FF05C70081F52C /* UserData.swift */,
+				8DC864DF25FF1AA70081F52C /* ProductData.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -315,6 +332,7 @@
 			children = (
 				8DC8649225FEEA440081F52C /* AuthRepository.swift */,
 				8DC864C225FF06D30081F52C /* UserRepository.swift */,
+				8DC864E225FF1BF50081F52C /* ProductRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -324,6 +342,7 @@
 			children = (
 				8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */,
 				8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */,
+				8DC864E525FF1C3D0081F52C /* ProductRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -331,6 +350,7 @@
 		8DC864A025FEF2C60081F52C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				8DC864E825FF1E050081F52C /* Components */,
 				8DC864A125FEF2CE0081F52C /* HomeViewController.swift */,
 				8DC864D625FF088E0081F52C /* HomeViewModel.swift */,
 			);
@@ -351,6 +371,15 @@
 				8DC864B225FEFA380081F52C /* CityViewController.swift */,
 			);
 			path = City;
+			sourceTree = "<group>";
+		};
+		8DC864E825FF1E050081F52C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8DC864E925FF1E180081F52C /* HomeContainer.swift */,
+				8DC864EC25FF201E0081F52C /* ProductCell.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		9876297D34FE3BCC74DB3A16 /* Pods */ = {
@@ -484,19 +513,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DC864EA25FF1E180081F52C /* HomeContainer.swift in Sources */,
 				8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */,
+				8DC864E025FF1AA70081F52C /* ProductData.swift in Sources */,
 				8DC864B325FEFA380081F52C /* CityViewController.swift in Sources */,
 				8DC1E12925FAEA2100A1CA7E /* StartContainerNode.swift in Sources */,
 				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
 				8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */,
+				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
 				8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */,
 				8DC8648D25FEE7C10081F52C /* LoginData.swift in Sources */,
 				8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */,
 				8DC8648A25FEE6D20081F52C /* Response.swift in Sources */,
 				8DC864C025FF06AC0081F52C /* UserRepositoryImpl.swift in Sources */,
+				8DC864E325FF1BF50081F52C /* ProductRepository.swift in Sources */,
 				8DC864B725FF04DD0081F52C /* UserAPI.swift in Sources */,
 				8DC8649925FEEAD70081F52C /* AuthRepositoryImpl.swift in Sources */,
 				8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */,
+				8DC864DD25FF1A430081F52C /* ProductRemote.swift in Sources */,
 				8DC864A225FEF2CE0081F52C /* HomeViewController.swift in Sources */,
 				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
 				8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */,
@@ -509,10 +543,12 @@
 				8DC8648525FEE6010081F52C /* AuthRemote.swift in Sources */,
 				8DC1E11A25FAE89B00A1CA7E /* Color+Ex.swift in Sources */,
 				8DC1E11E25FAE8B200A1CA7E /* UIView+Ex.swift in Sources */,
+				8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */,
 				8DC864BD25FF05C70081F52C /* UserData.swift in Sources */,
 				8DC864BA25FF05BE0081F52C /* UserRemote.swift in Sources */,
 				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
 				8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */,
+				8DC864DA25FF18EB0081F52C /* ProductAPI.swift in Sources */,
 				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,
 				8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */,
 				8D0EA9D825FAF95000514930 /* LoginContainerNode.swift in Sources */,
