@@ -33,6 +33,32 @@ class LoginViewController: ASDKViewController<LoginContainerNode> {
         self.setupNavigationBar()
     }
     
+    private func setupNavigationBar() {
+        self.navigationController?.do {
+            $0.isNavigationBarHidden = false
+            $0.navigationBar.topItem?.title = "로그인"
+            $0.navigationBar.barTintColor = .systemBackground
+            $0.navigationBar.tintColor = .black
+        }
+    }
+}
+
+extension LoginViewController {
+    
+    private func setupNode() {
+        self.node.do {
+            $0.backgroundColor = .systemBackground
+            
+            $0.imageNode.image = UIImage(named: "security")
+            $0.descriptionNode.attributedText = "오렌지마켓은 아이디로 로그인해요.\n개인정보는 안전하게 보관되며\n어디에도 공개되지 않아요."
+                .toAttributed(color: .label, ofSize: 16)
+            $0.idField.placeholder = "아이디 입력"
+            $0.passwordField.placeholder = "비밀번호 입력"
+            $0.loginNode.setTitle("로그인", with: .boldSystemFont(ofSize: 18), with: .systemBackground, for: .normal)
+            $0.guideNode.attributedText = "당근마켓은 처음인가요? 가입하기".toAttributed(color: .label, ofSize: 15)
+        }
+    }
+    
     private func bind() {
         // Input
         node.idField
@@ -62,48 +88,29 @@ class LoginViewController: ASDKViewController<LoginContainerNode> {
             }).disposed(by: disposeBag)
         
         viewModel.output.isLoading
+            .filter { $0 }
             .bind(onNext: { [weak self] value in
                 guard let self = self else { return }
                 
-                if (value) {
-                    let progressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    progressHUD.mode = .indeterminate
-                    progressHUD.label.text = "로딩중"
-                } else {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                }
+                MBProgressHUD.loading(from: self.view)
             }).disposed(by: disposeBag)
         
         viewModel.output.isLogin
             .bind(onNext: { [weak self] value in
                 guard let self = self else { return }
                 
+                if (value) {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    MBProgressHUD.successShow("로그인 성공!", from: self.view)
+                    
+                    self.present(TabBarController().then {
+                        $0.modalPresentationStyle = .fullScreen
+                        $0.modalTransitionStyle = .crossDissolve
+                    }, animated: true)
+                } else {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    MBProgressHUD.errorShow("로그인 실패", from: self.view)
+                }
             }).disposed(by: disposeBag)
-    }
-}
-
-extension LoginViewController {
-    
-    private func setupNode() {
-        self.node.do {
-            $0.backgroundColor = .systemBackground
-            
-            $0.imageNode.image = UIImage(named: "security")
-            $0.descriptionNode.attributedText = "오렌지마켓은 아이디로 로그인해요.\n개인정보는 안전하게 보관되며\n어디에도 공개되지 않아요."
-                .toAttributed(color: .label, ofSize: 16)
-            $0.idField.placeholder = "아이디 입력"
-            $0.passwordField.placeholder = "비밀번호 입력"
-            $0.loginNode.setTitle("로그인", with: .boldSystemFont(ofSize: 18), with: .systemBackground, for: .normal)
-            $0.guideNode.attributedText = "당근마켓은 처음인가요? 가입하기".toAttributed(color: .label, ofSize: 15)
-        }
-    }
-    
-    private func setupNavigationBar() {
-        self.navigationController?.do {
-            $0.isNavigationBarHidden = false
-            $0.navigationBar.topItem?.title = "로그인"
-            $0.navigationBar.barTintColor = .systemBackground
-            $0.navigationBar.tintColor = .black
-        }
     }
 }

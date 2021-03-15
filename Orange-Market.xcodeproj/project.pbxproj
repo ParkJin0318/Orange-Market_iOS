@@ -23,6 +23,26 @@
 		8DC1E12925FAEA2100A1CA7E /* StartContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E12825FAEA2100A1CA7E /* StartContainerNode.swift */; };
 		8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E13025FAECF600A1CA7E /* Constants.swift */; };
 		8DC1E13525FAED3000A1CA7E /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8DC1E13425FAED3000A1CA7E /* Jua-Regular.ttf */; };
+		8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8647525FEDDB30081F52C /* AuthAPI.swift */; };
+		8DC8647B25FEDE0D0081F52C /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8647A25FEDE0D0081F52C /* LoginRequest.swift */; };
+		8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */; };
+		8DC8648525FEE6010081F52C /* AuthRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8648425FEE6010081F52C /* AuthRemote.swift */; };
+		8DC8648A25FEE6D20081F52C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8648925FEE6D20081F52C /* Response.swift */; };
+		8DC8648D25FEE7C10081F52C /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8648C25FEE7C10081F52C /* LoginData.swift */; };
+		8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649225FEEA440081F52C /* AuthRepository.swift */; };
+		8DC8649925FEEAD70081F52C /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */; };
+		8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */; };
+		8DC864A225FEF2CE0081F52C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A125FEF2CE0081F52C /* HomeViewController.swift */; };
+		8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A525FEF4E80081F52C /* AuthController.swift */; };
+		8DC864AA25FEF6390081F52C /* SplashViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A925FEF6390081F52C /* SplashViewContoller.swift */; };
+		8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864AE25FEF9F60081F52C /* TabBarController.swift */; };
+		8DC864B325FEFA380081F52C /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864B225FEFA380081F52C /* CityViewController.swift */; };
+		8DC864B725FF04DD0081F52C /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864B625FF04DD0081F52C /* UserAPI.swift */; };
+		8DC864BA25FF05BE0081F52C /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864B925FF05BE0081F52C /* UserRemote.swift */; };
+		8DC864BD25FF05C70081F52C /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864BC25FF05C70081F52C /* UserData.swift */; };
+		8DC864C025FF06AC0081F52C /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */; };
+		8DC864C325FF06D30081F52C /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864C225FF06D30081F52C /* UserRepository.swift */; };
+		8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864D625FF088E0081F52C /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +66,26 @@
 		8DC1E12825FAEA2100A1CA7E /* StartContainerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartContainerNode.swift; sourceTree = "<group>"; };
 		8DC1E13025FAECF600A1CA7E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8DC1E13425FAED3000A1CA7E /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
+		8DC8647525FEDDB30081F52C /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		8DC8647A25FEDE0D0081F52C /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
+		8DC8648425FEE6010081F52C /* AuthRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRemote.swift; sourceTree = "<group>"; };
+		8DC8648925FEE6D20081F52C /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		8DC8648C25FEE7C10081F52C /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
+		8DC8649225FEEA440081F52C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
+		8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MBProgressHUD+Ex.swift"; sourceTree = "<group>"; };
+		8DC864A125FEF2CE0081F52C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8DC864A525FEF4E80081F52C /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		8DC864A925FEF6390081F52C /* SplashViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewContoller.swift; sourceTree = "<group>"; };
+		8DC864AE25FEF9F60081F52C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		8DC864B225FEFA380081F52C /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
+		8DC864B625FF04DD0081F52C /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
+		8DC864B925FF05BE0081F52C /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
+		8DC864BC25FF05C70081F52C /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
+		8DC864C225FF06D30081F52C /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		8DC864D625FF088E0081F52C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,11 +167,9 @@
 		8DC1E11125FAE7AE00A1CA7E /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8D0EA9DF25FB022C00514930 /* Core */,
-				8DC1E12025FAE8FE00A1CA7E /* Scenes */,
-				8DC1E11425FAE82100A1CA7E /* Extensions */,
-				8DC1E11325FAE7FF00A1CA7E /* Delegates */,
-				8DC1E12F25FAEC8500A1CA7E /* Utils */,
+				8DC8648125FEE5B10081F52C /* Data */,
+				8DC8649025FEEA2B0081F52C /* Domain */,
+				8DC8648225FEE5B90081F52C /* Presentation */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -151,6 +189,7 @@
 				8DC1E11525FAE87100A1CA7E /* String+Ex.swift */,
 				8DC1E11925FAE89B00A1CA7E /* Color+Ex.swift */,
 				8DC1E11D25FAE8B200A1CA7E /* UIView+Ex.swift */,
+				8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -158,8 +197,12 @@
 		8DC1E12025FAE8FE00A1CA7E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				8DC864A825FEF61C0081F52C /* Splash */,
 				8D0EA9CF25FAF8E600514930 /* Login */,
 				8DC1E12D25FAEA9600A1CA7E /* Start */,
+				8DC864A025FEF2C60081F52C /* Home */,
+				8DC864B125FEFA190081F52C /* City */,
+				8DC864AE25FEF9F60081F52C /* TabBarController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -185,8 +228,129 @@
 			isa = PBXGroup;
 			children = (
 				8DC1E13025FAECF600A1CA7E /* Constants.swift */,
+				8DC864A525FEF4E80081F52C /* AuthController.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		8DC8647325FEDD870081F52C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8647425FEDDA10081F52C /* API */,
+				8DC8647925FEDE020081F52C /* Request */,
+				8DC8648825FEE6B20081F52C /* Response */,
+				8DC8648325FEE5F10081F52C /* Remote */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		8DC8647425FEDDA10081F52C /* API */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8647525FEDDB30081F52C /* AuthAPI.swift */,
+				8DC864B625FF04DD0081F52C /* UserAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		8DC8647925FEDE020081F52C /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8647A25FEDE0D0081F52C /* LoginRequest.swift */,
+				8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		8DC8648125FEE5B10081F52C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8649725FEEAB60081F52C /* Repository */,
+				8DC8647325FEDD870081F52C /* Network */,
+				8DC1E12F25FAEC8500A1CA7E /* Utils */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		8DC8648225FEE5B90081F52C /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA9DF25FB022C00514930 /* Core */,
+				8DC1E12025FAE8FE00A1CA7E /* Scenes */,
+				8DC1E11425FAE82100A1CA7E /* Extensions */,
+				8DC1E11325FAE7FF00A1CA7E /* Delegates */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		8DC8648325FEE5F10081F52C /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8648425FEE6010081F52C /* AuthRemote.swift */,
+				8DC864B925FF05BE0081F52C /* UserRemote.swift */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		8DC8648825FEE6B20081F52C /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8648925FEE6D20081F52C /* Response.swift */,
+				8DC8648C25FEE7C10081F52C /* LoginData.swift */,
+				8DC864BC25FF05C70081F52C /* UserData.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		8DC8649025FEEA2B0081F52C /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8649125FEEA350081F52C /* Repository */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		8DC8649125FEEA350081F52C /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8649225FEEA440081F52C /* AuthRepository.swift */,
+				8DC864C225FF06D30081F52C /* UserRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		8DC8649725FEEAB60081F52C /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */,
+				8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		8DC864A025FEF2C60081F52C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				8DC864A125FEF2CE0081F52C /* HomeViewController.swift */,
+				8DC864D625FF088E0081F52C /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		8DC864A825FEF61C0081F52C /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				8DC864A925FEF6390081F52C /* SplashViewContoller.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		8DC864B125FEFA190081F52C /* City */ = {
+			isa = PBXGroup;
+			children = (
+				8DC864B225FEFA380081F52C /* CityViewController.swift */,
+			);
+			path = City;
 			sourceTree = "<group>";
 		};
 		9876297D34FE3BCC74DB3A16 /* Pods */ = {
@@ -321,13 +485,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */,
+				8DC864B325FEFA380081F52C /* CityViewController.swift in Sources */,
 				8DC1E12925FAEA2100A1CA7E /* StartContainerNode.swift in Sources */,
+				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
+				8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */,
+				8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */,
+				8DC8648D25FEE7C10081F52C /* LoginData.swift in Sources */,
+				8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */,
+				8DC8648A25FEE6D20081F52C /* Response.swift in Sources */,
+				8DC864C025FF06AC0081F52C /* UserRepositoryImpl.swift in Sources */,
+				8DC864B725FF04DD0081F52C /* UserAPI.swift in Sources */,
+				8DC8649925FEEAD70081F52C /* AuthRepositoryImpl.swift in Sources */,
 				8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */,
+				8DC864A225FEF2CE0081F52C /* HomeViewController.swift in Sources */,
+				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
+				8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */,
 				8DC1E11625FAE87100A1CA7E /* String+Ex.swift in Sources */,
+				8DC864C325FF06D30081F52C /* UserRepository.swift in Sources */,
+				8DC864AA25FEF6390081F52C /* SplashViewContoller.swift in Sources */,
+				8DC8647B25FEDE0D0081F52C /* LoginRequest.swift in Sources */,
 				8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */,
 				8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */,
+				8DC8648525FEE6010081F52C /* AuthRemote.swift in Sources */,
 				8DC1E11A25FAE89B00A1CA7E /* Color+Ex.swift in Sources */,
 				8DC1E11E25FAE8B200A1CA7E /* UIView+Ex.swift in Sources */,
+				8DC864BD25FF05C70081F52C /* UserData.swift in Sources */,
+				8DC864BA25FF05BE0081F52C /* UserRemote.swift in Sources */,
+				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
 				8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */,
 				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,
 				8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */,
@@ -474,6 +658,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 98Y25V599G;
 				INFOPLIST_FILE = "Orange-Market/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -494,6 +679,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 98Y25V599G;
 				INFOPLIST_FILE = "Orange-Market/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

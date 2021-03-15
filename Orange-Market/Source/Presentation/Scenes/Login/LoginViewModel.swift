@@ -23,15 +23,14 @@ class LoginViewModel: ViewModelType {
         var isLogin = PublishRelay<Bool>()
     }
     
-    var input: Input
-    var output: Output
+    lazy var input: Input = Input()
+    lazy var output: Output = Output()
     
-    var disposeBag: DisposeBag = DisposeBag()
+    lazy var authRepository: AuthRepository = AuthRepositoryImpl()
+    
+    lazy var disposeBag: DisposeBag = DisposeBag()
     
     init() {
-        self.input = Input()
-        self.output = Output()
-        
         self.validation()
         self.tapLogin()
     }
@@ -50,6 +49,25 @@ class LoginViewModel: ViewModelType {
                 guard let self = self else { return }
                 
                 self.output.isLoading.accept(true)
+                self.login(email: email, password: password)
+            }.disposed(by: disposeBag)
+    }
+    
+    private func login(email: String, password: String) {
+        let loginRequest = LoginRequest(userId: email, userPw: password)
+        
+        authRepository.login(loginRequest: loginRequest)
+            .subscribe { [weak self] data in
+                guard let self = self else { return }
+                
+                AuthController.getInstance().login(token: data.accessToken)
+                self.output.isLogin.accept(true)
+                self.output.isLoading.accept(false)
+            } onError: { [weak self] error in
+                guard let self = self else { return }
+                
+                self.output.isLogin.accept(false)
+                self.output.isLoading.accept(false)
             }.disposed(by: disposeBag)
     }
 }
