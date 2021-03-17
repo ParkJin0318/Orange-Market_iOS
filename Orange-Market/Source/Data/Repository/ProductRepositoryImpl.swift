@@ -15,4 +15,8 @@ class ProductRepositoryImpl: ProductRepository {
     func getAllProduct(city: String) -> Single<Array<ProductData>> {
         return remote.getAllProduct(city: city)
     }
+    
+    func saveProduct(productRequest: ProductRequest) -> Single<String> {
+        return remote.saveProduct(productRequest: productRequest)
+    }
 }

@@ -17,7 +17,7 @@ class ProductCell: ASCellNode {
     
     private lazy var imageNode = ASNetworkImageNode().then {
         $0.style.preferredSize = CGSize(width: 100, height: 100)
-        $0.cornerRadius = 8
+        $0.cornerRadius = 5
     }
     
     private lazy var viewNode = ASDisplayNode().then {
@@ -33,22 +33,18 @@ class ProductCell: ASCellNode {
     func setupNode(product: ProductData) {
         self.titleNode.attributedText = product.title.toAttributed(color: .black, ofSize: 17)
         self.locationNode.attributedText = product.location.toAttributed(color: .gray, ofSize: 14)
-        self.priceNode.attributedText = product.price.toBoldAttributed(color: .black, ofSize: 15)
+        self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .black, ofSize: 15)
         
         if (!product.imageList.isEmpty) {
             self.imageNode.url = URL(string: HOST + "images/" + product.imageList.first!)
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let borderLayout = self.borderLayoutSpec()
         
         return ASInsetLayoutSpec(
-            insets: .init(top: 0, left: 10, bottom: 0, right: 10),
+            insets: .init(top: 5, left: 10, bottom: 0, right: 10),
             child: borderLayout
         )
     }
@@ -80,7 +76,7 @@ class ProductCell: ASCellNode {
     private func infoLayoutSpec() -> ASLayoutSpec {
         return ASStackLayoutSpec(
             direction: .vertical,
-            spacing: 3,
+            spacing: 5,
             justifyContent: .start,
             alignItems: .start,
             children: [titleNode, locationNode, priceNode]

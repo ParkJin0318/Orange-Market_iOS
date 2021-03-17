@@ -13,6 +13,11 @@ class HomeViewController: ASDKViewController<HomeContainer> {
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = HomeViewModel()
     
+    private lazy var writeButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
+        $0.tintColor = .label
+    }
+    
     override init() {
         super.init(node: HomeContainer())
         self.setupNode()
@@ -24,10 +29,23 @@ class HomeViewController: ASDKViewController<HomeContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.bind()
     }
     
+    private func setupNavigationBar() {
+        self.navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(customView: writeButton)
+        ]
+    }
+    
     private func bind() {
+        // input
+        writeButton.rx.tap
+            .bind(onNext: self.presentProductAddView)
+            .disposed(by: disposeBag)
+        
+        // output
         viewModel.output.city
             .bind(onNext: { [weak self] value in
                 guard let self = self else { return }
@@ -35,6 +53,12 @@ class HomeViewController: ASDKViewController<HomeContainer> {
                 self.navigationController?.navigationBar.topItem?.title = value
                 self.node.collectionNode.reloadData()
             }).disposed(by: disposeBag)
+    }
+    
+    private func presentProductAddView() {
+        self.navigationController?.pushViewController(ProductAddViewController().then {
+            $0.hidesBottomBarWhenPushed = true
+        }, animated: true)
     }
     
     private func setupNode() {

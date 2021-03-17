@@ -12,3 +12,8 @@ struct Response<T: Codable>: Codable {
     let message: String
     let data: T
 }
+
+struct MessageResponse: Codable {
+    let status: Int
+    let message: String
+}

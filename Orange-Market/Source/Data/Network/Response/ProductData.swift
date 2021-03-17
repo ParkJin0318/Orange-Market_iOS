@@ -11,7 +11,7 @@ struct ProductData: Codable {
     let title: String
     let contents: String
     let price: String
-    let createAt: Date?
+    let createAt: String
     let userId: String
     let city: String
     let location: String

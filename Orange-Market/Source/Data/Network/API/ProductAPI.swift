@@ -9,6 +9,7 @@ import Moya
 
 enum ProductAPI {
     case getAllProduct(city: String)
+    case saveProduct(productRequest: ProductRequest)
 }
 
 extension ProductAPI: TargetType {
@@ -21,6 +22,8 @@ extension ProductAPI: TargetType {
         switch self {
             case .getAllProduct:
                 return ""
+            case .saveProduct:
+                return ""
         }
     }
     
@@ -28,6 +31,8 @@ extension ProductAPI: TargetType {
         switch self {
             case .getAllProduct:
                 return .get
+            case .saveProduct:
+                return .post
         }
     }
     
@@ -40,6 +45,8 @@ extension ProductAPI: TargetType {
         switch self {
             case let .getAllProduct(city):
                 return .requestParameters(parameters: ["city": city], encoding: URLEncoding.queryString)
+        case let .saveProduct(productRequest):
+            return .requestData(try! JSONEncoder().encode(productRequest))
         }
     }
     

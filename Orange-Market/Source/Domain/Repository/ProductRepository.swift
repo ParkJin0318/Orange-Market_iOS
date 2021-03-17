@@ -10,4 +10,5 @@ import RxSwift
 
 protocol ProductRepository {
     func getAllProduct(city: String) -> Single<Array<ProductData>>
+    func saveProduct(productRequest: ProductRequest) -> Single<String>
 }

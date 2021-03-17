@@ -19,4 +19,12 @@ class ProductRemote {
                 return response.data
             }
     }
+    
+    func saveProduct(productRequest: ProductRequest) -> Single<String> {
+        return provider.rx.request(.saveProduct(productRequest: productRequest))
+            .map(MessageResponse.self, using: JSONDecoder())
+            .map { response in
+                return response.message
+            }
+    }
 }
