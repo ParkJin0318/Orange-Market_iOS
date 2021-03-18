@@ -30,13 +30,13 @@ class ProductCell: ASCellNode {
         self.automaticallyManagesSubnodes = true
     }
     
-    func setupNode(product: ProductData) {
+    func setupNode(product: Product) {
         self.titleNode.attributedText = product.title.toAttributed(color: .black, ofSize: 17)
-        self.locationNode.attributedText = product.location.toAttributed(color: .gray, ofSize: 14)
+        self.locationNode.attributedText = product.city.toAttributed(color: .gray, ofSize: 14)
         self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .black, ofSize: 15)
         
-        if (!product.imageList.isEmpty) {
-            self.imageNode.url = URL(string: HOST + "images/" + product.imageList.first!)
+        if (!product.image.isEmpty) {
+            self.imageNode.url = URL(string: HOST + "images/" + product.image)
         }
     }
     

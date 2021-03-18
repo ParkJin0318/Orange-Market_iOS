@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 
 protocol ProductRepository {
-    func getAllProduct(city: String) -> Single<Array<ProductData>>
+    func getAllProduct(city: String) -> Single<Array<Product>>
+    func getProduct(idx: Int) -> Single<ProductDetail>
     func saveProduct(productRequest: ProductRequest) -> Single<String>
 }

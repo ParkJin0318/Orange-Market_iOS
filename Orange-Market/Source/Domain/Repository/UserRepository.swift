@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol UserRepository {
-    func getMyProfile() -> Single<UserData>
+    func getUserInfo(idx: Int) -> Single<User>
 }

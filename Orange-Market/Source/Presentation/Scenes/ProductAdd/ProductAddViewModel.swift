@@ -27,7 +27,7 @@ class ProductAddViewModel: ViewModelType {
     lazy var input: Input = Input()
     lazy var output: Output = Output()
     
-    private lazy var userRepository: UserRepository = UserRepositoryImpl()
+    private lazy var authRepository: AuthRepository = AuthRepositoryImpl()
     private lazy var productRepository: ProductRepository = ProductRepositoryImpl()
     private lazy var uploadRepository: UploadRepository = UploadRepositoryImpl()
     
@@ -50,7 +50,7 @@ class ProductAddViewModel: ViewModelType {
     func tapComplete() {
         input.tapComplete
             .withLatestFrom(Observable.combineLatest(
-                self.userRepository.getMyProfile().asObservable(),
+                self.authRepository.getUserProfile().asObservable(),
                 input.titleText,
                 input.priceText,
                 input.contentText
@@ -67,15 +67,14 @@ class ProductAddViewModel: ViewModelType {
             }.disposed(by: disposeBag)
     }
     
-    func saveProduct(user: UserData, title: String, price: String, content: String) -> Single<String> {
+    func saveProduct(user: User, title: String, price: String, content: String) -> Single<String> {
         return productRepository.saveProduct(productRequest: ProductRequest(
             title: title,
             contents: content,
             price: price,
             isSold: 0,
-            userId: user.userId,
+            userIdx: user.idx,
             city: user.city,
-            location: user.location,
             imageList: output.imageList
         ))
     }

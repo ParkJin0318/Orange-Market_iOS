@@ -24,4 +24,12 @@ class AuthRemote {
         return provider.rx.request(.register(registerRequest: registerRequest))
             .asCompletable()
     }
+    
+    func getUserProfile() -> Single<UserData> {
+        return provider.rx.request(.getUserProfile)
+            .map(Response<UserData>.self, using: JSONDecoder())
+            .map { response -> UserData in
+                return response.data
+            }
+    }
 }

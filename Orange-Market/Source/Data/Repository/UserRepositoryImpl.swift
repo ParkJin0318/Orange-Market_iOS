@@ -9,10 +9,9 @@ import Foundation
 import RxSwift
 
 class UserRepositoryImpl: UserRepository {
-    
     private lazy var remote = UserRemote()
     
-    func getMyProfile() -> Single<UserData> {
-        return remote.getMyProfile()
+    func getUserInfo(idx: Int) -> Single<User> {
+        return remote.getUserInfo(idx: idx).map { $0.toModel() }
     }
 }

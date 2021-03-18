@@ -33,6 +33,11 @@ class HomeViewController: ASDKViewController<HomeContainer> {
         self.bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getProducts()
+    }
+    
     private func setupNavigationBar() {
         self.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(customView: writeButton)
@@ -79,6 +84,16 @@ extension HomeViewController: ASCollectionDelegate {
             min: CGSize(width: width, height: 0),
             max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         )
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let item = viewModel.output.productList[indexPath.row]
+        
+        let vc = ProductDetailViewController().then {
+            $0.idx = item.idx
+            $0.hidesBottomBarWhenPushed = true
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -8,7 +8,7 @@
 import Moya
 
 enum UserAPI {
-    case getMyProfile
+    case getUserInfo(idx: Int)
 }
 
 extension UserAPI: TargetType {
@@ -18,14 +18,14 @@ extension UserAPI: TargetType {
     
     var path: String {
         switch self {
-            case .getMyProfile:
-                return "profile"
+            case let .getUserInfo(idx):
+                return "\(idx)"
         }
     }
     
     var method: Method {
         switch self {
-            case .getMyProfile:
+            case .getUserInfo:
                 return .get
         }
     }
@@ -37,7 +37,7 @@ extension UserAPI: TargetType {
     
     var task: Task {
         switch self {
-            case .getMyProfile:
+            case .getUserInfo:
                 return .requestPlain
         }
     }

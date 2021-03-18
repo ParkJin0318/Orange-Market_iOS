@@ -27,11 +27,6 @@ class ProductAddContainer: ASDisplayNode {
         $0.backgroundColor = .systemBackground
     }
     
-    private lazy var viewNode = ASTextNode().then {
-        $0.style.preferredSize = CGSize(width: width, height: 1)
-        $0.backgroundColor = .lightGray
-    }
-    
     lazy var titleField = UITextField().then {
         $0.keyboardType = .namePhonePad
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
@@ -96,22 +91,9 @@ class ProductAddContainer: ASDisplayNode {
             children: [imagePickerNode, collectionNode]
         )
         
-        let viewLayout = ASInsetLayoutSpec(
-            insets: .init(top: 0, left: 0, bottom: 0, right: 20),
-            child: viewNode
-        )
-        
-        let borderLayout = ASStackLayoutSpec(
-            direction: .vertical,
-            spacing: 0,
-            justifyContent: .start,
-            alignItems: .start,
-            children: [imageListLayout, viewLayout]
-        )
-        
         return ASInsetLayoutSpec(
             insets: .init(top: 0, left: 20, bottom: 0, right: 0),
-            child: borderLayout
+            child: imageListLayout
         )
     }
 }

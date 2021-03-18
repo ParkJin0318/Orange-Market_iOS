@@ -111,6 +111,7 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
                 
                 MBProgressHUD.hide(for: self.view, animated: true)
                 MBProgressHUD.successShow(value, from: self.view)
+                self.popViewController()
             }.disposed(by: disposeBag)
     }
     
@@ -160,8 +161,11 @@ extension ProductAddViewController: ASCollectionDataSource {
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
             let item = self?.viewModel.output.imageList[indexPath.row]
-            let cell = ProductImageCell()
-            cell.setupNode(url: item!)
+            let cell = ProductImageCell().then {
+                $0.setupNode(url: item!)
+                $0.imageNode.style.preferredSize = CGSize(width: 60, height: 60)
+                $0.imageNode.cornerRadius = 5
+            }
             return cell
         }
     }

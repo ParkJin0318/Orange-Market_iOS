@@ -16,3 +16,18 @@ struct UserData: Codable {
     let location: String
     let profileImage: String?
 }
+
+extension UserData {
+    
+    func toModel() -> User {
+        return User(
+            idx: self.idx,
+            userId: self.userId,
+            userPw: self.userPw,
+            name: self.name,
+            city: self.city,
+            location: self.location,
+            profileImage: self.profileImage
+        )
+    }
+}

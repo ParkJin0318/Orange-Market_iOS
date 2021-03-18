@@ -17,23 +17,19 @@ class HomeViewModel: ViewModelType {
     
     struct Output {
         var city = PublishRelay<String>()
-        var productList = Array<ProductData>()
+        var productList = Array<Product>()
     }
     
     lazy var input: Input = Input()
     lazy var output: Output = Output()
     
-    lazy var userRepository: UserRepository = UserRepositoryImpl()
-    lazy var productRepository: ProductRepository = ProductRepositoryImpl()
+    private lazy var productRepository: ProductRepository = ProductRepositoryImpl()
+    private lazy var authRepository: AuthRepository = AuthRepositoryImpl()
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     
-    init() {
-        self.getProducts()
-    }
-    
-    private func getProducts() {
-        userRepository.getMyProfile()
+    func getProducts() {
+        authRepository.getUserProfile()
             .flatMap { self.productRepository.getAllProduct(city: $0.city) }
             .subscribe { [weak self] data in
                 guard let self = self else { return }
