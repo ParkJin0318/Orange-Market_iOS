@@ -35,7 +35,7 @@ class HomeViewModel: ViewModelType {
                 
                 self.output.productList = data
                 self.output.city.accept(data.first?.city ?? "Error")
-            } onError: { error in
+            } onFailure: { error in
                 print(error)
             }.disposed(by: disposeBag)
     }

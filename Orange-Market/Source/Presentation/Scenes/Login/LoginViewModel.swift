@@ -63,7 +63,7 @@ class LoginViewModel: ViewModelType {
                 AuthController.getInstance().login(token: data)
                 self.output.isLogin.accept(true)
                 self.output.isLoading.accept(false)
-            } onError: { [weak self] error in
+            } onFailure: { [weak self] error in
                 guard let self = self else { return }
                 
                 self.output.isLogin.accept(false)

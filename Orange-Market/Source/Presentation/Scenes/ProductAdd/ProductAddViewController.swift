@@ -99,17 +99,16 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
         
         // output
         viewModel.output.isReloadData
-            .bind { [weak self] value in
-                self?.node.collectionNode.reloadData()
-            }.disposed(by: disposeBag)
+            .withUnretained(self)
+            .bind { $0.0.node.collectionNode.reloadData() }
+            .disposed(by: disposeBag)
         
         viewModel.output.completedMessage
-            .bind { [weak self] value in
-                guard let self = self else { return }
-                
-                MBProgressHUD.hide(for: self.view, animated: true)
-                MBProgressHUD.successShow(value, from: self.view)
-                self.popViewController()
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.hide(for: owner.view, animated: true)
+                MBProgressHUD.successShow(value, from: owner.view)
+                owner.popViewController()
             }.disposed(by: disposeBag)
     }
     

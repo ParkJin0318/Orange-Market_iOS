@@ -99,9 +99,9 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainer> {
         
         viewModel.output.isReloadData
             .filter { $0 }
-            .bind { [weak self] value in
-                self?.node.collectionNode.reloadData()
-            }.disposed(by: disposeBag)
+            .withUnretained(self)
+            .bind { $0.0.node.collectionNode.reloadData() }
+            .disposed(by: disposeBag)
     }
 }
 

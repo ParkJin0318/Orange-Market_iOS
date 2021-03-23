@@ -65,14 +65,14 @@ extension StartViewController {
         }
     }
     
-    func bind() {
+    private func bind() {
         node.startNode
             .rx.tap
             .bind(onNext: presentLoginView)
             .disposed(by: disposeBag)
     }
     
-    func presentLoginView() {
+    private func presentLoginView() {
         self.navigationController?.pushViewController(LoginViewController(), animated: true)
     }
 }

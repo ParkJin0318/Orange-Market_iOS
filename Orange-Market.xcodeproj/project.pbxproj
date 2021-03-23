@@ -34,6 +34,7 @@
 		8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */; };
 		8D64381326097A0900F7C5FE /* MyInfoContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381226097A0900F7C5FE /* MyInfoContainer.swift */; };
 		8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */; };
+		8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */; };
 		8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D96E5B326006F9F00A1292D /* ProductRequest.swift */; };
 		8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */; };
 		8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */; };
@@ -104,6 +105,7 @@
 		8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		8D64381226097A0900F7C5FE /* MyInfoContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoContainer.swift; sourceTree = "<group>"; };
 		8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
+		8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Ex.swift"; sourceTree = "<group>"; };
 		8D96E5B326006F9F00A1292D /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
 		8DC1E0E725FAE56A00A1CA7E /* Orange-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Orange-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				8DC1E11925FAE89B00A1CA7E /* Color+Ex.swift */,
 				8DC1E11D25FAE8B200A1CA7E /* UIView+Ex.swift */,
 				8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */,
+				8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				8D2F98AB2600561A00C8BE0C /* ProductImageCell.swift in Sources */,
 				8D3CEA8C26031D0500D9486A /* User.swift in Sources */,
 				8DC1E11625FAE87100A1CA7E /* String+Ex.swift in Sources */,
+				8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */,
 				8DC864C325FF06D30081F52C /* UserRepository.swift in Sources */,
 				8DC864AA25FEF6390081F52C /* SplashViewContoller.swift in Sources */,
 				8DC8647B25FEDE0D0081F52C /* LoginRequest.swift in Sources */,

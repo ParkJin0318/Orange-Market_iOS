@@ -47,16 +47,15 @@ class HomeViewController: ASDKViewController<HomeContainer> {
     private func bind() {
         // input
         writeButton.rx.tap
-            .bind(onNext: self.presentProductAddView)
+            .bind(onNext: presentProductAddView)
             .disposed(by: disposeBag)
         
         // output
         viewModel.output.city
-            .bind(onNext: { [weak self] value in
-                guard let self = self else { return }
-                
-                self.navigationController?.navigationBar.topItem?.title = value
-                self.node.collectionNode.reloadData()
+            .withUnretained(self)
+            .bind(onNext: { owner, value in
+                owner.navigationController?.navigationBar.topItem?.title = value
+                owner.node.collectionNode.reloadData()
             }).disposed(by: disposeBag)
     }
     

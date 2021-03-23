@@ -90,25 +90,22 @@ extension LoginViewController {
         
         viewModel.output.isLoading
             .filter { $0 }
-            .bind(onNext: { [weak self] value in
-                guard let self = self else { return }
-                
-                MBProgressHUD.loading(from: self.view)
-            }).disposed(by: disposeBag)
+            .withUnretained(self)
+            .bind { MBProgressHUD.loading(from: $0.0.view) }
+            .disposed(by: disposeBag)
         
         viewModel.output.isLogin
-            .bind(onNext: { [weak self] value in
-                guard let self = self else { return }
-                
+            .withUnretained(self)
+            .bind { owner, value in
                 if (value) {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    MBProgressHUD.successShow("로그인 성공!", from: self.view)
-                    self.presentHomeView()
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                    MBProgressHUD.successShow("로그인 성공!", from: owner.view)
+                    owner.presentHomeView()
                 } else {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    MBProgressHUD.errorShow("로그인 실패", from: self.view)
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                    MBProgressHUD.errorShow("로그인 실패", from: owner.view)
                 }
-            }).disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
     }
     
     private func presentHomeView() {

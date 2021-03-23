@@ -54,7 +54,7 @@ class ProfileNode: ASDisplayNode {
         
         return ASStackLayoutSpec(
             direction: .horizontal,
-            spacing: 5,
+            spacing: 10,
             justifyContent: .start,
             alignItems: .center,
             children: [profileImageNode, userInfoLayout]

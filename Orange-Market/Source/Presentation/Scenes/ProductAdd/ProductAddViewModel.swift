@@ -42,7 +42,7 @@ class ProductAddViewModel: ViewModelType {
             .subscribe { [weak self] data in
                 self?.output.imageList.append(data)
                 self?.output.isReloadData.accept(true)
-            } onError: { error in
+            } onFailure: { error in
                 print(error.localizedDescription)
             }.disposed(by: disposeBag)
     }

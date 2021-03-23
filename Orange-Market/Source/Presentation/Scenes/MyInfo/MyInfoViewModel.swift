@@ -30,7 +30,7 @@ class MyInfoViewModel: ViewModelType {
         authRepository.getUserProfile()
             .subscribe { [weak self] user in
                 self?.output.userData.accept(user)
-            } onError: { error in
+            } onFailure: { error in
                 print(error)
             }.disposed(by: disposeBag)
     }

@@ -33,7 +33,7 @@ class ProductDetailViewModel: ViewModelType {
                 self?.output.imageList = data.imageList
                 self?.output.productData.accept(data)
                 self?.output.isReloadData.accept(true)
-            } onError: { error in
+            } onFailure: { error in
                 print(error)
             }.disposed(by: disposeBag)
     }
