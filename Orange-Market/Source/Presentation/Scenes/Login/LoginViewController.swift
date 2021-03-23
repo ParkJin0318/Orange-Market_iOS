@@ -55,7 +55,7 @@ extension LoginViewController {
             $0.idField.placeholder = "아이디 입력"
             $0.passwordField.placeholder = "비밀번호 입력"
             $0.loginNode.setTitle("로그인", with: .boldSystemFont(ofSize: 18), with: .systemBackground, for: .normal)
-            $0.guideNode.attributedText = "당근마켓은 처음인가요? 가입하기".toAttributed(color: .label, ofSize: 15)
+            $0.guideNode.attributedText = "오렌지마켓은 처음인가요? 가입하기".toAttributed(color: .label, ofSize: 15)
         }
     }
     
@@ -77,15 +77,16 @@ extension LoginViewController {
             .disposed(by: disposeBag)
         
         // Output
-        viewModel.output.isEnabled
-            .bind(onNext: { [weak self] value in
-                guard let self = self else { return }
-                
-                self.node.loginNode.do {
-                    $0.isEnabled = value
-                    $0.backgroundColor = value ? .primaryColor() : .lightGray
-                }
-            }).disposed(by: disposeBag)
+        let isEnabled = viewModel.output.isEnabled.share()
+        
+        isEnabled
+            .bind(to: node.loginNode.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        isEnabled
+            .map { $0 ? UIColor.primaryColor() : UIColor.lightGray }
+            .bind(to: node.loginNode.rx.backgroundColor)
+            .disposed(by: disposeBag)
         
         viewModel.output.isLoading
             .filter { $0 }
@@ -102,15 +103,18 @@ extension LoginViewController {
                 if (value) {
                     MBProgressHUD.hide(for: self.view, animated: true)
                     MBProgressHUD.successShow("로그인 성공!", from: self.view)
-                    
-                    self.present(TabBarController().then {
-                        $0.modalPresentationStyle = .fullScreen
-                        $0.modalTransitionStyle = .crossDissolve
-                    }, animated: true)
+                    self.presentHomeView()
                 } else {
                     MBProgressHUD.hide(for: self.view, animated: true)
                     MBProgressHUD.errorShow("로그인 실패", from: self.view)
                 }
             }).disposed(by: disposeBag)
+    }
+    
+    private func presentHomeView() {
+        self.present(TabBarController().then {
+            $0.modalPresentationStyle = .fullScreen
+            $0.modalTransitionStyle = .crossDissolve
+        }, animated: true)
     }
 }

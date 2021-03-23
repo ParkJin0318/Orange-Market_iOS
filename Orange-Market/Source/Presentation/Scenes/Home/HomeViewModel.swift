@@ -29,8 +29,7 @@ class HomeViewModel: ViewModelType {
     lazy var disposeBag: DisposeBag = DisposeBag()
     
     func getProducts() {
-        authRepository.getUserProfile()
-            .flatMap { self.productRepository.getAllProduct(city: $0.city) }
+        productRepository.getAllProduct()
             .subscribe { [weak self] data in
                 guard let self = self else { return }
                 

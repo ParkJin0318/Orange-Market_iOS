@@ -22,22 +22,12 @@ class ProductDetailContainer: ASDisplayNode {
         $0.backgroundColor = .systemBackground
     }
     
-    lazy var profileImageNode = ASNetworkImageNode().then {
-        $0.style.preferredSize = CGSize(width: 30, height: 30)
-        $0.cornerRadius = 30 / 2
-    }
+    lazy var profileNode = ProfileNode()
     
-    lazy var nameNode = ASTextNode().then {
-        $0.style.flexShrink = 1
-    }
+    lazy var contentNode = ProductContentNode()
     
-    lazy var locationNode = ASTextNode().then {
-        $0.style.flexShrink = 1
-    }
-    
-    private lazy var viewNode = ASDisplayNode().then {
-        $0.style.preferredSize = CGSize(width: width, height: 1)
-        $0.backgroundColor = .lightGray
+    lazy var productBottomNode = ProductBottomNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 80)
     }
     
     override init() {
@@ -46,37 +36,28 @@ class ProductDetailContainer: ASDisplayNode {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let profileLayout = self.profileLayoutSpec()
+        let productDetailLayout = self.productDetailLayoutSpec()
         
+        return ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 5,
+            justifyContent: .spaceBetween,
+            alignItems: .start,
+            children: [productDetailLayout, productBottomNode]
+        )
+    }
+    
+    private func productDetailLayoutSpec() -> ASLayoutSpec {
         return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 10,
             justifyContent: .start,
             alignItems: .start,
-            children: [collectionNode, profileLayout, viewNode]
-        )
-    }
-    
-    private func profileLayoutSpec() -> ASLayoutSpec {
-        let userInfoLayout = ASStackLayoutSpec(
-            direction: .vertical,
-            spacing: 3,
-            justifyContent: .start,
-            alignItems: .start,
-            children: [nameNode, locationNode]
-        )
-        
-        let profileLayout = ASStackLayoutSpec(
-            direction: .horizontal,
-            spacing: 5,
-            justifyContent: .start,
-            alignItems: .center,
-            children: [profileImageNode, userInfoLayout]
-        )
-        
-        return ASInsetLayoutSpec(
-            insets: .init(top: 5, left: 20, bottom: 5, right: 20),
-            child: profileLayout
+            children: [
+                collectionNode,
+                profileNode,
+                contentNode
+            ]
         )
     }
 }

@@ -36,7 +36,7 @@ class ProductCell: ASCellNode {
         self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .black, ofSize: 15)
         
         if (!product.image.isEmpty) {
-            self.imageNode.url = URL(string: HOST + "images/" + product.image)
+            self.imageNode.url = product.image.toUrl()
         }
     }
     

@@ -25,6 +25,14 @@ class TabBarController: ASTabBarController {
         )
     }
     
+    private lazy var myInfoViewController = MyInfoViewController().then {
+        $0.tabBarItem = UITabBarItem(
+            title: "나의 오렌지",
+            image: UIImage(systemName: "person"),
+            selectedImage: UIImage(systemName: "person.fill")
+        )
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.do {
@@ -42,9 +50,14 @@ class TabBarController: ASTabBarController {
             $0.navigationBar.isTranslucent = false
         }
         
+        let navigationController3 = ASNavigationController(rootViewController: myInfoViewController).then {
+            $0.navigationBar.isTranslucent = false
+        }
+        
         viewControllers = [
             navigationController1,
-            navigationController2
+            navigationController2,
+            navigationController3
         ]
         selectedViewController = navigationController1
     }

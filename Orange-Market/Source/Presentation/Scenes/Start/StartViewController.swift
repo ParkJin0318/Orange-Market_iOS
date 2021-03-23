@@ -68,7 +68,7 @@ extension StartViewController {
     func bind() {
         node.startNode
             .rx.tap
-            .bind(onNext: self.presentLoginView)
+            .bind(onNext: presentLoginView)
             .disposed(by: disposeBag)
     }
     

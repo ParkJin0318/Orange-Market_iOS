@@ -52,5 +52,9 @@ extension String {
             ]
         )
     }
+    
+    func toUrl() -> URL? {
+        return URL(string: HOST + "images/" + self)
+    }
 }
 

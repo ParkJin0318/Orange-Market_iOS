@@ -26,6 +26,8 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.tintColor = .label
+        // self.setupNavigationBar()
         self.setupNode()
         self.bind()
     }
@@ -35,27 +37,70 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainer> {
         viewModel.getProduct(idx: idx)
     }
     
+    private func setupNavigationBar() {
+        self.navigationController?.do {
+            $0.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            $0.navigationBar.shadowImage = UIImage()
+            $0.navigationBar.isTranslucent = true
+            $0.navigationBar.tintColor = .white
+            $0.view.backgroundColor = .clear
+        }
+    }
+    
     private func setupNode() {
         self.node.do {
-            $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
             
             $0.collectionNode.delegate = self
             $0.collectionNode.dataSource = self
+            
+            $0.productBottomNode.buyNode.setTitle("구매하기", with: .none, with: .white, for: .normal)
         }
     }
     
     private func bind() {
-        viewModel.output.productData
+        // output
+        let productData = viewModel.output.productData.share()
+        
+        productData
+            .map { $0.profileImage?.toUrl() }
+            .bind(to: node.profileNode.profileImageNode.rx.url)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.name.toBoldAttributed(color: .black, ofSize: 14) }
+            .bind(to: node.profileNode.nameNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.location.toAttributed(color: .black, ofSize: 12) }
+            .bind(to: node.profileNode.locationNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.title.toBoldAttributed(color: .black, ofSize: 18) }
+            .bind(to: node.contentNode.titleNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.createAt.toAttributed(color: .gray, ofSize: 14) }
+            .bind(to: node.contentNode.dateNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.contents.toAttributed(color: .black, ofSize: 14) }
+            .bind(to: node.contentNode.contentsNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { "\($0.price)원".toAttributed(color: .black, ofSize: 16) }
+            .bind(to: node.productBottomNode.priceNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isReloadData
+            .filter { $0 }
             .bind { [weak self] value in
-                guard let self = self else { return }
-                
-                self.node.do {
-                    $0.collectionNode.reloadData()
-                    $0.profileImageNode.url = URL(string: HOST + "images/" + (value.profileImage ?? ""))
-                    $0.nameNode.attributedText = value.name.toBoldAttributed(color: .black, ofSize: 14)
-                    $0.locationNode.attributedText = value.location.toAttributed(color: .black, ofSize: 12)
-                }
+                self?.node.collectionNode.reloadData()
             }.disposed(by: disposeBag)
     }
 }

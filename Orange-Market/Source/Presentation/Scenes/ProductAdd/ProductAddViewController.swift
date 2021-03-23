@@ -100,9 +100,7 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
         // output
         viewModel.output.isReloadData
             .bind { [weak self] value in
-                guard let self = self else { return }
-                
-                self.node.collectionNode.reloadData()
+                self?.node.collectionNode.reloadData()
             }.disposed(by: disposeBag)
         
         viewModel.output.completedMessage

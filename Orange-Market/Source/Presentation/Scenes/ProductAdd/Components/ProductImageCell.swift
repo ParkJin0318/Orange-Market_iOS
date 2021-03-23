@@ -18,8 +18,7 @@ class ProductImageCell: ASCellNode {
     
     func setupNode(url: String) {
         if (!url.isEmpty) {
-            print(url)
-            self.imageNode.url = URL(string: HOST + "images/" + url)
+            self.imageNode.url = url.toUrl()
         }
     }
     

@@ -16,6 +16,7 @@ class ProductDetailViewModel: ViewModelType {
     
     struct Output {
         let productData = PublishRelay<ProductDetail>()
+        let isReloadData = PublishRelay<Bool>()
         var imageList = Array<String>()
     }
     
@@ -25,13 +26,13 @@ class ProductDetailViewModel: ViewModelType {
     lazy var disposeBag: DisposeBag = DisposeBag()
     
     private lazy var prouductRepository: ProductRepository = ProductRepositoryImpl()
-    private lazy var userRepository: UserRepository = UserRepositoryImpl()
     
     func getProduct(idx: Int) {
         prouductRepository.getProduct(idx: idx)
             .subscribe { [weak self] data in
                 self?.output.imageList = data.imageList
                 self?.output.productData.accept(data)
+                self?.output.isReloadData.accept(true)
             } onError: { error in
                 print(error)
             }.disposed(by: disposeBag)
