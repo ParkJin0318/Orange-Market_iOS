@@ -1,19 +1,19 @@
 //
-//  CityViewController.swift
+//  RegisterViewController.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/03/15.
+//  Created by 박진 on 2021/03/24.
 //
 
 import AsyncDisplayKit
 import RxSwift
 
-class CityViewContoller: ASDKViewController<ASDisplayNode> {
+class RegisterViewController: ASDKViewController<ASDisplayNode> {
     
-    lazy var disposeBag = DisposeBag()
+    lazy var disposeBag: DisposeBag = DisposeBag()
     
     override init() {
-        super.init(node: StartContainerNode())
+        super.init(node: ASDisplayNode())
         self.setupNode()
     }
     
@@ -28,7 +28,7 @@ class CityViewContoller: ASDKViewController<ASDisplayNode> {
     }
 }
 
-extension CityViewContoller: ViewControllerType {
+extension RegisterViewController: ViewControllerType {
     
     func setupNode() {
         self.node.do { container in
@@ -36,11 +36,7 @@ extension CityViewContoller: ViewControllerType {
         }
     }
     
-    func setupNavigationBar() {
-        self.navigationItem.do {
-            $0.title = "지역생활"
-        }
-    }
+    func setupNavigationBar() { }
     
     func bind() { }
 }

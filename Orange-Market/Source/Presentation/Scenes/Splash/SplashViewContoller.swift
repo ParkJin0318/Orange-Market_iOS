@@ -6,8 +6,11 @@
 //
 
 import AsyncDisplayKit
+import RxSwift
 
 class SplashViewContoller: ASDKViewController<ASDisplayNode> {
+    
+    lazy var disposeBag: DisposeBag = DisposeBag()
     
     override init() {
         super.init(node: ASDisplayNode())
@@ -16,6 +19,12 @@ class SplashViewContoller: ASDKViewController<ASDisplayNode> {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupNavigationBar()
+        self.bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,11 +50,18 @@ class SplashViewContoller: ASDKViewController<ASDisplayNode> {
             self.present(vc, animated: true)
         }
     }
+}
+
+extension SplashViewContoller: ViewControllerType {
     
-    private func setupNode() {
+    func setupNode() {
         self.node.do {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
         }
     }
+    
+    func setupNavigationBar() { }
+    
+    func bind() { }
 }

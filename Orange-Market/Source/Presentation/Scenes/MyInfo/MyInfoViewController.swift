@@ -8,13 +8,13 @@
 import AsyncDisplayKit
 import RxSwift
 
-class MyInfoViewController: ASDKViewController<MyInfoContainer> {
+class MyInfoViewController: ASDKViewController<MyInfoContainerNode> {
     
     lazy var viewModel = MyInfoViewModel()
     lazy var disposeBag = DisposeBag()
     
     override init() {
-        super.init(node: MyInfoContainer())
+        super.init(node: MyInfoContainerNode())
         self.setupNode()
     }
     
@@ -27,22 +27,25 @@ class MyInfoViewController: ASDKViewController<MyInfoContainer> {
         self.setupNavigationBar()
         self.bind()
     }
+}
+
+extension MyInfoViewController: ViewControllerType {
     
-    private func setupNode() {
+    func setupNode() {
         self.node.do { container in
             container.backgroundColor = .systemBackground
-            container.profileOpenNode.setTitle("프로필 보기", with: .none, with: .none, for: .normal)
+            container.profileOpenNode.setAttributedTitle("프로필 보기".toAttributed(color: .label, ofSize: 12), for: .normal)
             container.profileNode.profileImageNode.style.preferredSize = CGSize(width: 70, height: 70)
             container.profileNode.profileImageNode.cornerRadius = 70 / 2
             container.profileNode.viewNode.isHidden = true
         }
     }
     
-    private func setupNavigationBar() {
+    func setupNavigationBar() {
         self.navigationController?.navigationBar.topItem?.title = "나의 오렌지"
     }
     
-    private func bind() {
+    func bind() {
         let userData = viewModel.output.userData.share()
         
         userData.map { $0.profileImage?.toUrl() }

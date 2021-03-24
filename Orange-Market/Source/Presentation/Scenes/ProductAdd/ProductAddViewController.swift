@@ -10,10 +10,10 @@ import RxSwift
 import RxCocoa
 import MBProgressHUD
 
-class ProductAddViewController: ASDKViewController<ProductAddContainer> {
+class ProductAddViewController: ASDKViewController<ProductAddContainerNode> {
     
     lazy var disposeBag = DisposeBag()
-    private lazy var viewModel = ProductAddViewModel()
+    lazy var viewModel = ProductAddViewModel()
     
     let closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
@@ -28,7 +28,8 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
     }
     
     override init() {
-        super.init(node: ProductAddContainer())
+        super.init(node: ProductAddContainerNode())
+        self.setupNode()
     }
     
     required init?(coder: NSCoder) {
@@ -37,12 +38,18 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNode()
-        self.setNavigation()
+        self.setupNavigationBar()
         self.bind()
     }
     
-    private func setupNode() {
+    private func popViewController() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension ProductAddViewController: ViewControllerType {
+    
+    func setupNode() {
         self.node.do {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
@@ -56,7 +63,7 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
         }
     }
  
-    private func setNavigation() {
+    func setupNavigationBar() {
         self.navigationItem.do {
             $0.title = "중고거래 글쓰기"
             $0.leftBarButtonItems = [
@@ -68,7 +75,7 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
         }
     }
     
-    private func bind() {
+    func bind() {
         // input
         closeButton.rx.tap
             .bind(onNext: popViewController)
@@ -110,10 +117,6 @@ class ProductAddViewController: ASDKViewController<ProductAddContainer> {
                 MBProgressHUD.successShow(value, from: owner.view)
                 owner.popViewController()
             }.disposed(by: disposeBag)
-    }
-    
-    private func popViewController() {
-        self.navigationController?.popViewController(animated: true)
     }
 }
 

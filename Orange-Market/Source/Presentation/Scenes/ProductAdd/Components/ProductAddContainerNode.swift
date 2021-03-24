@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class ProductAddContainer: ASDisplayNode {
+class ProductAddContainerNode: ASDisplayNode {
     
     lazy var imagePickerNode = ASImageNode().then {
         $0.style.preferredSize = CGSize(width: 30, height: 30)

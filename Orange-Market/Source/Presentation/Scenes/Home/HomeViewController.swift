@@ -8,7 +8,7 @@
 import AsyncDisplayKit
 import RxSwift
 
-class HomeViewController: ASDKViewController<HomeContainer> {
+class HomeViewController: ASDKViewController<HomeContainerNode> {
     
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = HomeViewModel()
@@ -19,7 +19,7 @@ class HomeViewController: ASDKViewController<HomeContainer> {
     }
     
     override init() {
-        super.init(node: HomeContainer())
+        super.init(node: HomeContainerNode())
         self.setupNode()
     }
     
@@ -38,13 +38,32 @@ class HomeViewController: ASDKViewController<HomeContainer> {
         viewModel.getProducts()
     }
     
-    private func setupNavigationBar() {
+    private func presentProductAddView() {
+        self.navigationController?.pushViewController(ProductAddViewController().then {
+            $0.hidesBottomBarWhenPushed = true
+        }, animated: true)
+    }
+}
+
+extension HomeViewController: ViewControllerType {
+    
+    func setupNode() {
+        self.node.do {
+            $0.automaticallyManagesSubnodes = true
+            $0.backgroundColor = .systemBackground
+            
+            $0.collectionNode.delegate = self
+            $0.collectionNode.dataSource = self
+        }
+    }
+    
+    func setupNavigationBar() {
         self.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(customView: writeButton)
         ]
     }
     
-    private func bind() {
+    func bind() {
         // input
         writeButton.rx.tap
             .bind(onNext: presentProductAddView)
@@ -57,22 +76,6 @@ class HomeViewController: ASDKViewController<HomeContainer> {
                 owner.navigationController?.navigationBar.topItem?.title = value
                 owner.node.collectionNode.reloadData()
             }).disposed(by: disposeBag)
-    }
-    
-    private func presentProductAddView() {
-        self.navigationController?.pushViewController(ProductAddViewController().then {
-            $0.hidesBottomBarWhenPushed = true
-        }, animated: true)
-    }
-    
-    private func setupNode() {
-        self.node.do {
-            $0.automaticallyManagesSubnodes = true
-            $0.backgroundColor = .systemBackground
-            
-            $0.collectionNode.delegate = self
-            $0.collectionNode.dataSource = self
-        }
     }
 }
 

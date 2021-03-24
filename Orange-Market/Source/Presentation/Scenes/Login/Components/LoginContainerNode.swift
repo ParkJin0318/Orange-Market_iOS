@@ -52,6 +52,8 @@ class LoginContainerNode: ASDisplayNode {
         $0.style.flexShrink = 1
     }
     
+    lazy var registerNode = ASButtonNode()
+    
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
@@ -68,13 +70,14 @@ class LoginContainerNode: ASDisplayNode {
     
     private func loginLayoutSpec() -> ASLayoutSpec {
         let descriptionLayout = self.descriptionLayoutSpec()
+        let guideLayout = self.guideLayoutSpec()
         
         return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 15,
             justifyContent: .start,
             alignItems: .center,
-            children: [descriptionLayout, idNode, passwordNode, loginNode, guideNode]
+            children: [descriptionLayout, idNode, passwordNode, loginNode, guideLayout]
         )
     }
     
@@ -85,6 +88,16 @@ class LoginContainerNode: ASDisplayNode {
             justifyContent: .spaceAround,
             alignItems: .center,
             children: [imageNode, descriptionNode]
+        )
+    }
+    
+    private func guideLayoutSpec() -> ASLayoutSpec {
+        return ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 5,
+            justifyContent: .center,
+            alignItems: .center,
+            children: [guideNode, registerNode]
         )
     }
 }

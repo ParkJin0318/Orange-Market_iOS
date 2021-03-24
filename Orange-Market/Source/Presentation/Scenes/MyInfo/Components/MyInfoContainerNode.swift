@@ -7,13 +7,13 @@
 
 import AsyncDisplayKit
 
-class MyInfoContainer: ASDisplayNode {
+class MyInfoContainerNode: ASDisplayNode {
     
     lazy var profileNode = ProfileNode()
     
     lazy var profileOpenNode = ASButtonNode().then {
         $0.borderWidth = 1
-        $0.borderColor = UIColor.black.cgColor
+        $0.borderColor = UIColor.lightGray.cgColor
         $0.cornerRadius = 5
         $0.style.preferredSize = CGSize(width: width, height: 40)
     }

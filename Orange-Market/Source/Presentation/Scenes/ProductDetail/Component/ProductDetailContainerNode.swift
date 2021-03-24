@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class ProductDetailContainer: ASDisplayNode {
+class ProductDetailContainerNode: ASDisplayNode {
     
     private lazy var flowLayout = UICollectionViewFlowLayout().then {
         $0.itemSize = CGSize(width: 60, height: 60)
@@ -48,6 +48,11 @@ class ProductDetailContainer: ASDisplayNode {
     }
     
     private func productDetailLayoutSpec() -> ASLayoutSpec {
+        let profileInsetLayout = ASInsetLayoutSpec(
+            insets: .init(top: 10, left: 20, bottom: 10, right: 20),
+            child: profileNode
+        )
+        
         return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 10,
@@ -55,7 +60,7 @@ class ProductDetailContainer: ASDisplayNode {
             alignItems: .start,
             children: [
                 collectionNode,
-                profileNode,
+                profileInsetLayout,
                 contentNode
             ]
         )

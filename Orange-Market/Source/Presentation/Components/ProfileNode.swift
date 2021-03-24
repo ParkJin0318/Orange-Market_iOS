@@ -35,17 +35,12 @@ class ProfileNode: ASDisplayNode {
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let profileLayout = self.profileLayoutSpec()
         
-        let viewLayout = ASStackLayoutSpec(
+        return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 20,
             justifyContent: .start,
             alignItems: .start,
             children: [profileLayout, viewNode]
-        )
-        
-        return ASInsetLayoutSpec(
-            insets: .init(top: 5, left: 20, bottom: 5, right: 20),
-            child: viewLayout
         )
     }
     

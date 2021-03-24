@@ -30,13 +30,17 @@ class StartViewController: ASDKViewController<StartContainerNode> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+        self.setupNavigationBar()
+    }
+    
+    private func presentLoginView() {
+        self.navigationController?.pushViewController(LoginViewController(), animated: true)
     }
 }
 
-extension StartViewController {
+extension StartViewController: ViewControllerType {
     
-    private func setupNode() {
+    func setupNode() {
         self.node.do {
             $0.backgroundColor = .systemBackground
             
@@ -65,14 +69,14 @@ extension StartViewController {
         }
     }
     
-    private func bind() {
+    func setupNavigationBar() {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    func bind() {
         node.startNode
             .rx.tap
             .bind(onNext: presentLoginView)
             .disposed(by: disposeBag)
-    }
-    
-    private func presentLoginView() {
-        self.navigationController?.pushViewController(LoginViewController(), animated: true)
     }
 }

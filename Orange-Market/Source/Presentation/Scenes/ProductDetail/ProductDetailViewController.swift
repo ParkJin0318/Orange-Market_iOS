@@ -9,15 +9,16 @@ import AsyncDisplayKit
 import RxSwift
 import RxCocoa
 
-class ProductDetailViewController: ASDKViewController<ProductDetailContainer> {
+class ProductDetailViewController: ASDKViewController<ProductDetailContainerNode> {
     
     lazy var disposeBag = DisposeBag()
-    private lazy var viewModel = ProductDetailViewModel()
+    lazy var viewModel = ProductDetailViewModel()
     
     var idx: Int = -1
     
     override init() {
-        super.init(node: ProductDetailContainer())
+        super.init(node: ProductDetailContainerNode())
+        self.setupNode()
     }
     
     required init?(coder: NSCoder) {
@@ -26,9 +27,7 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.tintColor = .label
-        // self.setupNavigationBar()
-        self.setupNode()
+        self.setupNavigationBar()
         self.bind()
     }
     
@@ -36,18 +35,15 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainer> {
         super.viewWillAppear(animated)
         viewModel.getProduct(idx: idx)
     }
+}
+
+extension ProductDetailViewController: ViewControllerType {
     
-    private func setupNavigationBar() {
-        self.navigationController?.do {
-            $0.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            $0.navigationBar.shadowImage = UIImage()
-            $0.navigationBar.isTranslucent = true
-            $0.navigationBar.tintColor = .white
-            $0.view.backgroundColor = .clear
-        }
+    func setupNavigationBar() {
+        self.navigationController?.navigationBar.tintColor = .label
     }
     
-    private func setupNode() {
+    func setupNode() {
         self.node.do {
             $0.backgroundColor = .systemBackground
             
@@ -58,7 +54,7 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainer> {
         }
     }
     
-    private func bind() {
+    func bind() {
         // output
         let productData = viewModel.output.productData.share()
         
