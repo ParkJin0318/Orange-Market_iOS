@@ -45,11 +45,10 @@ class LoginViewModel: ViewModelType {
     private func tapLogin() {
         input.tapLogin
             .withLatestFrom(Observable.combineLatest(input.idText, input.passwordText))
-            .bind { [weak self] (email, password) in
-                guard let self = self else { return }
-                
-                self.output.isLoading.accept(true)
-                self.login(email: email, password: password)
+            .withUnretained(self)
+            .bind { (owner, value) in
+                owner.output.isLoading.accept(true)
+                owner.login(email: value.0, password: value.1)
             }.disposed(by: disposeBag)
     }
     

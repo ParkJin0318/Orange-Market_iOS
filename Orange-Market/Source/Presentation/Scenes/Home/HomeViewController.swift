@@ -20,7 +20,7 @@ class HomeViewController: ASDKViewController<HomeContainerNode> {
     
     override init() {
         super.init(node: HomeContainerNode())
-        self.setupNode()
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -29,12 +29,12 @@ class HomeViewController: ASDKViewController<HomeContainerNode> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.setupNavigationBar()
         viewModel.getProducts()
     }
     
@@ -47,7 +47,7 @@ class HomeViewController: ASDKViewController<HomeContainerNode> {
 
 extension HomeViewController: ViewControllerType {
     
-    func setupNode() {
+    func initNode() {
         self.node.do {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
@@ -56,6 +56,8 @@ extension HomeViewController: ViewControllerType {
             $0.collectionNode.dataSource = self
         }
     }
+    
+    func loadNode() { }
     
     func setupNavigationBar() {
         self.navigationItem.rightBarButtonItems = [

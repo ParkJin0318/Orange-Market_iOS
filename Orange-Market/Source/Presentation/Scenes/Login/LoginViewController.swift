@@ -8,15 +8,18 @@
 import AsyncDisplayKit
 import RxSwift
 import MBProgressHUD
+import CoreLocation
 
 class LoginViewController: ASDKViewController<LoginContainerNode> {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     lazy var viewModel: LoginViewModel = LoginViewModel()
+    
+    var locationManager:CLLocationManager!
 
     override init() {
         super.init(node: LoginContainerNode())
-        self.setupNode()
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -31,6 +34,7 @@ class LoginViewController: ASDKViewController<LoginContainerNode> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
+        self.getPermission()
     }
     
     private func presentHomeView() {
@@ -41,13 +45,24 @@ class LoginViewController: ASDKViewController<LoginContainerNode> {
     }
     
     private func presentRegisterView() {
-        self.navigationController?.pushViewController(RegisterViewController(), animated: true)
+        self.navigationController?.pushViewController(IdViewController(), animated: true)
+    }
+}
+
+extension LoginViewController: CLLocationManagerDelegate {
+    
+    private func getPermission() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
     }
 }
 
 extension LoginViewController: ViewControllerType {
     
-    func setupNode() {
+    func initNode() {
         self.node.do {
             $0.backgroundColor = .systemBackground
             
@@ -62,10 +77,12 @@ extension LoginViewController: ViewControllerType {
         }
     }
     
+    func loadNode() { }
+    
     func setupNavigationBar() {
+        self.navigationItem.title = "로그인"
         self.navigationController?.do {
             $0.isNavigationBarHidden = false
-            $0.navigationBar.topItem?.title = "로그인"
             $0.navigationBar.barTintColor = .systemBackground
             $0.navigationBar.tintColor = .black
         }

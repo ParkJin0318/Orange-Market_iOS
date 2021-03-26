@@ -13,8 +13,8 @@ class CityViewContoller: ASDKViewController<ASDisplayNode> {
     lazy var disposeBag = DisposeBag()
     
     override init() {
-        super.init(node: StartContainerNode())
-        self.setupNode()
+        super.init(node: ASDisplayNode())
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -23,18 +23,24 @@ class CityViewContoller: ASDKViewController<ASDisplayNode> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupNavigationBar()
     }
 }
 
 extension CityViewContoller: ViewControllerType {
     
-    func setupNode() {
+    func initNode() {
         self.node.do { container in
             container.backgroundColor = .systemBackground
         }
     }
+    
+    func loadNode() { }
     
     func setupNavigationBar() {
         self.navigationItem.do {

@@ -16,7 +16,7 @@ class StartViewController: ASDKViewController<StartContainerNode> {
     
     override init() {
         super.init(node: StartContainerNode())
-        self.setupNode()
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -40,7 +40,7 @@ class StartViewController: ASDKViewController<StartContainerNode> {
 
 extension StartViewController: ViewControllerType {
     
-    func setupNode() {
+    func initNode() {
         self.node.do {
             $0.backgroundColor = .systemBackground
             
@@ -68,6 +68,8 @@ extension StartViewController: ViewControllerType {
             $0.startNode.backgroundColor = .primaryColor()
         }
     }
+    
+    func loadNode() { }
     
     func setupNavigationBar() {
         self.navigationController?.isNavigationBarHidden = true

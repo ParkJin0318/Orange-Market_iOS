@@ -29,7 +29,7 @@ class ProductAddViewController: ASDKViewController<ProductAddContainerNode> {
     
     override init() {
         super.init(node: ProductAddContainerNode())
-        self.setupNode()
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -38,8 +38,12 @@ class ProductAddViewController: ASDKViewController<ProductAddContainerNode> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupNavigationBar()
     }
     
     private func popViewController() {
@@ -49,7 +53,7 @@ class ProductAddViewController: ASDKViewController<ProductAddContainerNode> {
 
 extension ProductAddViewController: ViewControllerType {
     
-    func setupNode() {
+    func initNode() {
         self.node.do {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
@@ -62,6 +66,8 @@ extension ProductAddViewController: ViewControllerType {
             $0.contentField.placeholder = "게시글 내용 입력"
         }
     }
+    
+    func loadNode() { }
  
     func setupNavigationBar() {
         self.navigationItem.do {

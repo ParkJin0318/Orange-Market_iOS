@@ -14,7 +14,7 @@ class SplashViewContoller: ASDKViewController<ASDisplayNode> {
     
     override init() {
         super.init(node: ASDisplayNode())
-        self.setupNode()
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -23,8 +23,12 @@ class SplashViewContoller: ASDKViewController<ASDisplayNode> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupNavigationBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,12 +58,14 @@ class SplashViewContoller: ASDKViewController<ASDisplayNode> {
 
 extension SplashViewContoller: ViewControllerType {
     
-    func setupNode() {
+    func initNode() {
         self.node.do {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
         }
     }
+    
+    func loadNode() { }
     
     func setupNavigationBar() { }
     

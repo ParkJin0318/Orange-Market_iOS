@@ -12,7 +12,15 @@ protocol ViewControllerType {
     
     var disposeBag: DisposeBag { get set }
     
-    func setupNode() -> Void
+    /*
+     init 호출 후 Node 설정
+     */
+    func initNode() -> Void
+    /*
+     ViewDidLoad 호출 후 Node 설정
+     */
+    func loadNode() -> Void
+    
     func setupNavigationBar() -> Void
     func bind() -> Void
 }

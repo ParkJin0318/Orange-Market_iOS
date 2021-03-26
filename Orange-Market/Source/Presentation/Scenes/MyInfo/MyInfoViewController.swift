@@ -15,7 +15,7 @@ class MyInfoViewController: ASDKViewController<MyInfoContainerNode> {
     
     override init() {
         super.init(node: MyInfoContainerNode())
-        self.setupNode()
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -24,14 +24,18 @@ class MyInfoViewController: ASDKViewController<MyInfoContainerNode> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupNavigationBar()
     }
 }
 
 extension MyInfoViewController: ViewControllerType {
     
-    func setupNode() {
+    func initNode() {
         self.node.do { container in
             container.backgroundColor = .systemBackground
             container.profileOpenNode.setAttributedTitle("프로필 보기".toAttributed(color: .label, ofSize: 12), for: .normal)
@@ -40,6 +44,8 @@ extension MyInfoViewController: ViewControllerType {
             container.profileNode.viewNode.isHidden = true
         }
     }
+    
+    func loadNode() { }
     
     func setupNavigationBar() {
         self.navigationController?.navigationBar.topItem?.title = "나의 오렌지"

@@ -18,7 +18,7 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainerNode
     
     override init() {
         super.init(node: ProductDetailContainerNode())
-        self.setupNode()
+        self.initNode()
     }
     
     required init?(coder: NSCoder) {
@@ -27,23 +27,19 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainerNode
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.setupNavigationBar()
         viewModel.getProduct(idx: idx)
     }
 }
 
 extension ProductDetailViewController: ViewControllerType {
     
-    func setupNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = .label
-    }
-    
-    func setupNode() {
+    func initNode() {
         self.node.do {
             $0.backgroundColor = .systemBackground
             
@@ -52,6 +48,12 @@ extension ProductDetailViewController: ViewControllerType {
             
             $0.productBottomNode.buyNode.setTitle("구매하기", with: .none, with: .white, for: .normal)
         }
+    }
+    
+    func loadNode() { }
+    
+    func setupNavigationBar() {
+        self.navigationController?.navigationBar.tintColor = .label
     }
     
     func bind() {
