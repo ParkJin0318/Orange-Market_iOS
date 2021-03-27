@@ -40,7 +40,6 @@ class NameViewController: ASDKViewController<InputContainerNode> {
     
     private func presentRegisterView() {
         guard !node.inputField.text!.isEmpty else {
-            MBProgressHUD.hide(for: self.view, animated: true)
             MBProgressHUD.errorShow("빈칸 없이 입력해주세요", from: self.view)
             return
         }

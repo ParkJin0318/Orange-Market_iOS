@@ -7,6 +7,7 @@
 
 import AsyncDisplayKit
 import RxSwift
+import MBProgressHUD
 
 class RegisterViewController: ASDKViewController<RegisterContainerNode> {
     
@@ -39,6 +40,18 @@ class RegisterViewController: ASDKViewController<RegisterContainerNode> {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
         self.loadNode()
+    }
+    
+    private func register() {
+        viewModel.register(registerRequest: self.registerRequest)
+    }
+    
+    private func presentLoginView() {
+        let controllers = self.navigationController?.viewControllers
+        for vc in controllers! {
+            self.navigationController?.popToViewController(vc, animated: true)
+        }
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 }
 
@@ -75,7 +88,7 @@ extension RegisterViewController: ViewControllerType {
         // input
         completeButton
             .rx.tap
-            .bind(onNext: viewModel.register)
+            .bind(onNext: register)
             .disposed(by: disposeBag)
         
         node.addButton
@@ -84,10 +97,28 @@ extension RegisterViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         // output
-        viewModel.output.imageUrl
+        let imageUrl = viewModel.output.imageUrl.share()
+        
+        imageUrl
             .map { $0.toUrl() }
             .bind(to: node.profileImageNode.rx.url)
             .disposed(by: disposeBag)
+        
+        imageUrl
+            .withUnretained(self)
+            .bind { owner, value in
+                owner.registerRequest.profileImage = value
+            }.disposed(by: disposeBag)
+        
+        viewModel.output.isRegister
+            .withUnretained(self)
+            .bind { owner, value in
+                if (value) {
+                    owner.presentLoginView()
+                } else {
+                    MBProgressHUD.errorShow("회원가입 실패", from: owner.view)
+                }
+            }.disposed(by: disposeBag)
     }
 }
 

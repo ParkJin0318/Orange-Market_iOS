@@ -25,6 +25,7 @@ class RegisterViewModel: ViewModelType {
     
     struct Output {
         let imageUrl = PublishRelay<String>()
+        let isRegister = PublishRelay<Bool>()
     }
     
     func uploadImage(image: UIImage) {
@@ -36,7 +37,12 @@ class RegisterViewModel: ViewModelType {
             }.disposed(by: disposeBag)
     }
     
-    func register() {
-        
+    func register(registerRequest: RegisterRequest) {
+        authRepository.register(registerRequest: registerRequest)
+            .subscribe { [weak self] in
+                self?.output.isRegister.accept(true)
+            } onError: { [weak self] error in
+                self?.output.isRegister.accept(false)
+            }.disposed(by: disposeBag)
     }
 }

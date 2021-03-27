@@ -45,7 +45,16 @@ class LoginViewController: ASDKViewController<LoginContainerNode> {
     }
     
     private func presentRegisterView() {
-        self.navigationController?.pushViewController(IdViewController(), animated: true)
+        switch locationManager.authorizationStatus {
+            case .authorizedAlways, .authorizedWhenInUse:
+                self.navigationController?.pushViewController(IdViewController(), animated: true)
+            case .restricted, .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            case .denied:
+                MBProgressHUD.errorShow("설정에서 위치 권한을 허용해주세요", from: self.view)
+            default:
+                locationManager.requestWhenInUseAuthorization()
+        }
     }
 }
 
@@ -132,11 +141,9 @@ extension LoginViewController: ViewControllerType {
             .withUnretained(self)
             .bind { owner, value in
                 if (value) {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
                     MBProgressHUD.successShow("로그인 성공!", from: owner.view)
                     owner.presentHomeView()
                 } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
                     MBProgressHUD.errorShow("로그인 실패", from: owner.view)
                 }
             }.disposed(by: disposeBag)

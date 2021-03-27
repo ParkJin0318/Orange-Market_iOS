@@ -12,6 +12,7 @@ extension MBProgressHUD {
     static func loading(from fromView: UIView?) {
         guard let view = fromView else { return }
         
+        MBProgressHUD.hide(for: view, animated: true)
         let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
         progressHUD.mode = .indeterminate
         progressHUD.label.text = "로딩중"
@@ -20,6 +21,7 @@ extension MBProgressHUD {
     static func errorShow(_ message: String, from fromView: UIView?) {
         guard let view = fromView else { return }
         
+        MBProgressHUD.hide(for: view, animated: true)
         let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
         progressHUD.mode = .determinate
         progressHUD.label.text = message
@@ -29,6 +31,7 @@ extension MBProgressHUD {
     static func successShow(_ message: String, from fromView: UIView?) {
         guard let view = fromView else { return }
         
+        MBProgressHUD.hide(for: view, animated: true)
         let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
         progressHUD.mode = .customView
         progressHUD.customView = UIImageView(image: UIImage(systemName: "checkmark"))

@@ -44,7 +44,6 @@ class IdViewController: ASDKViewController<InputContainerNode> {
     
     private func presentPwView() {
         guard !node.inputField.text!.isEmpty else {
-            MBProgressHUD.hide(for: self.view, animated: true)
             MBProgressHUD.errorShow("빈칸 없이 입력해주세요", from: self.view)
             return
         }
@@ -67,8 +66,9 @@ class IdViewController: ASDKViewController<InputContainerNode> {
         
         geoCoder.reverseGeocodeLocation(findLocation, preferredLocale: local) { (place, error) in
             if let address: [CLPlacemark] = place {
-                    self.registerRequest.location =
-                        "\(address.last?.administrativeArea ?? "") \(address.last?.locality! ?? "") \(address.last?.subLocality! ?? "")"
+                self.registerRequest.city = address.last?.locality! ?? ""
+                self.registerRequest.location =
+                    "\(address.last?.administrativeArea ?? "") \(address.last?.locality! ?? "") \(address.last?.subLocality! ?? "")"
             }
         }
     }
