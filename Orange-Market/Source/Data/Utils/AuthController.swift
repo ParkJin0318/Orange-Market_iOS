@@ -12,11 +12,11 @@ class AuthController {
     let tokenKey = "token"
     let preferences = UserDefaults.standard
     
-    func login(token:String){
-        preferences.set(token, forKey: tokenKey)
+    func login(token:String) {
+        preferences.set("Bearer \(token)", forKey: tokenKey)
     }
     
-    func logout(){
+    func logout() {
         preferences.set(nil, forKey: tokenKey)
     }
     

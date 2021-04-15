@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class MyInfoContainerNode: ASDisplayNode {
+class MyInfoContainerNode: ASScrollNode {
     
     lazy var profileNode = ProfileNode()
     
@@ -18,9 +18,16 @@ class MyInfoContainerNode: ASDisplayNode {
         $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
+    lazy var salesNode = OrangeButtonNode()
+    lazy var buyNode = OrangeButtonNode()
+    lazy var attentionNode = OrangeButtonNode()
+    
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
+        self.automaticallyManagesContentSize = true
+        
+        self.scrollableDirections = [.up, .down]
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -33,12 +40,32 @@ class MyInfoContainerNode: ASDisplayNode {
     }
     
     private func myInfoLayoutSpec() -> ASLayoutSpec {
+        let salesLayout = self.salesLayoutSpec()
+        
         return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 10,
             justifyContent: .start,
             alignItems: .center,
-            children: [profileNode, profileOpenNode]
+            children: [profileNode, profileOpenNode, salesLayout]
+        )
+    }
+    
+    private func salesLayoutSpec() -> ASLayoutSpec {
+        
+        let salesLayout = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 0,
+            justifyContent: .spaceBetween,
+            alignItems: .center,
+            children: [salesNode, buyNode, attentionNode]
+        ).then {
+            $0.style.preferredSize = CGSize(width: width, height: 100)
+        }
+        
+        return ASInsetLayoutSpec(
+            insets: .init(top: 10, left: 40, bottom: 10, right: 40),
+            child: salesLayout
         )
     }
 }

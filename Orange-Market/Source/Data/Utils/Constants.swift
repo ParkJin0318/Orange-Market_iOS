@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-let HOST = "http://192.168.0.5:8080/"
+let HOST = "http://10.80.161.163:8080/"
 
 let JuaRegular: String = "Jua-Regular"
 

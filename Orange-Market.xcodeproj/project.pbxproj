@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		15BE8846B1B80DD27BB6EFB4 /* Pods_Orange_Market.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CC4D7381A761C52278576A3 /* Pods_Orange_Market.framework */; };
+		8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D041E7A2627FAFC00AF9E7F /* OrangeError.swift */; };
 		8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9D125FAF8F800514930 /* LoginViewController.swift */; };
 		8D0EA9D825FAF95000514930 /* LoginContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9D725FAF95000514930 /* LoginContainerNode.swift */; };
 		8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9DB25FB020100514930 /* LoginViewModel.swift */; };
@@ -25,6 +26,7 @@
 		8D337BE42608561B0042B1A0 /* ProductBottomNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D337BE32608561B0042B1A0 /* ProductBottomNode.swift */; };
 		8D3CEA8C26031D0500D9486A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3CEA8B26031D0500D9486A /* User.swift */; };
 		8D3CEA9026031D7900D9486A /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3CEA8F26031D7900D9486A /* ProductDetail.swift */; };
+		8D456E572627D630007DA760 /* OrangeButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D456E562627D630007DA760 /* OrangeButtonNode.swift */; };
 		8D475F9D2602D95500F2911F /* ProductDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475F9C2602D95500F2911F /* ProductDetailViewModel.swift */; };
 		8D475FA22602DB9500F2911F /* ProductDetailContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA12602DB9500F2911F /* ProductDetailContainerNode.swift */; };
 		8D475FA72602F84700F2911F /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA62602F84700F2911F /* UserRemote.swift */; };
@@ -42,6 +44,8 @@
 		8D6E3135260B1627004FCB1A /* InputContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E3134260B1627004FCB1A /* InputContainerNode.swift */; };
 		8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */; };
 		8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D96E5B326006F9F00A1292D /* ProductRequest.swift */; };
+		8D979EE62610670200E9DC32 /* ProductScrollNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D979EE52610670200E9DC32 /* ProductScrollNode.swift */; };
+		8DB670182612CC17006A3FD0 /* LocationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB670172612CC17006A3FD0 /* LocationRequest.swift */; };
 		8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */; };
 		8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */; };
 		8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EE25FAE56A00A1CA7E /* StartViewController.swift */; };
@@ -58,7 +62,6 @@
 		8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */; };
 		8DC8648525FEE6010081F52C /* AuthRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8648425FEE6010081F52C /* AuthRemote.swift */; };
 		8DC8648A25FEE6D20081F52C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8648925FEE6D20081F52C /* Response.swift */; };
-		8DC8648D25FEE7C10081F52C /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8648C25FEE7C10081F52C /* LoginData.swift */; };
 		8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649225FEEA440081F52C /* AuthRepository.swift */; };
 		8DC8649925FEEAD70081F52C /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */; };
 		8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */; };
@@ -87,6 +90,7 @@
 		2DC87B2BD796EBAA5B3F5A65 /* Pods-Orange-Market.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Orange-Market.debug.xcconfig"; path = "Target Support Files/Pods-Orange-Market/Pods-Orange-Market.debug.xcconfig"; sourceTree = "<group>"; };
 		5CC4D7381A761C52278576A3 /* Pods_Orange_Market.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Orange_Market.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8569ECC66D22DE2FB14ECDC9 /* Pods-Orange-Market.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Orange-Market.release.xcconfig"; path = "Target Support Files/Pods-Orange-Market/Pods-Orange-Market.release.xcconfig"; sourceTree = "<group>"; };
+		8D041E7A2627FAFC00AF9E7F /* OrangeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrangeError.swift; sourceTree = "<group>"; };
 		8D0EA9D125FAF8F800514930 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8D0EA9D725FAF95000514930 /* LoginContainerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginContainerNode.swift; sourceTree = "<group>"; };
 		8D0EA9DB25FB020100514930 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 		8D337BE32608561B0042B1A0 /* ProductBottomNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBottomNode.swift; sourceTree = "<group>"; };
 		8D3CEA8B26031D0500D9486A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8D3CEA8F26031D7900D9486A /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
+		8D456E562627D630007DA760 /* OrangeButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrangeButtonNode.swift; sourceTree = "<group>"; };
 		8D475F9C2602D95500F2911F /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
 		8D475FA12602DB9500F2911F /* ProductDetailContainerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailContainerNode.swift; sourceTree = "<group>"; };
 		8D475FA62602F84700F2911F /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
@@ -121,6 +126,8 @@
 		8D6E3134260B1627004FCB1A /* InputContainerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContainerNode.swift; sourceTree = "<group>"; };
 		8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Ex.swift"; sourceTree = "<group>"; };
 		8D96E5B326006F9F00A1292D /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
+		8D979EE52610670200E9DC32 /* ProductScrollNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScrollNode.swift; sourceTree = "<group>"; };
+		8DB670172612CC17006A3FD0 /* LocationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequest.swift; sourceTree = "<group>"; };
 		8DC1E0E725FAE56A00A1CA7E /* Orange-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Orange-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,7 +146,6 @@
 		8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		8DC8648425FEE6010081F52C /* AuthRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRemote.swift; sourceTree = "<group>"; };
 		8DC8648925FEE6D20081F52C /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		8DC8648C25FEE7C10081F52C /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
 		8DC8649225FEEA440081F52C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
 		8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MBProgressHUD+Ex.swift"; sourceTree = "<group>"; };
@@ -176,6 +182,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D041E792627FAEC00AF9E7F /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				8D041E7A2627FAFC00AF9E7F /* OrangeError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		8D0EA9CF25FAF8E600514930 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				8D475FA12602DB9500F2911F /* ProductDetailContainerNode.swift */,
+				8D979EE52610670200E9DC32 /* ProductScrollNode.swift */,
 				8D337BE0260853E70042B1A0 /* ProductContentNode.swift */,
 				8D337BE32608561B0042B1A0 /* ProductBottomNode.swift */,
 			);
@@ -273,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				8D64381226097A0900F7C5FE /* MyInfoContainerNode.swift */,
+				8D456E562627D630007DA760 /* OrangeButtonNode.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -426,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC8647425FEDDA10081F52C /* API */,
+				8D041E792627FAEC00AF9E7F /* Error */,
 				8DC8647925FEDE020081F52C /* Request */,
 				8DC8648825FEE6B20081F52C /* Response */,
 				8DC8648325FEE5F10081F52C /* Remote */,
@@ -450,6 +467,7 @@
 				8DC8647A25FEDE0D0081F52C /* LoginRequest.swift */,
 				8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */,
 				8D96E5B326006F9F00A1292D /* ProductRequest.swift */,
+				8DB670172612CC17006A3FD0 /* LocationRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -491,7 +509,6 @@
 			isa = PBXGroup;
 			children = (
 				8DC8648925FEE6D20081F52C /* Response.swift */,
-				8DC8648C25FEE7C10081F52C /* LoginData.swift */,
 				8DC864BC25FF05C70081F52C /* UserData.swift */,
 				8DC864DF25FF1AA70081F52C /* ProductData.swift */,
 			);
@@ -706,9 +723,9 @@
 				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
 				8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */,
 				8D337BE42608561B0042B1A0 /* ProductBottomNode.swift in Sources */,
+				8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */,
 				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
 				8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */,
-				8DC8648D25FEE7C10081F52C /* LoginData.swift in Sources */,
 				8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */,
 				8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */,
 				8DC8648A25FEE6D20081F52C /* Response.swift in Sources */,
@@ -723,6 +740,7 @@
 				8DC864A225FEF2CE0081F52C /* HomeViewController.swift in Sources */,
 				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
 				8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */,
+				8D979EE62610670200E9DC32 /* ProductScrollNode.swift in Sources */,
 				8D475FAB2602FC1300F2911F /* Product.swift in Sources */,
 				8D475F9D2602D95500F2911F /* ProductDetailViewModel.swift in Sources */,
 				8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */,
@@ -748,6 +766,7 @@
 				8D63150F260D76C100EB3540 /* RegisterViewModel.swift in Sources */,
 				8DC1E11E25FAE8B200A1CA7E /* UIView+Ex.swift in Sources */,
 				8D4FABEE2601FFEB00D8701A /* ProductDetailViewController.swift in Sources */,
+				8D456E572627D630007DA760 /* OrangeButtonNode.swift in Sources */,
 				8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */,
 				8DC864BD25FF05C70081F52C /* UserData.swift in Sources */,
 				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
@@ -759,6 +778,7 @@
 				8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */,
 				8D2F98A22600469500C8BE0C /* UploadRemote.swift in Sources */,
 				8D6E3131260B14B0004FCB1A /* IdViewController.swift in Sources */,
+				8DB670182612CC17006A3FD0 /* LocationRequest.swift in Sources */,
 				8D64381326097A0900F7C5FE /* MyInfoContainerNode.swift in Sources */,
 				8D0EA9D825FAF95000514930 /* LoginContainerNode.swift in Sources */,
 				8D337BDE260846330042B1A0 /* ProfileNode.swift in Sources */,

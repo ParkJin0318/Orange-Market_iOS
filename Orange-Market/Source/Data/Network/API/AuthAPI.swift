@@ -10,7 +10,6 @@ import Moya
 enum AuthAPI {
     case login(loginRequest: LoginRequest)
     case register(registerRequest: RegisterRequest)
-    case getUserProfile
 }
 
 extension AuthAPI: TargetType {
@@ -26,9 +25,6 @@ extension AuthAPI: TargetType {
                 
             case .register:
                 return "register"
-                
-            case .getUserProfile:
-                return "profile"
         }
     }
     
@@ -39,12 +35,8 @@ extension AuthAPI: TargetType {
                 
             case.register:
                 return .post
-                
-            case .getUserProfile:
-                return .get
         }
     }
-    
     
     var sampleData: Data {
         return Data()
@@ -57,9 +49,6 @@ extension AuthAPI: TargetType {
                 
             case let .register(registerRequest):
                 return .requestData(try! JSONEncoder().encode(registerRequest))
-                
-            case .getUserProfile:
-                return .requestPlain
         }
     }
     
@@ -68,8 +57,6 @@ extension AuthAPI: TargetType {
     }
         
     var headers: [String : String]? {
-        var headers = ["Content-Type": "application/json"]
-        headers["token"] = AuthController.getInstance().getToken()
-        return headers
+        return ["Content-Type": "application/json"]
     }
 }

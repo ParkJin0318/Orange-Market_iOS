@@ -112,6 +112,7 @@ extension ProductAddViewController: ViewControllerType {
         
         // output
         viewModel.output.isReloadData
+            .filter { $0 }
             .withUnretained(self)
             .bind { $0.0.node.collectionNode.reloadData() }
             .disposed(by: disposeBag)

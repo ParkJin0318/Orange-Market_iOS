@@ -13,14 +13,10 @@ class AuthRepositoryImpl: AuthRepository {
     private lazy var remote = AuthRemote()
     
     func login(loginRequest: LoginRequest) -> Single<String> {
-        return remote.login(loginRequest: loginRequest).map { $0.accessToken }
+        return remote.login(loginRequest: loginRequest).map { $0 }
     }
     
     func register(registerRequest: RegisterRequest) -> Completable {
-        return remote.register(registerRequest: registerRequest)
-    }
-    
-    func getUserProfile() -> Single<User> {
-        return remote.getUserProfile().map { $0.toModel() }
+        return remote.register(registerRequest: registerRequest).asCompletable()
     }
 }

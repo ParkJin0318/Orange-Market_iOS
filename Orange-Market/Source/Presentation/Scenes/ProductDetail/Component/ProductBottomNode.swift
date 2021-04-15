@@ -24,6 +24,7 @@ class ProductBottomNode: ASDisplayNode {
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
+        self.backgroundColor = .systemBackground
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

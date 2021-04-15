@@ -48,7 +48,7 @@ extension UploadAPI: TargetType {
             
     var headers: [String : String]? {
         var headers = ["Content-Type": "application/json"]
-        headers["token"] = AuthController.getInstance().getToken()
+        headers["Authorization"] = AuthController.getInstance().getToken()
         return headers
     }
 }

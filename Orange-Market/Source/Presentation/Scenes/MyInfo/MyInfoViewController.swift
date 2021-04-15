@@ -25,6 +25,7 @@ class MyInfoViewController: ASDKViewController<MyInfoContainerNode> {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bind()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +43,15 @@ extension MyInfoViewController: ViewControllerType {
             container.profileNode.profileImageNode.style.preferredSize = CGSize(width: 70, height: 70)
             container.profileNode.profileImageNode.cornerRadius = 70 / 2
             container.profileNode.viewNode.isHidden = true
+            
+            container.salesNode.iconNode.image = UIImage(named: "receipt")
+            container.salesNode.textNode.attributedText = "판매 내역".toAttributed(color: .label, ofSize: 12)
+            
+            container.buyNode.iconNode.image = UIImage(named: "basket")
+            container.buyNode.textNode.attributedText = "구매 내역".toAttributed(color: .label, ofSize: 12)
+            
+            container.attentionNode.iconNode.image = UIImage(named: "heart")
+            container.attentionNode.textNode.attributedText = "관심 목록".toAttributed(color: .label, ofSize: 12)
         }
     }
     

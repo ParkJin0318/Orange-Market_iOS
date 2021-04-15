@@ -15,7 +15,7 @@ class LoginViewController: ASDKViewController<LoginContainerNode> {
     lazy var disposeBag: DisposeBag = DisposeBag()
     lazy var viewModel: LoginViewModel = LoginViewModel()
     
-    var locationManager:CLLocationManager!
+    var locationManager: CLLocationManager!
 
     override init() {
         super.init(node: LoginContainerNode())

@@ -10,7 +10,6 @@ import Foundation
 struct User {
     let idx: Int
     let userId: String
-    let userPw: String
     let name: String
     let city: String
     let location: String

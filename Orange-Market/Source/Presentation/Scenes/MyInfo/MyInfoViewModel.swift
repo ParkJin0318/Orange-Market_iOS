@@ -24,10 +24,10 @@ class MyInfoViewModel: ViewModelType {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     
-    private lazy var authRepository: AuthRepository = AuthRepositoryImpl()
+    private lazy var userRepository: UserRepository = UserRepositoryImpl()
     
     init() {
-        authRepository.getUserProfile()
+        userRepository.getUserProfile()
             .subscribe { [weak self] user in
                 self?.output.userData.accept(user)
             } onFailure: { error in

@@ -10,7 +10,6 @@ import Foundation
 struct UserData: Codable {
     let idx: Int
     let userId: String
-    let userPw: String
     let name: String
     let city: String
     let location: String
@@ -23,7 +22,6 @@ extension UserData {
         return User(
             idx: self.idx,
             userId: self.userId,
-            userPw: self.userPw,
             name: self.name,
             city: self.city,
             location: self.location,

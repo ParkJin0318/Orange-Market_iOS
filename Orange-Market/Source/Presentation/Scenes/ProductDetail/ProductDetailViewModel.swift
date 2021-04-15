@@ -16,8 +16,12 @@ class ProductDetailViewModel: ViewModelType {
     
     struct Output {
         let productData = PublishRelay<ProductDetail>()
-        let isReloadData = PublishRelay<Bool>()
         var imageList = Array<String>()
+        
+        let isDeleteHideen = PublishRelay<Bool>()
+        let onReloadEvent = PublishRelay<Bool>()
+        let onDeleteEvent = PublishRelay<String>()
+        let onFailureEvent = PublishRelay<String>()
     }
     
     lazy var input: Input = Input()
@@ -25,16 +29,37 @@ class ProductDetailViewModel: ViewModelType {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     
+    private lazy var userRepository: UserRepository = UserRepositoryImpl()
     private lazy var prouductRepository: ProductRepository = ProductRepositoryImpl()
     
     func getProduct(idx: Int) {
-        prouductRepository.getProduct(idx: idx)
+        Single.zip(
+            userRepository.getUserProfile(),
+            prouductRepository.getProduct(idx: idx)
+        ).subscribe { [weak self] user, product in
+            
+            if (user.idx == product.userIdx) {
+                self?.output.isDeleteHideen.accept(false)
+            } else {
+                self?.output.isDeleteHideen.accept(true)
+            }
+            
+            self?.output.imageList = product.imageList
+            self?.output.productData.accept(product)
+            self?.output.onReloadEvent.accept(true)
+        } onFailure: { [weak self] error in
+            
+            self?.output.onFailureEvent.accept(error.toMessage())
+        }.disposed(by: disposeBag)
+    }
+    
+    func deleteProduct(idx: Int) {
+        prouductRepository.deleteProduct(idx: idx)
             .subscribe { [weak self] data in
-                self?.output.imageList = data.imageList
-                self?.output.productData.accept(data)
-                self?.output.isReloadData.accept(true)
-            } onFailure: { error in
-                print(error)
+                self?.output.onDeleteEvent.accept(data)
+            } onFailure: { [weak self] error in
+                
+                self?.output.onFailureEvent.accept(error.toMessage())
             }.disposed(by: disposeBag)
     }
 }

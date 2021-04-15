@@ -10,12 +10,11 @@ import RxSwift
 
 class ProductRepositoryImpl: ProductRepository {
     
-    private lazy var authRemote = AuthRemote()
     private lazy var userRemote = UserRemote()
     private lazy var productRemote = ProductRemote()
     
     func getAllProduct() -> Single<Array<Product>> {
-        return authRemote.getUserProfile().flatMap { profile in
+        return userRemote.getUserProfile().flatMap { profile in
             self.productRemote.getAllProduct(city: profile.city).map { productDataList in
                 productDataList.map { $0.toModel() }
             }
@@ -32,5 +31,13 @@ class ProductRepositoryImpl: ProductRepository {
     
     func saveProduct(productRequest: ProductRequest) -> Single<String> {
         return productRemote.saveProduct(productRequest: productRequest)
+    }
+    
+    func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<String> {
+        return productRemote.updateProduct(idx: idx, productRequest: productRequest)
+    }
+    
+    func deleteProduct(idx: Int) -> Single<String> {
+        return productRemote.deleteProduct(idx: idx)
     }
 }

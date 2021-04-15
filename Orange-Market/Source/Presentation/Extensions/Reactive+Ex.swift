@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 import Moya
 
 extension MoyaProvider: ReactiveCompatible {}
@@ -15,18 +16,32 @@ public extension Reactive where Base: MoyaProviderType {
     
     func request(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Single<Moya.Response> {
             return Single.create { [weak base] single in
+                
+                if(!NetworkReachabilityManager(host: HOST)!.isReachable){
+                    single(.failure(OrangeError.error(message: "서버 중지")))
+                }
+                
                 let cancellableToken = base?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
                     switch result {
-                    case let .success(response):
-                        single(.success(response))
-                    case let .failure(error):
-                        single(.failure(error))
+                        case let .success(response):
+                            single(.success(response))
+                            
+                        case let .failure(error):
+                            let errorBody = (try? error.response?.mapJSON() as? Dictionary<String, String>) ?? Dictionary()
+                            single(.failure(OrangeError.error(message: errorBody["message"] ?? "네트워크 오류")))
                     }
                 }
 
                 return Disposables.create {
                     cancellableToken?.cancel()
                 }
+            }.timeout(RxTimeInterval.seconds(5), scheduler: MainScheduler.asyncInstance)
+            .catch {
+                if let error = $0 as? RxError,
+                   case .timeout = error {
+                    return .error(OrangeError.error(message: "요청시간 만료"))
+                }
+                return .error($0)
             }
         }
 }

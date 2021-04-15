@@ -12,24 +12,19 @@ import RxSwift
 class AuthRemote {
     private lazy var provider: MoyaProvider<AuthAPI> = MoyaProvider()
     
-    func login(loginRequest: LoginRequest) -> Single<LoginData> {
+    func login(loginRequest: LoginRequest) -> Single<String> {
         return provider.rx.request(.login(loginRequest: loginRequest))
-            .map(Response<LoginData>.self, using: JSONDecoder())
-            .map { response -> LoginData in
+            .map(Response<String>.self, using: JSONDecoder())
+            .map { response -> String in
                 return response.data
             }
     }
     
-    func register(registerRequest: RegisterRequest) -> Completable {
+    func register(registerRequest: RegisterRequest) -> Single<String> {
         return provider.rx.request(.register(registerRequest: registerRequest))
-            .asCompletable()
-    }
-    
-    func getUserProfile() -> Single<UserData> {
-        return provider.rx.request(.getUserProfile)
-            .map(Response<UserData>.self, using: JSONDecoder())
-            .map { response -> UserData in
-                return response.data
+            .map(MessageResponse.self, using: JSONDecoder())
+            .map { response in
+                return response.message
             }
     }
 }

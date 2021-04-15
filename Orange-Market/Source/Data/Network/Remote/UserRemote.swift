@@ -18,4 +18,20 @@ class UserRemote {
                 return response.data
             }
     }
+    
+    func getUserProfile() -> Single<UserData> {
+        return provider.rx.request(.getUserProfile)
+            .map(Response<UserData>.self, using: JSONDecoder())
+            .map { response -> UserData in
+                return response.data
+            }
+    }
+    
+    func updateLocation(locationRequest: LocationRequest) -> Single<String> {
+        return provider.rx.request(.updateLocation(locationRequest: locationRequest))
+            .map(MessageResponse.self, using: JSONDecoder())
+            .map { response in
+                return response.message
+            }
+    }
 }

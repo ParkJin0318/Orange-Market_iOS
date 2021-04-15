@@ -9,6 +9,8 @@ import Moya
 
 enum UserAPI {
     case getUserInfo(idx: Int)
+    case getUserProfile
+    case updateLocation(locationRequest: LocationRequest)
 }
 
 extension UserAPI: TargetType {
@@ -20,6 +22,10 @@ extension UserAPI: TargetType {
         switch self {
             case let .getUserInfo(idx):
                 return "\(idx)"
+            case .getUserProfile:
+                return "profile"
+            case .updateLocation:
+                return "location"
         }
     }
     
@@ -27,6 +33,10 @@ extension UserAPI: TargetType {
         switch self {
             case .getUserInfo:
                 return .get
+            case .getUserProfile:
+                return .get
+            case .updateLocation:
+                return .post
         }
     }
     
@@ -39,6 +49,10 @@ extension UserAPI: TargetType {
         switch self {
             case .getUserInfo:
                 return .requestPlain
+            case .getUserProfile:
+                return .requestPlain
+            case let .updateLocation(locationRequest):
+                return .requestData(try! JSONEncoder().encode(locationRequest))
         }
     }
     
@@ -48,7 +62,7 @@ extension UserAPI: TargetType {
         
     var headers: [String : String]? {
         var headers = ["Content-Type": "application/json"]
-        headers["token"] = AuthController.getInstance().getToken()
+        headers["Authorization"] = AuthController.getInstance().getToken()
         return headers
     }
 }

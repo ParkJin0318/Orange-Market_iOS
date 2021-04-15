@@ -27,7 +27,7 @@ class ProductAddViewModel: ViewModelType {
     lazy var input: Input = Input()
     lazy var output: Output = Output()
     
-    private lazy var authRepository: AuthRepository = AuthRepositoryImpl()
+    private lazy var userRepository: UserRepository = UserRepositoryImpl()
     private lazy var productRepository: ProductRepository = ProductRepositoryImpl()
     private lazy var uploadRepository: UploadRepository = UploadRepositoryImpl()
     
@@ -40,17 +40,18 @@ class ProductAddViewModel: ViewModelType {
     func uploadImage(image: UIImage) {
         uploadRepository.uploadImage(image: image)
             .subscribe { [weak self] data in
+                print(data)
                 self?.output.imageList.append(data)
                 self?.output.isReloadData.accept(true)
             } onFailure: { error in
-                print(error.localizedDescription)
+                print(error)
             }.disposed(by: disposeBag)
     }
     
     func tapComplete() {
         input.tapComplete
             .withLatestFrom(Observable.combineLatest(
-                self.authRepository.getUserProfile().asObservable(),
+                self.userRepository.getUserProfile().asObservable(),
                 input.titleText,
                 input.priceText,
                 input.contentText
@@ -69,6 +70,7 @@ class ProductAddViewModel: ViewModelType {
     
     func saveProduct(user: User, title: String, price: String, content: String) -> Single<String> {
         return productRepository.saveProduct(productRequest: ProductRequest(
+            topic: "temp",
             title: title,
             contents: content,
             price: price,
