@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class ProductDetailContainerNode: ASDisplayNode {
+class ProductDetailViewContainer: ASDisplayNode {
     
     lazy var productScrollNode = ProductScrollNode().then {
         $0.style.preferredSize = CGSize(width: width, height: height - 80)

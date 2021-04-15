@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import MBProgressHUD
 
-class ProductAddViewController: ASDKViewController<ProductAddContainerNode> {
+class ProductAddViewController: ASDKViewController<ProductAddViewContainer> {
     
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = ProductAddViewModel()
@@ -28,7 +28,7 @@ class ProductAddViewController: ASDKViewController<ProductAddContainerNode> {
     }
     
     override init() {
-        super.init(node: ProductAddContainerNode())
+        super.init(node: ProductAddViewContainer())
         self.initNode()
     }
     

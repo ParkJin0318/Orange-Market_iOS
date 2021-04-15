@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class OrangeButtonNode: ASButtonNode {
+class IconButtonNode: ASButtonNode {
     
     lazy var iconNode = ASImageNode().then {
         $0.style.preferredSize = CGSize(width: 50, height: 50)

@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class InputContainerNode: ASDisplayNode {
+class InputViewContainer: ASDisplayNode {
     
     lazy var stepNode = ASTextNode().then {
         $0.style.flexShrink = 1

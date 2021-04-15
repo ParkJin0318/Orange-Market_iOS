@@ -10,12 +10,12 @@ import RxSwift
 import AsyncDisplayKit
 import RxTexture2
 
-class StartViewController: ASDKViewController<StartContainerNode> {
+class StartViewController: ASDKViewController<StartViewContainer> {
     
     lazy var disposeBag = DisposeBag()
     
     override init() {
-        super.init(node: StartContainerNode())
+        super.init(node: StartViewContainer())
         self.initNode()
     }
     

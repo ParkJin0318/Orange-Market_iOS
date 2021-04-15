@@ -24,7 +24,17 @@ class ProductScrollNode: ASScrollNode {
     
     lazy var profileNode = ProfileNode()
     
-    lazy var contentNode = ProductContentNode()
+    lazy var titleNode = ASTextNode().then {
+        $0.style.flexShrink = 1
+    }
+    
+    lazy var dateNode = ASTextNode().then {
+        $0.style.flexShrink = 1
+    }
+    
+    lazy var contentsNode = ASTextNode().then {
+        $0.style.flexShrink = 1
+    }
     
     override init() {
         super.init()
@@ -36,6 +46,7 @@ class ProductScrollNode: ASScrollNode {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let profileLayout = self.profileLayoutSpec()
+        let contentLayout = self.contentLayoutSpec()
         
         return ASStackLayoutSpec(
             direction: .vertical,
@@ -45,7 +56,7 @@ class ProductScrollNode: ASScrollNode {
             children: [
                 collectionNode,
                 profileLayout,
-                contentNode
+                contentLayout
             ]
         )
     }
@@ -55,6 +66,25 @@ class ProductScrollNode: ASScrollNode {
         return ASInsetLayoutSpec(
             insets: .init(top: 10, left: 20, bottom: 10, right: 20),
             child: profileNode
+        )
+    }
+    
+    private func contentLayoutSpec() -> ASLayoutSpec {
+        let contentLayout = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 10,
+            justifyContent: .start,
+            alignItems: .start,
+            children: [
+                titleNode,
+                dateNode,
+                contentsNode
+            ]
+        )
+        
+        return ASInsetLayoutSpec(
+            insets: .init(top: 10, left: 20, bottom: 0, right: 20),
+            child: contentLayout
         )
     }
 }

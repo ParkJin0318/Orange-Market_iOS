@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import MBProgressHUD
 
-class ProductDetailViewController: ASDKViewController<ProductDetailContainerNode> {
+class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer> {
     
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = ProductDetailViewModel()
@@ -23,7 +23,7 @@ class ProductDetailViewController: ASDKViewController<ProductDetailContainerNode
     }
     
     override init() {
-        super.init(node: ProductDetailContainerNode())
+        super.init(node: ProductDetailViewContainer())
         self.initNode()
     }
     
@@ -106,17 +106,17 @@ extension ProductDetailViewController: ViewControllerType {
             
             productData
                 .map { $0.title.toBoldAttributed(color: .black, ofSize: 18) }
-                .bind(to: node.contentNode.titleNode.rx.attributedText)
+                .bind(to: node.titleNode.rx.attributedText)
                 .disposed(by: disposeBag)
             
             productData
                 .map { $0.createAt.toAttributed(color: .gray, ofSize: 14) }
-                .bind(to: node.contentNode.dateNode.rx.attributedText)
+                .bind(to: node.dateNode.rx.attributedText)
                 .disposed(by: disposeBag)
             
             productData
                 .map { $0.contents.toAttributed(color: .black, ofSize: 14) }
-                .bind(to: node.contentNode.contentsNode.rx.attributedText)
+                .bind(to: node.contentsNode.rx.attributedText)
                 .disposed(by: disposeBag)
         }
         

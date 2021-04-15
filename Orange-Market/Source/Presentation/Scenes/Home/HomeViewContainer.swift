@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class HomeContainerNode: ASDisplayNode {
+class HomeViewContainer: ASDisplayNode {
     
     private lazy var flowLayout = UICollectionViewFlowLayout().then {
         $0.itemSize = CGSize(width: 60, height: 60)

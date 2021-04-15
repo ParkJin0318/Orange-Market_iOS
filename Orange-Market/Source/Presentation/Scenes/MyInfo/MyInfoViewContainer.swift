@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class MyInfoContainerNode: ASScrollNode {
+class MyInfoViewContainer: ASScrollNode {
     
     lazy var profileNode = ProfileNode()
     
@@ -18,9 +18,9 @@ class MyInfoContainerNode: ASScrollNode {
         $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
-    lazy var salesNode = OrangeButtonNode()
-    lazy var buyNode = OrangeButtonNode()
-    lazy var attentionNode = OrangeButtonNode()
+    lazy var salesNode = IconButtonNode()
+    lazy var buyNode = IconButtonNode()
+    lazy var attentionNode = IconButtonNode()
     
     override init() {
         super.init()

@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class StartContainerNode: ASDisplayNode {
+class StartViewContainer: ASDisplayNode {
     
     lazy var titleNode = ASTextNode().then {
         $0.style.flexShrink = 1
@@ -34,7 +34,7 @@ class StartContainerNode: ASDisplayNode {
     }
 }
 
-extension StartContainerNode {
+extension StartViewContainer {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let startLayout = self.startLayoutSpec()

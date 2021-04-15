@@ -8,13 +8,13 @@
 import AsyncDisplayKit
 import RxSwift
 
-class MyInfoViewController: ASDKViewController<MyInfoContainerNode> {
+class MyInfoViewController: ASDKViewController<MyInfoViewContainer> {
     
     lazy var viewModel = MyInfoViewModel()
     lazy var disposeBag = DisposeBag()
     
     override init() {
-        super.init(node: MyInfoContainerNode())
+        super.init(node: MyInfoViewContainer())
         self.initNode()
     }
     

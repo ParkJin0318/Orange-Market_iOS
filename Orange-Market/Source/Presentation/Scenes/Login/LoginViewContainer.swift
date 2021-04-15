@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class LoginContainerNode: ASDisplayNode {
+class LoginViewContainer: ASDisplayNode {
     
     lazy var imageNode = ASImageNode()
     

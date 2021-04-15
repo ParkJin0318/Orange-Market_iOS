@@ -9,7 +9,7 @@ import AsyncDisplayKit
 import RxSwift
 import MBProgressHUD
 
-class RegisterViewController: ASDKViewController<RegisterContainerNode> {
+class RegisterViewController: ASDKViewController<RegisterViewContainer> {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     lazy var viewModel: RegisterViewModel = RegisterViewModel()
@@ -23,7 +23,7 @@ class RegisterViewController: ASDKViewController<RegisterContainerNode> {
     }
     
     override init() {
-        super.init(node: RegisterContainerNode())
+        super.init(node: RegisterViewContainer())
         self.initNode()
     }
     

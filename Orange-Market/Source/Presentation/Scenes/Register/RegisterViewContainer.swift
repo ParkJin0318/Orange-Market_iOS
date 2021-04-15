@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class RegisterContainerNode: ASDisplayNode {
+class RegisterViewContainer: ASDisplayNode {
     
     lazy var profileImageNode = ASNetworkImageNode().then {
         $0.style.preferredSize = CGSize(width: 80, height: 80)

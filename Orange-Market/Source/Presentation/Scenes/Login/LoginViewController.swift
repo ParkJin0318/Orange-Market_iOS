@@ -10,7 +10,7 @@ import RxSwift
 import MBProgressHUD
 import CoreLocation
 
-class LoginViewController: ASDKViewController<LoginContainerNode> {
+class LoginViewController: ASDKViewController<LoginViewContainer> {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     lazy var viewModel: LoginViewModel = LoginViewModel()
@@ -18,7 +18,7 @@ class LoginViewController: ASDKViewController<LoginContainerNode> {
     var locationManager: CLLocationManager!
 
     override init() {
-        super.init(node: LoginContainerNode())
+        super.init(node: LoginViewContainer())
         self.initNode()
     }
     

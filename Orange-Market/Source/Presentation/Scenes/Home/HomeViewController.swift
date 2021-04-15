@@ -8,7 +8,7 @@
 import AsyncDisplayKit
 import RxSwift
 
-class HomeViewController: ASDKViewController<HomeContainerNode> {
+class HomeViewController: ASDKViewController<HomeViewContainer> {
     
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = HomeViewModel()
@@ -19,7 +19,7 @@ class HomeViewController: ASDKViewController<HomeContainerNode> {
     }
     
     override init() {
-        super.init(node: HomeContainerNode())
+        super.init(node: HomeViewContainer())
         self.initNode()
     }
     

@@ -1,5 +1,5 @@
 //
-//  NameViewController.swift
+//  PasswordViewController.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/03/25.
@@ -9,7 +9,7 @@ import AsyncDisplayKit
 import RxSwift
 import MBProgressHUD
 
-class NameViewController: ASDKViewController<InputContainerNode> {
+class PwViewController: ASDKViewController<InputViewContainer> {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     var registerRequest: RegisterRequest!
@@ -20,7 +20,7 @@ class NameViewController: ASDKViewController<InputContainerNode> {
     }
     
     override init() {
-        super.init(node: InputContainerNode())
+        super.init(node: InputViewContainer())
         self.initNode()
     }
     
@@ -38,28 +38,29 @@ class NameViewController: ASDKViewController<InputContainerNode> {
         self.setupNavigationBar()
     }
     
-    private func presentRegisterView() {
+    private func presentNameView() {
         guard !node.inputField.text!.isEmpty else {
             MBProgressHUD.errorShow("빈칸 없이 입력해주세요", from: self.view)
             return
         }
-        self.registerRequest.name = node.inputField.text
+        self.registerRequest.userPw = node.inputField.text
         
-        let vc = RegisterViewController()
+        let vc = NameViewController()
         vc.registerRequest = registerRequest
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-extension NameViewController: ViewControllerType {
-    
+extension PwViewController: ViewControllerType {
+
     func initNode() {
         self.node.do { container in
             container.backgroundColor = .systemBackground
             
-            container.stepNode.attributedText = "STEP 3 OF 3".toAttributed(color: .gray, ofSize: 16)
-            container.titleNode.attributedText = "이름".toBoldAttributed(color: .label, ofSize: 18)
-            container.inputField.placeholder = "이름 입력"
+            container.stepNode.attributedText = "STEP 2 OF 3".toAttributed(color: .gray, ofSize: 16)
+            container.titleNode.attributedText = "비밀번호".toBoldAttributed(color: .label, ofSize: 18)
+            container.inputField.placeholder = "비밀번호 입력"
+            container.inputField.isSecureTextEntry = true
         }
     }
     
@@ -67,7 +68,7 @@ extension NameViewController: ViewControllerType {
     
     func setupNavigationBar() {
         self.navigationItem.do {
-            $0.title = "이름"
+            $0.title = "비밀번호"
             $0.rightBarButtonItems = [
                 UIBarButtonItem(customView: nextButton)
             ]
@@ -78,7 +79,7 @@ extension NameViewController: ViewControllerType {
         // input
         nextButton
             .rx.tap
-            .bind(onNext: presentRegisterView)
+            .bind(onNext: presentNameView)
             .disposed(by: disposeBag)
     }
 }
