@@ -16,8 +16,9 @@ class HomeViewModel: ViewModelType {
     }
     
     struct Output {
-        var city = PublishRelay<String>()
+        let city = PublishRelay<String>()
         var productList = Array<Product>()
+        let onFailureEvent = PublishRelay<String>()
     }
     
     lazy var input: Input = Input()
@@ -35,8 +36,9 @@ class HomeViewModel: ViewModelType {
                 
                 self.output.productList = data
                 self.output.city.accept(data.first?.city ?? "Error")
-            } onFailure: { error in
-                print(error)
+            } onFailure: { [weak self] error in
+                
+                self?.output.onFailureEvent.accept(error.toMessage())
             }.disposed(by: disposeBag)
     }
 }

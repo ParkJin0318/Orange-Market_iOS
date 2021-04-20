@@ -15,6 +15,8 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> {
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = ProductAddViewModel()
     
+    var product: ProductDetail? = nil
+    
     let closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
         $0.setTitleColor(.label, for: .normal)
@@ -71,7 +73,12 @@ extension ProductAddViewController: ViewControllerType {
  
     func setupNavigationBar() {
         self.navigationItem.do {
-            $0.title = "중고거래 글쓰기"
+            if (product == nil) {
+                $0.title = "중고거래 글쓰기"
+            } else {
+                $0.title = "중고거래 글 수정하기"
+            }
+           
             $0.leftBarButtonItems = [
                 UIBarButtonItem(customView: closeButton)
             ]
@@ -82,16 +89,51 @@ extension ProductAddViewController: ViewControllerType {
     }
     
     func bind() {
+        let productData = Observable.just(product)
+            .filter { $0 != nil }
+            .share()
+        
+        productData
+            .bind(to: viewModel.input.product)
+            .disposed(by: disposeBag)
+        
+        productData.map { $0!.title }
+            .bind(to: node.titleField.rx.text.orEmpty)
+            .disposed(by: disposeBag)
+        
+        productData.map { $0!.price }
+            .bind(to: node.priceField.rx.text.orEmpty)
+            .disposed(by: disposeBag)
+        
+        productData.map { $0!.contents }
+            .bind(to: node.contentField.rx.text.orEmpty)
+            .disposed(by: disposeBag)
+        
+        productData.map { $0!.imageList }
+            .withUnretained(self)
+            .bind { $0.0.viewModel.output.imageList = $0.1 }
+            .disposed(by: disposeBag)
+        
         // input
-        closeButton.rx.tap
+        closeButton
+            .rx.tap
             .bind(onNext: popViewController)
             .disposed(by: disposeBag)
         
-        completeButton.rx.tap
-            .bind(to: viewModel.input.tapComplete)
-            .disposed(by: disposeBag)
-        
-        node.imagePickerNode.rx.tap
+        if (product ==  nil) {
+            completeButton
+                .rx.tap
+                .bind(to: viewModel.input.tapSave)
+                .disposed(by: disposeBag)
+        } else {
+            completeButton
+                .rx.tap
+                .bind(to: viewModel.input.tapUpdate)
+                .disposed(by: disposeBag)
+        }
+       
+        node.imagePickerNode
+            .rx.tap
             .bind(onNext: presentImagePicker)
             .disposed(by: disposeBag)
         
@@ -153,6 +195,27 @@ extension ProductAddViewController: ASCollectionDelegate {
             min: CGSize(width: 0, height: 0),
             max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         )
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        removeImage(index: indexPath.row)
+    }
+    
+    func removeImage(index: Int) {
+        let actions: [UIAlertController.AlertAction] = [
+            .action(title: "삭제", style: .destructive),
+            .action(title: "아니요")
+        ]
+        
+        UIAlertController
+            .present(in: self, title: "사진 삭제", message: "사진을 삭제하시겠습니까?", style: .alert, actions: actions)
+            .withUnretained(self)
+            .subscribe { owner, value in
+                if (value == 0) {
+                    owner.viewModel.output.imageList.remove(at: index)
+                    owner.node.collectionNode.reloadData()
+                }
+            }.disposed(by: disposeBag)
     }
 }
 

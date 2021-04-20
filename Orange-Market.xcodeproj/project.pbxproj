@@ -83,6 +83,7 @@
 		8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864EC25FF201E0081F52C /* ProductCell.swift */; };
 		8DCA58C9260C5A7E00A775B0 /* PwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA58C8260C5A7E00A775B0 /* PwViewController.swift */; };
 		8DCA58CD260C5CCE00A775B0 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */; };
+		8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -166,6 +167,7 @@
 		8DC864EC25FF201E0081F52C /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		8DCA58C8260C5A7E00A775B0 /* PwViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwViewController.swift; sourceTree = "<group>"; };
 		8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
+		8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Ex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +365,7 @@
 				8DC1E11D25FAE8B200A1CA7E /* UIView+Ex.swift */,
 				8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */,
 				8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */,
+				8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				8DC864B325FEFA380081F52C /* CityViewController.swift in Sources */,
 				8DC1E12925FAEA2100A1CA7E /* StartViewContainer.swift in Sources */,
 				8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */,
+				8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */,
 				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
 				8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */,
 				8D337BE42608561B0042B1A0 /* ProductBottomNode.swift in Sources */,

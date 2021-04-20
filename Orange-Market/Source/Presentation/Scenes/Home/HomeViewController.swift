@@ -43,6 +43,17 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
             $0.hidesBottomBarWhenPushed = true
         }, animated: true)
     }
+    
+    public func moveToStart(){
+        AuthController.getInstance().logout()
+        DispatchQueue.main.async {
+            let vc = ASNavigationController(rootViewController: StartViewController()).then {
+                $0.modalPresentationStyle = .fullScreen
+                $0.modalTransitionStyle = .crossDissolve
+            }
+            self.navigationController?.present(vc, animated: true)
+        }
+    }
 }
 
 extension HomeViewController: ViewControllerType {
@@ -78,6 +89,12 @@ extension HomeViewController: ViewControllerType {
                 owner.navigationController?.navigationBar.topItem?.title = value
                 owner.node.collectionNode.reloadData()
             }).disposed(by: disposeBag)
+        
+        viewModel.output.onFailureEvent
+            .withUnretained(self)
+            .bind { owner, value in
+                owner.moveToStart()
+            }.disposed(by: disposeBag)
     }
 }
 

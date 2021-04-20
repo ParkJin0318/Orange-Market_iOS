@@ -22,6 +22,11 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
         $0.tintColor = .label
     }
     
+    private lazy var editButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "doc.badge.ellipsis"), for: .normal)
+        $0.tintColor = .label
+    }
+    
     override init() {
         super.init(node: ProductDetailViewContainer())
         self.initNode()
@@ -54,6 +59,15 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     private func deleteProduct() {
         viewModel.deleteProduct(idx: idx)
     }
+    
+    var product: ProductDetail? = nil
+    
+    private func moveToEdit() {
+        let vc = ProductAddViewController().then {
+            $0.product = self.product
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension ProductDetailViewController: ViewControllerType {
@@ -75,7 +89,8 @@ extension ProductDetailViewController: ViewControllerType {
     func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .label
         self.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(customView: removeButton)
+            UIBarButtonItem(customView: removeButton),
+            UIBarButtonItem(customView: editButton)
         ]
     }
     
@@ -84,41 +99,48 @@ extension ProductDetailViewController: ViewControllerType {
         removeButton.rx.tap
             .bind(onNext: deleteProduct)
             .disposed(by: disposeBag)
+        
+        editButton.rx.tap
+            .bind(onNext: moveToEdit)
+            .disposed(by: disposeBag)
             
         // output
         let productData = viewModel.output.productData.share()
         
-        node.productScrollNode.do { node in
-            productData
-                .map { $0.profileImage?.toUrl() }
-                .bind(to: node.profileNode.profileImageNode.rx.url)
-                .disposed(by: disposeBag)
-            
-            productData
-                .map { $0.name.toBoldAttributed(color: .black, ofSize: 14) }
-                .bind(to: node.profileNode.nameNode.rx.attributedText)
-                .disposed(by: disposeBag)
-            
-            productData
-                .map { $0.location.toAttributed(color: .black, ofSize: 12) }
-                .bind(to: node.profileNode.locationNode.rx.attributedText)
-                .disposed(by: disposeBag)
-            
-            productData
-                .map { $0.title.toBoldAttributed(color: .black, ofSize: 18) }
-                .bind(to: node.titleNode.rx.attributedText)
-                .disposed(by: disposeBag)
-            
-            productData
-                .map { $0.createAt.toAttributed(color: .gray, ofSize: 14) }
-                .bind(to: node.dateNode.rx.attributedText)
-                .disposed(by: disposeBag)
-            
-            productData
-                .map { $0.contents.toAttributed(color: .black, ofSize: 14) }
-                .bind(to: node.contentsNode.rx.attributedText)
-                .disposed(by: disposeBag)
-        }
+        productData
+            .withUnretained(self)
+            .bind { $0.0.product = $0.1 }
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.profileImage?.toUrl() }
+            .bind(to: node.productScrollNode.profileNode.profileImageNode.rx.url)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.name.toBoldAttributed(color: .black, ofSize: 14) }
+            .bind(to: node.productScrollNode.profileNode.nameNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.location.toAttributed(color: .black, ofSize: 12) }
+            .bind(to: node.productScrollNode.profileNode.locationNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.title.toBoldAttributed(color: .black, ofSize: 18) }
+            .bind(to: node.productScrollNode.titleNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.createAt.toAttributed(color: .gray, ofSize: 14) }
+            .bind(to: node.productScrollNode.dateNode.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.contents.toAttributed(color: .black, ofSize: 14) }
+            .bind(to: node.productScrollNode.contentsNode.rx.attributedText)
+            .disposed(by: disposeBag)
         
         productData
             .map { "\($0.price)원".toAttributed(color: .black, ofSize: 16) }
@@ -146,6 +168,10 @@ extension ProductDetailViewController: ViewControllerType {
         
         viewModel.output.isDeleteHideen
             .bind(to: removeButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isDeleteHideen
+            .bind(to: editButton.rx.isHidden)
             .disposed(by: disposeBag)
     }
 }
