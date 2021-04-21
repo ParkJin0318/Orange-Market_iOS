@@ -44,6 +44,14 @@ class ProductRemote {
             }
     }
     
+    func updateSold(idx: Int) -> Single<String> {
+        return provider.rx.request(.updateSold(idx: idx))
+            .map(MessageResponse.self, using: JSONDecoder())
+            .map { response in
+                return response.message
+            }
+    }
+    
     func deleteProduct(idx: Int) -> Single<String> {
         return provider.rx.request(.deleteProduct(idx: idx))
             .map(MessageResponse.self, using: JSONDecoder())

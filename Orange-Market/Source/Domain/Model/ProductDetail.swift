@@ -14,6 +14,7 @@ struct ProductDetail {
     let contents: String
     let price: String
     let createAt: String
+    let isSold: Bool
     let userIdx: Int
     let city: String
     let imageList: Array<String>

@@ -17,8 +17,9 @@ class ProductDetailViewModel: ViewModelType {
     struct Output {
         let productData = PublishRelay<ProductDetail>()
         var imageList = Array<String>()
+        var product: ProductDetail? = nil
         
-        let isDeleteHideen = PublishRelay<Bool>()
+        let isMyProduct = PublishRelay<Bool>()
         let onReloadEvent = PublishRelay<Bool>()
         let onDeleteEvent = PublishRelay<String>()
         let onFailureEvent = PublishRelay<String>()
@@ -38,19 +39,29 @@ class ProductDetailViewModel: ViewModelType {
             prouductRepository.getProduct(idx: idx)
         ).subscribe { [weak self] user, product in
             
-            if (user.idx == product.userIdx) {
-                self?.output.isDeleteHideen.accept(false)
-            } else {
-                self?.output.isDeleteHideen.accept(true)
-            }
-            
             self?.output.imageList = product.imageList
+            self?.output.isMyProduct.accept(user.idx != product.userIdx)
+            
             self?.output.productData.accept(product)
+            self?.output.product = product
+            
             self?.output.onReloadEvent.accept(true)
         } onFailure: { [weak self] error in
             
             self?.output.onFailureEvent.accept(error.toMessage())
         }.disposed(by: disposeBag)
+    }
+    
+    func updateSold(idx: Int) {
+        prouductRepository.updateSold(idx: idx)
+            .subscribe { [weak self] data in
+                
+                self?.output.onFailureEvent.accept(data)
+                self?.getProduct(idx: idx)
+            } onFailure: { [weak self] error in
+                
+                self?.output.onFailureEvent.accept(error.toMessage())
+            }.disposed(by: disposeBag)
     }
     
     func deleteProduct(idx: Int) {

@@ -13,5 +13,6 @@ protocol ProductRepository {
     func getProduct(idx: Int) -> Single<ProductDetail>
     func saveProduct(productRequest: ProductRequest) -> Single<String>
     func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<String>
+    func updateSold(idx: Int) -> Single<String>
     func deleteProduct(idx: Int) -> Single<String>
 }

@@ -28,6 +28,7 @@ extension ProductData {
             title: self.title,
             price: self.price,
             createAt: self.createAt,
+            isSold: self.isSold,
             userIdx: self.userIdx,
             city: self.city,
             image: self.imageList.first ?? ""
@@ -42,6 +43,7 @@ extension ProductData {
             contents: self.contents,
             price: self.price,
             createAt: self.createAt,
+            isSold: self.isSold,
             userIdx: self.userIdx,
             city: self.city,
             imageList: self.imageList,

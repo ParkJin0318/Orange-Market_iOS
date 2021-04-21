@@ -17,13 +17,10 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     
     var idx: Int = -1
     
-    private lazy var removeButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "trash"), for: .normal)
-        $0.tintColor = .label
-    }
+    var state: String? = nil
     
-    private lazy var editButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "doc.badge.ellipsis"), for: .normal)
+    private lazy var moreButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         $0.tintColor = .label
     }
     
@@ -56,15 +53,9 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func deleteProduct() {
-        viewModel.deleteProduct(idx: idx)
-    }
-    
-    var product: ProductDetail? = nil
-    
     private func moveToEdit() {
         let vc = ProductAddViewController().then {
-            $0.product = self.product
+            $0.product = self.viewModel.output.product
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -89,28 +80,44 @@ extension ProductDetailViewController: ViewControllerType {
     func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .label
         self.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(customView: removeButton),
-            UIBarButtonItem(customView: editButton)
+            UIBarButtonItem(customView: moreButton)
         ]
+    }
+    
+    func moreAlret() {
+        let actions: [UIAlertController.AlertAction] = [
+            .action(title: "\(state ?? "")로 변경"),
+            .action(title: "게시글 수정"),
+            .action(title: "삭제", style: .destructive),
+            .action(title: "취소", style: .cancel)
+        ]
+        
+        UIAlertController
+            .present(in: self, title: "게시글", message: "게시글 상태 변경", style: .actionSheet, actions: actions)
+            .withUnretained(self)
+            .subscribe { owner, value in
+                switch (value) {
+                    case 0:
+                        owner.viewModel.updateSold(idx: owner.idx)
+                    case 1:
+                        owner.moveToEdit()
+                    case 2:
+                        owner.viewModel.deleteProduct(idx: owner.idx)
+                    default:
+                        break
+                }
+            }.disposed(by: disposeBag)
     }
     
     func bind() {
         // input
-        removeButton.rx.tap
-            .bind(onNext: deleteProduct)
-            .disposed(by: disposeBag)
-        
-        editButton.rx.tap
-            .bind(onNext: moveToEdit)
+        moreButton.rx.tap
+            .withUnretained(self)
+            .bind { $0.0.moreAlret() }
             .disposed(by: disposeBag)
             
         // output
         let productData = viewModel.output.productData.share()
-        
-        productData
-            .withUnretained(self)
-            .bind { $0.0.product = $0.1 }
-            .disposed(by: disposeBag)
         
         productData
             .map { $0.profileImage?.toUrl() }
@@ -147,6 +154,17 @@ extension ProductDetailViewController: ViewControllerType {
             .bind(to: node.productBottomNode.priceNode.rx.attributedText)
             .disposed(by: disposeBag)
         
+        productData
+            .map { $0.isSold ? "판매중" : "판매완료" }
+            .withUnretained(self)
+            .bind { $0.0.state = $0.1 }
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.isSold ? UIColor.lightGray : UIColor.primaryColor() }
+            .bind(to: node.productBottomNode.buyNode.rx.backgroundColor)
+            .disposed(by: disposeBag)
+        
         viewModel.output.onReloadEvent
             .filter { $0 }
             .withUnretained(self)
@@ -166,12 +184,8 @@ extension ProductDetailViewController: ViewControllerType {
                 owner.popViewController()
             }.disposed(by: disposeBag)
         
-        viewModel.output.isDeleteHideen
-            .bind(to: removeButton.rx.isHidden)
-            .disposed(by: disposeBag)
-        
-        viewModel.output.isDeleteHideen
-            .bind(to: editButton.rx.isHidden)
+        viewModel.output.isMyProduct
+            .bind(to: moreButton.rx.isHidden)
             .disposed(by: disposeBag)
     }
 }

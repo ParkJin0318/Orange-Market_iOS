@@ -12,6 +12,7 @@ struct Product {
     let title: String
     let price: String
     let createAt: String
+    let isSold: Bool
     let userIdx: Int
     let city: String
     let image: String

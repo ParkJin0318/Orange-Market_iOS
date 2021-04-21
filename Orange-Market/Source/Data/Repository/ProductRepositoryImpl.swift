@@ -37,6 +37,10 @@ class ProductRepositoryImpl: ProductRepository {
         return productRemote.updateProduct(idx: idx, productRequest: productRequest)
     }
     
+    func updateSold(idx: Int) -> Single<String> {
+        return productRemote.updateSold(idx: idx)
+    }
+    
     func deleteProduct(idx: Int) -> Single<String> {
         return productRemote.deleteProduct(idx: idx)
     }
