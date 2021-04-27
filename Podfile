@@ -11,6 +11,7 @@ target 'Orange-Market' do
   pod 'BEMCheckBox'
   pod 'RxTexture2', '~> 1.3.0'
   pod 'MBProgressHUD', '~> 1.2.0'
+  pod 'RealmSwift'
 
   # Pods for Orange-Market
 

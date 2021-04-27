@@ -17,6 +17,9 @@
 		8D148FC22636B9AA00406E86 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */; };
 		8D148FC52636C16400406E86 /* CategoryViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FC42636C16400406E86 /* CategoryViewContainer.swift */; };
 		8D148FDF2636D75100406E86 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FDE2636D75100406E86 /* CategoryCell.swift */; };
+		8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E862638159B0033CDA2 /* CategoryEntity.swift */; };
+		8D279E8B26381F810033CDA2 /* CategoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8A26381F810033CDA2 /* CategoryCache.swift */; };
+		8D279E8D26381FA10033CDA2 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8C26381FA10033CDA2 /* AppDatabase.swift */; };
 		8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F98922600285400C8BE0C /* ProductAddViewController.swift */; };
 		8D2F989926002BFF00C8BE0C /* ProductAddViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F989826002BFF00C8BE0C /* ProductAddViewContainer.swift */; };
 		8D2F989C260042CB00C8BE0C /* ProductAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F989B260042CB00C8BE0C /* ProductAddViewModel.swift */; };
@@ -106,6 +109,9 @@
 		8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		8D148FC42636C16400406E86 /* CategoryViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewContainer.swift; sourceTree = "<group>"; };
 		8D148FDE2636D75100406E86 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		8D279E862638159B0033CDA2 /* CategoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEntity.swift; sourceTree = "<group>"; };
+		8D279E8A26381F810033CDA2 /* CategoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCache.swift; path = "Orange-Market/Source/Data/Database/CategoryCache.swift"; sourceTree = SOURCE_ROOT; };
+		8D279E8C26381FA10033CDA2 /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		8D2F98922600285400C8BE0C /* ProductAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddViewController.swift; sourceTree = "<group>"; };
 		8D2F989826002BFF00C8BE0C /* ProductAddViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddViewContainer.swift; sourceTree = "<group>"; };
 		8D2F989B260042CB00C8BE0C /* ProductAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddViewModel.swift; sourceTree = "<group>"; };
@@ -229,6 +235,32 @@
 				8D148FDE2636D75100406E86 /* CategoryCell.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		8D279E85263815900033CDA2 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				8D279E8926381F6C0033CDA2 /* Cache */,
+				8D279E8826381F630033CDA2 /* Entity */,
+				8D279E8C26381FA10033CDA2 /* AppDatabase.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		8D279E8826381F630033CDA2 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				8D279E862638159B0033CDA2 /* CategoryEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		8D279E8926381F6C0033CDA2 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				8D279E8A26381F810033CDA2 /* CategoryCache.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		8D2F98912600282400C8BE0C /* ProductAdd */ = {
@@ -479,6 +511,7 @@
 		8DC8648125FEE5B10081F52C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				8D279E85263815900033CDA2 /* Database */,
 				8DC8649725FEEAB60081F52C /* Repository */,
 				8DC8647325FEDD870081F52C /* Network */,
 				8DC1E12F25FAEC8500A1CA7E /* Utils */,
@@ -723,14 +756,17 @@
 				8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */,
 				8D337BE42608561B0042B1A0 /* ProductBottomNode.swift in Sources */,
 				8D148FC22636B9AA00406E86 /* CategoryViewModel.swift in Sources */,
+				8D279E8D26381FA10033CDA2 /* AppDatabase.swift in Sources */,
 				8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */,
 				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
 				8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */,
 				8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */,
+				8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */,
 				8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */,
 				8DC8648A25FEE6D20081F52C /* Response.swift in Sources */,
 				8DC864C025FF06AC0081F52C /* UserRepositoryImpl.swift in Sources */,
 				8DC864E325FF1BF50081F52C /* ProductRepository.swift in Sources */,
+				8D279E8B26381F810033CDA2 /* CategoryCache.swift in Sources */,
 				8D2F989F2600437800C8BE0C /* UploadAPI.swift in Sources */,
 				8D148FDF2636D75100406E86 /* CategoryCell.swift in Sources */,
 				8DC864B725FF04DD0081F52C /* UserAPI.swift in Sources */,
