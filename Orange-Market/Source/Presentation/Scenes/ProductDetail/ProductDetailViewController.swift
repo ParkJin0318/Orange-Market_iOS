@@ -17,7 +17,7 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     
     var idx: Int = -1
     
-    var state: String? = nil
+    var soldMessage: String? = nil
     
     private lazy var moreButton = UIButton().then {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
@@ -71,7 +71,6 @@ extension ProductDetailViewController: ViewControllerType {
                 $0.collectionNode.delegate = self
                 $0.collectionNode.dataSource = self
             }
-            container.productBottomNode.buyNode.setTitle("구매하기", with: .none, with: .white, for: .normal)
         }
     }
     
@@ -86,7 +85,7 @@ extension ProductDetailViewController: ViewControllerType {
     
     func moreAlret() {
         let actions: [UIAlertController.AlertAction] = [
-            .action(title: "\(state ?? "")로 변경"),
+            .action(title: "\(soldMessage ?? "")로 변경"),
             .action(title: "게시글 수정"),
             .action(title: "삭제", style: .destructive),
             .action(title: "취소", style: .cancel)
@@ -157,7 +156,13 @@ extension ProductDetailViewController: ViewControllerType {
         productData
             .map { $0.isSold ? "판매중" : "판매완료" }
             .withUnretained(self)
-            .bind { $0.0.state = $0.1 }
+            .bind { $0.0.soldMessage = $0.1 }
+            .disposed(by: disposeBag)
+        
+        productData
+            .map { $0.isSold ? "판매완료" : "구매하기" }
+            .withUnretained(self)
+            .bind { $0.0.node.productBottomNode.buyNode.setAttributedTitle($0.1.toAttributed(color: .systemBackground, ofSize: 16), for: .normal) }
             .disposed(by: disposeBag)
         
         productData

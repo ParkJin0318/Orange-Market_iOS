@@ -9,7 +9,7 @@ import Foundation
 
 struct ProductDetail {
     let idx: Int
-    let topic: String
+    let categoryIdx: Int
     let title: String
     let contents: String
     let price: String
@@ -21,4 +21,11 @@ struct ProductDetail {
     let name: String
     let location: String
     let profileImage: String?
+}
+
+extension ProductDetail {
+    
+    func getIsSold() -> Int {
+        return isSold ? 1 : 0
+    }
 }

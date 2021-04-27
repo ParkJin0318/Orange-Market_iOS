@@ -28,6 +28,14 @@ class ProductRemote {
             }
     }
     
+    func getAllCategory() -> Single<Array<CategoryData>> {
+        return provider.rx.request(.getAllCategory)
+            .map(Response<Array<CategoryData>>.self, using: JSONDecoder())
+            .map { response -> Array<CategoryData> in
+                return response.data
+            }
+    }
+    
     func saveProduct(productRequest: ProductRequest) -> Single<String> {
         return provider.rx.request(.saveProduct(productRequest: productRequest))
             .map(MessageResponse.self, using: JSONDecoder())

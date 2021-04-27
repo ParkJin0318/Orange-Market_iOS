@@ -10,6 +10,7 @@ import Moya
 enum ProductAPI {
     case getAllProduct(city: String)
     case getProduct(idx: Int)
+    case getAllCategory
     case saveProduct(productRequest: ProductRequest)
     case updateProduct(idx: Int, productRequest: ProductRequest)
     case updateSold(idx: Int)
@@ -28,6 +29,8 @@ extension ProductAPI: TargetType {
                 return ""
             case let .getProduct(idx):
                 return "\(idx)"
+            case .getAllCategory:
+                return "category"
             case .saveProduct:
                 return ""
             case let .updateProduct(idx, _):
@@ -44,6 +47,8 @@ extension ProductAPI: TargetType {
             case .getAllProduct:
                 return .get
             case .getProduct:
+                return .get
+            case .getAllCategory:
                 return .get
             case .saveProduct:
                 return .post
@@ -67,6 +72,9 @@ extension ProductAPI: TargetType {
                 return .requestParameters(parameters: ["city": city], encoding: URLEncoding.queryString)
                 
             case .getProduct:
+                return .requestPlain
+                
+            case .getAllCategory:
                 return .requestPlain
                 
             case let .saveProduct(productRequest):

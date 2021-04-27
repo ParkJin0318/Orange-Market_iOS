@@ -8,7 +8,7 @@
 import Foundation
 
 struct ProductRequest: Codable {
-    var topic: String
+    var categoryIdx: Int
     var title: String
     var contents: String
     var price: String
@@ -17,9 +17,9 @@ struct ProductRequest: Codable {
     var city: String
     var imageList: Array<String>
     
-    init(topic: String, title: String, contents: String, price: String,
+    init(categoryIdx: Int, title: String, contents: String, price: String,
          isSold: Int, userIdx: Int, city: String, imageList: Array<String>) {
-        self.topic = topic
+        self.categoryIdx = categoryIdx
         self.title = title
         self.contents = contents
         self.price = price

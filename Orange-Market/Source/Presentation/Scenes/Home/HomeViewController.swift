@@ -18,6 +18,11 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
         $0.tintColor = .label
     }
     
+    private lazy var categoryButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
+        $0.tintColor = .label
+    }
+    
     override init() {
         super.init(node: HomeViewContainer())
         self.initNode()
@@ -40,6 +45,12 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     
     private func presentProductAddView() {
         self.navigationController?.pushViewController(ProductAddViewController().then {
+            $0.hidesBottomBarWhenPushed = true
+        }, animated: true)
+    }
+    
+    private func presentCategoryView() {
+        self.navigationController?.pushViewController(CategoryViewController().then {
             $0.hidesBottomBarWhenPushed = true
         }, animated: true)
     }
@@ -72,7 +83,8 @@ extension HomeViewController: ViewControllerType {
     
     func setupNavigationBar() {
         self.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(customView: writeButton)
+            UIBarButtonItem(customView: writeButton),
+            UIBarButtonItem(customView: categoryButton)
         ]
     }
     
@@ -80,6 +92,10 @@ extension HomeViewController: ViewControllerType {
         // input
         writeButton.rx.tap
             .bind(onNext: presentProductAddView)
+            .disposed(by: disposeBag)
+        
+        categoryButton.rx.tap
+            .bind(onNext: presentCategoryView)
             .disposed(by: disposeBag)
         
         // output
@@ -132,6 +148,10 @@ extension HomeViewController: ASCollectionDataSource {
             let item = self?.viewModel.output.productList[indexPath.row]
             let cell = ProductCell()
             cell.setupNode(product: item!)
+            
+            if (item?.isSold == true) {
+                cell.alpha = 0.5
+            }
             return cell
         }
     }

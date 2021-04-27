@@ -87,7 +87,7 @@ class ProductAddViewModel: ViewModelType {
     
     func saveProduct(user: User, title: String, price: String, content: String) -> Single<String> {
         return productRepository.saveProduct(productRequest: ProductRequest(
-            topic: "temp",
+            categoryIdx: 1,
             title: title,
             contents: content,
             price: price,
@@ -100,11 +100,11 @@ class ProductAddViewModel: ViewModelType {
     
     func updateProduct(product: ProductDetail, title: String, price: String, content: String) -> Single<String> {
         return productRepository.updateProduct(idx: product.idx, productRequest: ProductRequest(
-            topic: "temp",
+            categoryIdx: 1,
             title: title,
             contents: content,
             price: price,
-            isSold: 0,
+            isSold: product.getIsSold(),
             userIdx: product.userIdx,
             city: product.city,
             imageList: output.imageList

@@ -34,7 +34,7 @@ class HomeViewModel: ViewModelType {
             .subscribe { [weak self] data in
                 guard let self = self else { return }
                 
-                self.output.productList = data
+                self.output.productList = data.sorted(by: { $0.idx > $1.idx })
                 self.output.city.accept(data.first?.city ?? "Error")
             } onFailure: { [weak self] error in
                 

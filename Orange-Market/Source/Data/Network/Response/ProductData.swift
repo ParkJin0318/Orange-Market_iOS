@@ -9,7 +9,7 @@ import Foundation
 
 struct ProductData: Codable {
     let idx: Int
-    let topic: String
+    let categoryIdx: Int
     let title: String
     let contents: String
     let price: String
@@ -25,6 +25,7 @@ extension ProductData {
     func toModel() -> Product {
         return Product(
             idx: self.idx,
+            categoryIdx: self.categoryIdx,
             title: self.title,
             price: self.price,
             createAt: self.createAt,
@@ -38,7 +39,7 @@ extension ProductData {
     func toDetailModel(user: UserData) -> ProductDetail {
         return ProductDetail(
             idx: self.idx,
-            topic: self.topic,
+            categoryIdx: self.categoryIdx,
             title: self.title,
             contents: self.contents,
             price: self.price,

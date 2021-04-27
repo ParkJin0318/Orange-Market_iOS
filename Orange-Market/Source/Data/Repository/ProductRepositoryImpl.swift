@@ -29,6 +29,12 @@ class ProductRepositoryImpl: ProductRepository {
         }
     }
     
+    func getAllCategory() -> Single<Array<Category>> {
+        return productRemote.getAllCategory().map {
+            $0.map { $0.toModel() }
+        }
+    }
+    
     func saveProduct(productRequest: ProductRequest) -> Single<String> {
         return productRemote.saveProduct(productRequest: productRequest)
     }

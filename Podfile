@@ -8,6 +8,7 @@ target 'Orange-Market' do
   pod 'Alamofire', '~> 5.4.1'
   pod 'Moya', '~> 14.0'
   pod 'Then'
+  pod 'BEMCheckBox'
   pod 'RxTexture2', '~> 1.3.0'
   pod 'MBProgressHUD', '~> 1.2.0'
 

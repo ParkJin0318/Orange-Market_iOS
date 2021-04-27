@@ -31,9 +31,9 @@ class ProductCell: ASCellNode {
     }
     
     func setupNode(product: Product) {
-        self.titleNode.attributedText = product.title.toAttributed(color: .black, ofSize: 17)
+        self.titleNode.attributedText = product.title.toAttributed(color: .label, ofSize: 17)
         self.locationNode.attributedText = product.city.toAttributed(color: .gray, ofSize: 14)
-        self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .black, ofSize: 15)
+        self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .label, ofSize: 15)
         
         if (!product.image.isEmpty) {
             self.imageNode.url = product.image.toUrl()

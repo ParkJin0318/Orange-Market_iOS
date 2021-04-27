@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.4.1)
+  - BEMCheckBox (1.4.1)
   - MBProgressHUD (1.2.0)
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
@@ -54,6 +55,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.4.1)
+  - BEMCheckBox
   - MBProgressHUD (~> 1.2.0)
   - Moya (~> 14.0)
   - RxTexture2 (~> 1.3.0)
@@ -62,6 +64,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BEMCheckBox
     - MBProgressHUD
     - Moya
     - PINCache
@@ -76,6 +79,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
@@ -88,6 +92,6 @@ SPEC CHECKSUMS:
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: e9097b14a34e40d7d1bad5acafdbd5eff810ffc1
+PODFILE CHECKSUM: 61800aaa90b078a706124b27b8aca8290d2a85a8
 
 COCOAPODS: 1.10.1
