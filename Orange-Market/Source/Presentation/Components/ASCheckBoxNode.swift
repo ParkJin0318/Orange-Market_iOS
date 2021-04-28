@@ -10,7 +10,7 @@ import BEMCheckBox
 
 class ASCheckBoxNode: ASDisplayNode {
     
-    lazy var checkBoxNode = ASDisplayNode()
+    var checkBox: BEMCheckBox!
     
     override init() {
         super.init()
@@ -20,19 +20,22 @@ class ASCheckBoxNode: ASDisplayNode {
     override func didLoad() {
         super.didLoad()
         
-        checkBoxNode = BEMCheckBox().then {
+        checkBox = BEMCheckBox().then {
             $0.boxType = .circle
             $0.onCheckColor = .systemBackground
                 
             $0.tintColor = .lightGray
             $0.onTintColor = .primaryColor()
             $0.onFillColor = .primaryColor()
-        }.toNode()
+        }
         
         self.setNeedsLayout()
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASWrapperLayoutSpec(layoutElement: checkBoxNode)
+        if (checkBox != nil) {
+            return ASWrapperLayoutSpec(layoutElement: checkBox.toNode())
+        }
+        return ASWrapperLayoutSpec(layoutElement: ASDisplayNode())
     }
 }

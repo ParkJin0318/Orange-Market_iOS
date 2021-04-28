@@ -7,6 +7,7 @@
 
 import AsyncDisplayKit
 import RxSwift
+import BEMCheckBox
 
 class CategoryViewController: ASDKViewController<CategoryViewContainer> {
     
@@ -44,7 +45,7 @@ extension CategoryViewController: ViewControllerType {
             $0.collectionNode.delegate = self
             $0.collectionNode.dataSource = self
             
-            $0.titleNode.attributedText = "홈 화면에서 보고 싶지 않은 카테고리는 \n체크를 해제하세요.".toCenterAttributed(color: .label, ofSize: 15)
+            $0.titleNode.attributedText = "홈 화면에서 보고 싶은 카테고리는 \n체크하세요.".toCenterAttributed(color: .label, ofSize: 15)
             $0.descriptionNode.attributedText = "최소 1개 이상 선택되어 있어야 합니다.".toAttributed(color: .lightGray, ofSize: 14)
         }
     }
@@ -68,7 +69,11 @@ extension CategoryViewController: ViewControllerType {
     }
 }
 
-extension CategoryViewController: ASCollectionDelegate {
+extension CategoryViewController: ASCollectionDelegate, CategoryCellDelegate {
+    
+    func setCheckedCategory(idx: Int) {
+        viewModel.updateCategory(idx: idx)
+    }
     
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         return ASSizeRange(
@@ -79,6 +84,7 @@ extension CategoryViewController: ASCollectionDelegate {
 }
 
 extension CategoryViewController: ASCollectionDataSource {
+    
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
     }
@@ -92,6 +98,7 @@ extension CategoryViewController: ASCollectionDataSource {
             let item = self?.viewModel.output.categoryList[indexPath.row]
             
             return CategoryCell().then {
+                $0.delegate = self
                 $0.setupNode(category: item!)
             }
         }

@@ -15,6 +15,10 @@ struct CategoryData: Codable {
 extension CategoryData {
     
     func toModel() -> Category {
-        return Category(idx: self.idx, name: self.name)
+        return Category(
+            idx: self.idx,
+            name: self.name,
+            isSelected: false
+        )
     }
 }

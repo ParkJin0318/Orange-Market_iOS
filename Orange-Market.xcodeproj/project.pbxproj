@@ -17,6 +17,7 @@
 		8D148FC22636B9AA00406E86 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */; };
 		8D148FC52636C16400406E86 /* CategoryViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FC42636C16400406E86 /* CategoryViewContainer.swift */; };
 		8D148FDF2636D75100406E86 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FDE2636D75100406E86 /* CategoryCell.swift */; };
+		8D19EFC42638FF8F00DB654E /* CategoryCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC32638FF8F00DB654E /* CategoryCellDelegate.swift */; };
 		8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E862638159B0033CDA2 /* CategoryEntity.swift */; };
 		8D279E8B26381F810033CDA2 /* CategoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8A26381F810033CDA2 /* CategoryCache.swift */; };
 		8D279E8D26381FA10033CDA2 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8C26381FA10033CDA2 /* AppDatabase.swift */; };
@@ -109,6 +110,7 @@
 		8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		8D148FC42636C16400406E86 /* CategoryViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewContainer.swift; sourceTree = "<group>"; };
 		8D148FDE2636D75100406E86 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		8D19EFC32638FF8F00DB654E /* CategoryCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellDelegate.swift; sourceTree = "<group>"; };
 		8D279E862638159B0033CDA2 /* CategoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEntity.swift; sourceTree = "<group>"; };
 		8D279E8A26381F810033CDA2 /* CategoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCache.swift; path = "Orange-Market/Source/Data/Database/CategoryCache.swift"; sourceTree = SOURCE_ROOT; };
 		8D279E8C26381FA10033CDA2 /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		8D148FC82636CE1D00406E86 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				8D19EFC32638FF8F00DB654E /* CategoryCellDelegate.swift */,
 				8D148FDE2636D75100406E86 /* CategoryCell.swift */,
 			);
 			path = Components;
@@ -751,6 +754,7 @@
 				8DC1E12925FAEA2100A1CA7E /* StartViewContainer.swift in Sources */,
 				8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */,
 				8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */,
+				8D19EFC42638FF8F00DB654E /* CategoryCellDelegate.swift in Sources */,
 				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
 				8D8F371026366786008196D0 /* CategoryData.swift in Sources */,
 				8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */,
@@ -974,7 +978,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.hs.dgsw.Orange-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -995,7 +999,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.hs.dgsw.Orange-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

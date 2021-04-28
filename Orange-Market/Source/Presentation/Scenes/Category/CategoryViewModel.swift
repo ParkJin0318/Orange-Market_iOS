@@ -36,4 +36,13 @@ class CategoryViewModel: ViewModelType {
                 
             }.disposed(by: disposeBag)
     }
+    
+    func updateCategory(idx: Int) {
+        productRepository.updateCategory(idx: idx)
+            .subscribe {
+                print("성공!")
+            } onError: { error in
+                print("실패!")
+            }.disposed(by: disposeBag)
+    }
 }

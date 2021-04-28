@@ -8,7 +8,10 @@
 import AsyncDisplayKit
 import BEMCheckBox
 
-class CategoryCell: ASCellNode {
+class CategoryCell: ASCellNode, BEMCheckBoxDelegate {
+    
+    var delegate: CategoryCellDelegate?
+    var category: Category!
     
     lazy var checkBoxNode = ASCheckBoxNode().then {
         $0.style.preferredSize = CGSize(width: 20, height: 20)
@@ -24,7 +27,18 @@ class CategoryCell: ASCellNode {
     }
     
     func setupNode(category: Category) {
+        self.category = category
         nameNode.attributedText = category.name.toAttributed(color: .label, ofSize: 16)
+    }
+    
+    override func layout() {
+        super.layout()
+        checkBoxNode.checkBox.delegate = self
+        checkBoxNode.checkBox.on = category.isSelected
+    }
+    
+    func didTap(_ checkBox: BEMCheckBox) {
+        delegate?.setCheckedCategory(idx: category.idx)
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

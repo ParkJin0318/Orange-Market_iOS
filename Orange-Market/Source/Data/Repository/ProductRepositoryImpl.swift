@@ -12,27 +12,55 @@ class ProductRepositoryImpl: ProductRepository {
     
     private lazy var userRemote = UserRemote()
     private lazy var productRemote = ProductRemote()
+    private lazy var categoryCache = CategoryCache()
     
     func getAllProduct() -> Single<Array<Product>> {
-        return userRemote.getUserProfile().flatMap { profile in
-            self.productRemote.getAllProduct(city: profile.city).map { productDataList in
-                productDataList.map { $0.toModel() }
+        return userRemote.getUserProfile()
+            .flatMap { profile in
+                Single.zip(
+                    self.productRemote.getAllProduct(city: profile.city),
+                    self.categoryCache.getAllCategory()
+                ) { productDataList, categoryList in
+                    
+                    let selectCategotyList = categoryList
+                        .filter { $0.isSelected }
+                        .map { $0.idx }
+                    
+                    return productDataList
+                        .filter { selectCategotyList.contains($0.categoryIdx) }
+                        .map { $0.toModel() }
+                }
             }
-        }
     }
     
     func getProduct(idx: Int) -> Single<ProductDetail> {
-        return productRemote.getProduct(idx: idx).flatMap { productData in
-            self.userRemote.getUserInfo(idx: productData.userIdx).map { userData in
-                productData.toDetailModel(user: userData)
+        return productRemote.getProduct(idx: idx)
+            .flatMap { productData in
+                self.userRemote
+                    .getUserInfo(idx: productData.userIdx)
+                    .map { userData in
+                        productData.toDetailModel(user: userData)
+                    }
             }
-        }
     }
     
     func getAllCategory() -> Single<Array<Category>> {
-        return productRemote.getAllCategory().map {
-            $0.map { $0.toModel() }
-        }
+        return categoryCache.getAllCategory()
+            .map { $0.map { $0.toModel() } }
+            .catch { error in
+                self.productRemote
+                    .getAllCategory()
+                    .map { $0.map { $0.toModel() } }
+                    .flatMap {
+                        self.categoryCache
+                            .insertCategory($0.map { $0.toEntity() })
+                            .andThen(Single.just($0))
+                    }
+            }
+    }
+    
+    func updateCategory(idx: Int) -> Completable {
+        return categoryCache.updateCategory(idx: idx)
     }
     
     func saveProduct(productRequest: ProductRequest) -> Single<String> {
