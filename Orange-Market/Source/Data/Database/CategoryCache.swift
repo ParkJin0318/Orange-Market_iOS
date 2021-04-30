@@ -53,6 +53,26 @@ class CategoryCache {
         }
     }
     
+    func getCategory(idx: Int) -> Single<CategoryEntity> {
+        return Single<CategoryEntity>.create { [weak self] emitter in
+            guard let self = self else {
+                emitter(.failure(OrangeError.error(message: "조회 실패")))
+                return Disposables.create()
+            }
+            
+            let idxPredicate = NSPredicate(format: "idx = %d", idx)
+            
+            let data = self.database.objects(CategoryEntity.self).filter(idxPredicate).first
+            
+            if (data == nil) {
+                emitter(.failure(OrangeError.error(message: "조회 실패")))
+            } else {
+                emitter(.success(data!))
+            }
+            return Disposables.create()
+        }
+    }
+    
     func updateCategory(idx: Int) -> Completable {
         return Completable.create { [weak self] emitter in
             guard let self = self else {

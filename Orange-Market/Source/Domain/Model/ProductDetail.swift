@@ -9,7 +9,8 @@ import Foundation
 
 struct ProductDetail {
     let idx: Int
-    let categoryIdx: Int
+    var categoryIdx: Int
+    var category: String
     let title: String
     let contents: String
     let price: String

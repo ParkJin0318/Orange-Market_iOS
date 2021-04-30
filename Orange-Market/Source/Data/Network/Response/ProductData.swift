@@ -36,10 +36,11 @@ extension ProductData {
         )
     }
     
-    func toDetailModel(user: UserData) -> ProductDetail {
+    func toDetailModel(user: UserData, category: CategoryEntity) -> ProductDetail {
         return ProductDetail(
             idx: self.idx,
             categoryIdx: self.categoryIdx,
+            category: category.name ?? "",
             title: self.title,
             contents: self.contents,
             price: self.price,

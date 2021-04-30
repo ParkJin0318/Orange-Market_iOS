@@ -35,7 +35,11 @@ class ProductAddViewContainer: ASDisplayNode {
     }
     
     private lazy var titleNode = titleField.toNode().then {
-        $0.style.preferredSize = CGSize(width: width - 40, height: 40)
+        $0.style.preferredSize = CGSize(width: width, height: 40)
+    }
+    
+    lazy var categorySelectNode = ArrowButtonNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
     lazy var priceField = UITextField().then {
@@ -46,7 +50,7 @@ class ProductAddViewContainer: ASDisplayNode {
     }
     
     private lazy var priceNode = priceField.toNode().then {
-        $0.style.preferredSize = CGSize(width: width - 40, height: 40)
+        $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
     lazy var contentField = UITextField().then {
@@ -57,7 +61,7 @@ class ProductAddViewContainer: ASDisplayNode {
     }
     
     private lazy var contentNode = contentField.toNode().then {
-        $0.style.preferredSize = CGSize(width: width - 40, height: 40)
+        $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
     override init() {
@@ -76,6 +80,7 @@ class ProductAddViewContainer: ASDisplayNode {
             children: [
                 imagePickerLayout,
                 titleNode,
+                categorySelectNode,
                 priceNode,
                 contentNode]
         )

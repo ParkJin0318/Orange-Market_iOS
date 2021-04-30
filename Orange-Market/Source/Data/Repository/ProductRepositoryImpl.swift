@@ -19,7 +19,7 @@ class ProductRepositoryImpl: ProductRepository {
             .flatMap { profile in
                 Single.zip(
                     self.productRemote.getAllProduct(city: profile.city),
-                    self.categoryCache.getAllCategory()
+                    self.getAllCategory()
                 ) { productDataList, categoryList in
                     
                     let selectCategotyList = categoryList
@@ -36,11 +36,12 @@ class ProductRepositoryImpl: ProductRepository {
     func getProduct(idx: Int) -> Single<ProductDetail> {
         return productRemote.getProduct(idx: idx)
             .flatMap { productData in
-                self.userRemote
-                    .getUserInfo(idx: productData.userIdx)
-                    .map { userData in
-                        productData.toDetailModel(user: userData)
-                    }
+                Single.zip(
+                    self.userRemote.getUserInfo(idx: productData.userIdx),
+                    self.categoryCache.getCategory(idx: productData.categoryIdx)
+                ) { userData, categoryEntity in
+                    return productData.toDetailModel(user: userData, category: categoryEntity)
+                }
             }
     }
     

@@ -69,7 +69,7 @@ extension CategoryViewController: ViewControllerType {
     }
 }
 
-extension CategoryViewController: ASCollectionDelegate, CategoryCellDelegate {
+extension CategoryViewController: ASCollectionDelegate, CategoryCheckBoxCellDelegate {
     
     func setCheckedCategory(idx: Int) {
         viewModel.updateCategory(idx: idx)
@@ -97,7 +97,7 @@ extension CategoryViewController: ASCollectionDataSource {
         return { [weak self] in
             let item = self?.viewModel.output.categoryList[indexPath.row]
             
-            return CategoryCell().then {
+            return CategoryCheckBoxCell().then {
                 $0.delegate = self
                 $0.setupNode(category: item!)
             }

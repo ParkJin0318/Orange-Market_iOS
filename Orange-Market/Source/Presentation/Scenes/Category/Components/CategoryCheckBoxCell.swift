@@ -8,9 +8,9 @@
 import AsyncDisplayKit
 import BEMCheckBox
 
-class CategoryCell: ASCellNode, BEMCheckBoxDelegate {
+class CategoryCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
     
-    var delegate: CategoryCellDelegate?
+    var delegate: CategoryCheckBoxCellDelegate?
     var category: Category!
     
     lazy var checkBoxNode = ASCheckBoxNode().then {

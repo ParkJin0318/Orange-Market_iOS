@@ -18,7 +18,7 @@ extension CategoryData {
         return Category(
             idx: self.idx,
             name: self.name,
-            isSelected: false
+            isSelected: true
         )
     }
 }

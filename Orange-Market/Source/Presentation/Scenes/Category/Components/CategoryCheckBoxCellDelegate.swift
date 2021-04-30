@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol CategoryCellDelegate {
+protocol CategoryCheckBoxCellDelegate {
     func setCheckedCategory(idx: Int)
 }

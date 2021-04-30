@@ -15,15 +15,18 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> {
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = ProductAddViewModel()
     
-    var product: ProductDetail? = nil
+    var categoryListViewController: CategoryListViewController!
     
-    let closeButton = UIButton().then {
+    var product: ProductDetail? = nil
+    var category: Category? = nil
+    
+    lazy var closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
         $0.setTitleColor(.label, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
     }
     
-    let completeButton = UIButton().then {
+    lazy var completeButton = UIButton().then {
         $0.setTitle("완료", for: .normal)
         $0.setTitleColor(.label, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
@@ -40,20 +43,39 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bind()
+        self.bindOutput()
+        viewModel.output.productData.accept(product!)
+        self.bindInput()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
+        
+        if (categoryListViewController != nil) {
+            var product = self.product!
+            let category = categoryListViewController.selectCategory!
+            
+            product.categoryIdx = category.idx
+            product.category = category.name
+            viewModel.output.productData.accept(product)
+        }
     }
     
     private func popViewController() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    private func presentCategoryListView() {
+        categoryListViewController = CategoryListViewController()
+        self.navigationController?.pushViewController(categoryListViewController, animated: true)
+    }
 }
 
 extension ProductAddViewController: ViewControllerType {
+    func bind() {
+        
+    }
     
     func initNode() {
         self.node.do {
@@ -64,6 +86,7 @@ extension ProductAddViewController: ViewControllerType {
             $0.collectionNode.dataSource = self
             
             $0.titleField.placeholder = "글 제목"
+            $0.categorySelectNode.nameNode.attributedText = "카테고리 선택".toCenterAttributed(color: .label, ofSize: 16)
             $0.priceField.placeholder = "₩ 가격 입력"
             $0.contentField.placeholder = "게시글 내용 입력"
         }
@@ -88,33 +111,7 @@ extension ProductAddViewController: ViewControllerType {
         }
     }
     
-    func bind() {
-        let productData = Observable.just(product)
-            .filter { $0 != nil }
-            .share()
-        
-        productData
-            .bind(to: viewModel.input.product)
-            .disposed(by: disposeBag)
-        
-        productData.map { $0!.title }
-            .bind(to: node.titleField.rx.text.orEmpty)
-            .disposed(by: disposeBag)
-        
-        productData.map { $0!.price }
-            .bind(to: node.priceField.rx.text.orEmpty)
-            .disposed(by: disposeBag)
-        
-        productData.map { $0!.contents }
-            .bind(to: node.contentField.rx.text.orEmpty)
-            .disposed(by: disposeBag)
-        
-        productData.map { $0!.imageList }
-            .withUnretained(self)
-            .bind { $0.0.viewModel.output.imageList = $0.1 }
-            .disposed(by: disposeBag)
-        
-        // input
+    func bindInput() {
         closeButton
             .rx.tap
             .bind(onNext: popViewController)
@@ -141,6 +138,11 @@ extension ProductAddViewController: ViewControllerType {
             .rx.text.orEmpty
             .bind(to: viewModel.input.titleText)
             .disposed(by: disposeBag)
+        
+        node.categorySelectNode
+            .rx.tap
+            .bind(onNext: presentCategoryListView)
+            .disposed(by: disposeBag)
 
         node.priceField
             .rx.text.orEmpty
@@ -151,8 +153,42 @@ extension ProductAddViewController: ViewControllerType {
             .rx.text.orEmpty
             .bind(to: viewModel.input.contentText)
             .disposed(by: disposeBag)
+    }
+    
+    func bindOutput() {
+        let productData = viewModel.output.productData.share()
+            
+        productData
+            .bind(to: viewModel.input.product)
+            .disposed(by: disposeBag)
+            
+        productData.map { $0.title }
+            .bind(to: node.titleField.rx.text.orEmpty)
+            .disposed(by: disposeBag)
+            
+        productData.map { $0.category.toAttributed(color: .label, ofSize: 16) }
+            .bind(to: node.categorySelectNode.nameNode.rx.attributedText)
+            .disposed(by: disposeBag)
         
-        // output
+        productData.map { $0.categoryIdx }
+            .bind(to: viewModel.input.category)
+            .disposed(by: disposeBag)
+            
+        productData.map { $0.price }
+            .bind(to: node.priceField.rx.text.orEmpty)
+            .disposed(by: disposeBag)
+            
+        productData.map { $0.contents }
+            .bind(to: node.contentField.rx.text.orEmpty)
+            .disposed(by: disposeBag)
+            
+        productData.map { $0.imageList }
+            .withUnretained(self)
+            .bind { owner, value in
+                owner.viewModel.output.imageList = value
+                owner.viewModel.output.isReloadData.accept(true)
+            }.disposed(by: disposeBag)
+        
         viewModel.output.isReloadData
             .filter { $0 }
             .withUnretained(self)

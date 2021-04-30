@@ -16,12 +16,14 @@ class ProductAddViewModel: ViewModelType {
         let titleText = PublishSubject<String>()
         let priceText = PublishSubject<String>()
         let contentText = PublishSubject<String>()
+        let category = PublishSubject<Int>()
         
         let tapSave = PublishSubject<Void>()
         let tapUpdate = PublishSubject<Void>()
     }
     
     struct Output {
+        let productData = PublishRelay<ProductDetail>()
         var imageList = Array<String>()
         let isReloadData = PublishRelay<Bool>()
         let completedMessage = PublishRelay<String>()
@@ -57,10 +59,11 @@ class ProductAddViewModel: ViewModelType {
                 userRepository.getUserProfile().asObservable(),
                 input.titleText,
                 input.priceText,
-                input.contentText
+                input.contentText,
+                input.category
             ))
             .withUnretained(self)
-            .flatMap { $0.0.saveProduct(user: $0.1.0, title: $0.1.1, price: $0.1.2, content: $0.1.3) }
+            .flatMap { $0.0.saveProduct(user: $0.1.0, title: $0.1.1, price: $0.1.2, content: $0.1.3, categoryIdx: $0.1.4) }
             .subscribe { data in
                 self.output.completedMessage.accept(data)
             } onError: { error in
@@ -74,10 +77,11 @@ class ProductAddViewModel: ViewModelType {
                 input.product,
                 input.titleText,
                 input.priceText,
-                input.contentText
+                input.contentText,
+                input.category
             ))
             .withUnretained(self)
-            .flatMap { $0.0.updateProduct(product: $0.1.0!, title: $0.1.1, price: $0.1.2, content: $0.1.3) }
+            .flatMap { $0.0.updateProduct(product: $0.1.0!, title: $0.1.1, price: $0.1.2, content: $0.1.3, categoryIdx: $0.1.4) }
             .subscribe { data in
                 self.output.completedMessage.accept(data)
             } onError: { error in
@@ -85,9 +89,9 @@ class ProductAddViewModel: ViewModelType {
             }.disposed(by: disposeBag)
     }
     
-    func saveProduct(user: User, title: String, price: String, content: String) -> Single<String> {
+    func saveProduct(user: User, title: String, price: String, content: String, categoryIdx: Int) -> Single<String> {
         return productRepository.saveProduct(productRequest: ProductRequest(
-            categoryIdx: 1,
+            categoryIdx: categoryIdx,
             title: title,
             contents: content,
             price: price,
@@ -98,9 +102,9 @@ class ProductAddViewModel: ViewModelType {
         ))
     }
     
-    func updateProduct(product: ProductDetail, title: String, price: String, content: String) -> Single<String> {
+    func updateProduct(product: ProductDetail, title: String, price: String, content: String, categoryIdx: Int) -> Single<String> {
         return productRepository.updateProduct(idx: product.idx, productRequest: ProductRequest(
-            categoryIdx: 1,
+            categoryIdx: categoryIdx,
             title: title,
             contents: content,
             price: price,

@@ -16,8 +16,12 @@
 		8D148FBF26367D0000406E86 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FBE26367D0000406E86 /* CategoryViewController.swift */; };
 		8D148FC22636B9AA00406E86 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */; };
 		8D148FC52636C16400406E86 /* CategoryViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FC42636C16400406E86 /* CategoryViewContainer.swift */; };
-		8D148FDF2636D75100406E86 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FDE2636D75100406E86 /* CategoryCell.swift */; };
-		8D19EFC42638FF8F00DB654E /* CategoryCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC32638FF8F00DB654E /* CategoryCellDelegate.swift */; };
+		8D148FDF2636D75100406E86 /* CategoryCheckBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FDE2636D75100406E86 /* CategoryCheckBoxCell.swift */; };
+		8D19EFC42638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC32638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift */; };
+		8D19EFC826392FAE00DB654E /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC726392FAE00DB654E /* CategoryListViewController.swift */; };
+		8D19EFCA2639322300DB654E /* ArrowButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC92639322300DB654E /* ArrowButtonNode.swift */; };
+		8D19EFCC2639381D00DB654E /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFCB2639381D00DB654E /* CategoryListViewModel.swift */; };
+		8D19EFCE2639390E00DB654E /* CategoryListViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFCD2639390E00DB654E /* CategoryListViewContainer.swift */; };
 		8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E862638159B0033CDA2 /* CategoryEntity.swift */; };
 		8D279E8B26381F810033CDA2 /* CategoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8A26381F810033CDA2 /* CategoryCache.swift */; };
 		8D279E8D26381FA10033CDA2 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8C26381FA10033CDA2 /* AppDatabase.swift */; };
@@ -39,6 +43,7 @@
 		8D475FA72602F84700F2911F /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA62602F84700F2911F /* UserRemote.swift */; };
 		8D475FAB2602FC1300F2911F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FAA2602FC1300F2911F /* Product.swift */; };
 		8D4FABEE2601FFEB00D8701A /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */; };
+		8D59EB77263A723F001AB8C4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D59EB76263A723F001AB8C4 /* CategoryCell.swift */; };
 		8D631508260D690300EB3540 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D631507260D690300EB3540 /* RegisterViewController.swift */; };
 		8D63150C260D6AB800EB3540 /* RegisterViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D63150B260D6AB800EB3540 /* RegisterViewContainer.swift */; };
 		8D63150F260D76C100EB3540 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D63150E260D76C000EB3540 /* RegisterViewModel.swift */; };
@@ -109,8 +114,12 @@
 		8D148FBE26367D0000406E86 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		8D148FC42636C16400406E86 /* CategoryViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewContainer.swift; sourceTree = "<group>"; };
-		8D148FDE2636D75100406E86 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
-		8D19EFC32638FF8F00DB654E /* CategoryCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellDelegate.swift; sourceTree = "<group>"; };
+		8D148FDE2636D75100406E86 /* CategoryCheckBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCheckBoxCell.swift; sourceTree = "<group>"; };
+		8D19EFC32638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCheckBoxCellDelegate.swift; sourceTree = "<group>"; };
+		8D19EFC726392FAE00DB654E /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
+		8D19EFC92639322300DB654E /* ArrowButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowButtonNode.swift; sourceTree = "<group>"; };
+		8D19EFCB2639381D00DB654E /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
+		8D19EFCD2639390E00DB654E /* CategoryListViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewContainer.swift; sourceTree = "<group>"; };
 		8D279E862638159B0033CDA2 /* CategoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEntity.swift; sourceTree = "<group>"; };
 		8D279E8A26381F810033CDA2 /* CategoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCache.swift; path = "Orange-Market/Source/Data/Database/CategoryCache.swift"; sourceTree = SOURCE_ROOT; };
 		8D279E8C26381FA10033CDA2 /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
@@ -132,6 +141,7 @@
 		8D475FA62602F84700F2911F /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
 		8D475FAA2602FC1300F2911F /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
+		8D59EB76263A723F001AB8C4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		8D631507260D690300EB3540 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		8D63150B260D6AB800EB3540 /* RegisterViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewContainer.swift; sourceTree = "<group>"; };
 		8D63150E260D76C000EB3540 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -234,10 +244,21 @@
 		8D148FC82636CE1D00406E86 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				8D19EFC32638FF8F00DB654E /* CategoryCellDelegate.swift */,
-				8D148FDE2636D75100406E86 /* CategoryCell.swift */,
+				8D148FDE2636D75100406E86 /* CategoryCheckBoxCell.swift */,
+				8D19EFC32638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		8D19EFC626392FA000DB654E /* CategoryList */ = {
+			isa = PBXGroup;
+			children = (
+				8D59EB75263A722F001AB8C4 /* Components */,
+				8D19EFC726392FAE00DB654E /* CategoryListViewController.swift */,
+				8D19EFCD2639390E00DB654E /* CategoryListViewContainer.swift */,
+				8D19EFCB2639381D00DB654E /* CategoryListViewModel.swift */,
+			);
+			path = CategoryList;
 			sourceTree = "<group>";
 		};
 		8D279E85263815900033CDA2 /* Database */ = {
@@ -276,13 +297,13 @@
 			path = ProductAdd;
 			sourceTree = "<group>";
 		};
-		8D475FA02602DB8800F2911F /* Component */ = {
+		8D475FA02602DB8800F2911F /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				8D979EE52610670200E9DC32 /* ProductScrollNode.swift */,
 				8D337BE32608561B0042B1A0 /* ProductBottomNode.swift */,
 			);
-			path = Component;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		8D475FA92602FC0D00F2911F /* Model */ = {
@@ -299,12 +320,20 @@
 		8D4FABEC2601FFC400D8701A /* ProductDetail */ = {
 			isa = PBXGroup;
 			children = (
-				8D475FA02602DB8800F2911F /* Component */,
+				8D475FA02602DB8800F2911F /* Components */,
 				8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */,
 				8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */,
 				8D475F9C2602D95500F2911F /* ProductDetailViewModel.swift */,
 			);
 			path = ProductDetail;
+			sourceTree = "<group>";
+		};
+		8D59EB75263A722F001AB8C4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8D59EB76263A723F001AB8C4 /* CategoryCell.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		8D6438072609778F00F7C5FE /* Profile */ = {
@@ -333,6 +362,7 @@
 				8D337BDD260846330042B1A0 /* ProfileNode.swift */,
 				8D456E562627D630007DA760 /* IconButtonNode.swift */,
 				8D724D5626379A3900613B5A /* ASCheckBoxNode.swift */,
+				8D19EFC92639322300DB654E /* ArrowButtonNode.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -450,6 +480,7 @@
 				8D6E3126260B08B8004FCB1A /* Register */,
 				8DC864A025FEF2C60081F52C /* Home */,
 				8D8F371526366A73008196D0 /* Category */,
+				8D19EFC626392FA000DB654E /* CategoryList */,
 				8D2F98912600282400C8BE0C /* ProductAdd */,
 				8D4FABEC2601FFC400D8701A /* ProductDetail */,
 				8DC864B125FEFA190081F52C /* City */,
@@ -754,8 +785,9 @@
 				8DC1E12925FAEA2100A1CA7E /* StartViewContainer.swift in Sources */,
 				8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */,
 				8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */,
-				8D19EFC42638FF8F00DB654E /* CategoryCellDelegate.swift in Sources */,
+				8D19EFC42638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift in Sources */,
 				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
+				8D59EB77263A723F001AB8C4 /* CategoryCell.swift in Sources */,
 				8D8F371026366786008196D0 /* CategoryData.swift in Sources */,
 				8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */,
 				8D337BE42608561B0042B1A0 /* ProductBottomNode.swift in Sources */,
@@ -772,12 +804,13 @@
 				8DC864E325FF1BF50081F52C /* ProductRepository.swift in Sources */,
 				8D279E8B26381F810033CDA2 /* CategoryCache.swift in Sources */,
 				8D2F989F2600437800C8BE0C /* UploadAPI.swift in Sources */,
-				8D148FDF2636D75100406E86 /* CategoryCell.swift in Sources */,
+				8D148FDF2636D75100406E86 /* CategoryCheckBoxCell.swift in Sources */,
 				8DC864B725FF04DD0081F52C /* UserAPI.swift in Sources */,
 				8DC8649925FEEAD70081F52C /* AuthRepositoryImpl.swift in Sources */,
 				8D3CEA9026031D7900D9486A /* ProductDetail.swift in Sources */,
 				8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */,
 				8DC864DD25FF1A430081F52C /* ProductRemote.swift in Sources */,
+				8D19EFCE2639390E00DB654E /* CategoryListViewContainer.swift in Sources */,
 				8DC864A225FEF2CE0081F52C /* HomeViewController.swift in Sources */,
 				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
 				8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */,
@@ -799,8 +832,10 @@
 				8D724D5726379A3900613B5A /* ASCheckBoxNode.swift in Sources */,
 				8DC8647B25FEDE0D0081F52C /* LoginRequest.swift in Sources */,
 				8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */,
+				8D19EFC826392FAE00DB654E /* CategoryListViewController.swift in Sources */,
 				8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */,
 				8DC8648525FEE6010081F52C /* AuthRemote.swift in Sources */,
+				8D19EFCA2639322300DB654E /* ArrowButtonNode.swift in Sources */,
 				8DC1E11A25FAE89B00A1CA7E /* Color+Ex.swift in Sources */,
 				8D6438092609779A00F7C5FE /* ProfileViewController.swift in Sources */,
 				8D631508260D690300EB3540 /* RegisterViewController.swift in Sources */,
@@ -813,6 +848,7 @@
 				8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */,
 				8DC864BD25FF05C70081F52C /* UserData.swift in Sources */,
 				8D148FBF26367D0000406E86 /* CategoryViewController.swift in Sources */,
+				8D19EFCC2639381D00DB654E /* CategoryListViewModel.swift in Sources */,
 				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
 				8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */,
 				8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */,
