@@ -32,6 +32,10 @@ class MyInfoViewController: ASDKViewController<MyInfoViewContainer> {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
     }
+    
+    func presentSalesListView() {
+        self.navigationController?.pushViewController(SalesListViewController(), animated: true)
+    }
 }
 
 extension MyInfoViewController: ViewControllerType {
@@ -62,6 +66,11 @@ extension MyInfoViewController: ViewControllerType {
     }
     
     func bind() {
+        node.salesNode
+            .rx.tap
+            .bind(onNext: presentSalesListView)
+            .disposed(by: disposeBag)
+        
         let userData = viewModel.output.userData.share()
         
         userData.map { $0.profileImage?.toUrl() }

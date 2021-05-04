@@ -33,6 +33,18 @@ class ProductRepositoryImpl: ProductRepository {
             }
     }
     
+    func getAllMyProduct() -> Single<Array<Product>> {
+        return userRemote.getUserProfile()
+            .flatMap { profile in
+                self.productRemote.getAllProduct(city: profile.city)
+                    .map { productDataList in
+                        productDataList
+                            .map { $0.toModel() }
+                            .filter { $0.userIdx == profile.idx }
+                    }
+            }
+    }
+    
     func getProduct(idx: Int) -> Single<ProductDetail> {
         return productRemote.getProduct(idx: idx)
             .flatMap { productData in

@@ -60,6 +60,9 @@
 		8D8F3713263669A2008196D0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F3712263669A2008196D0 /* Category.swift */; };
 		8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D96E5B326006F9F00A1292D /* ProductRequest.swift */; };
 		8D979EE62610670200E9DC32 /* ProductScrollNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D979EE52610670200E9DC32 /* ProductScrollNode.swift */; };
+		8DA542A92640EC880084FB5D /* SalesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA542A82640EC880084FB5D /* SalesListViewController.swift */; };
+		8DA542AB2640EDAD0084FB5D /* SalesListViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA542AA2640EDAD0084FB5D /* SalesListViewContainer.swift */; };
+		8DA542AD2640EFFA0084FB5D /* SalesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA542AC2640EFFA0084FB5D /* SalesListViewModel.swift */; };
 		8DB670182612CC17006A3FD0 /* LocationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB670172612CC17006A3FD0 /* LocationRequest.swift */; };
 		8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */; };
 		8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E0EC25FAE56A00A1CA7E /* SceneDelegate.swift */; };
@@ -158,6 +161,9 @@
 		8D8F3712263669A2008196D0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		8D96E5B326006F9F00A1292D /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
 		8D979EE52610670200E9DC32 /* ProductScrollNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScrollNode.swift; sourceTree = "<group>"; };
+		8DA542A82640EC880084FB5D /* SalesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesListViewController.swift; sourceTree = "<group>"; };
+		8DA542AA2640EDAD0084FB5D /* SalesListViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesListViewContainer.swift; sourceTree = "<group>"; };
+		8DA542AC2640EFFA0084FB5D /* SalesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesListViewModel.swift; sourceTree = "<group>"; };
 		8DB670172612CC17006A3FD0 /* LocationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequest.swift; sourceTree = "<group>"; };
 		8DC1E0E725FAE56A00A1CA7E /* Orange-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Orange-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC1E0EA25FAE56A00A1CA7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -400,6 +406,16 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
+		8DA542A72640EC4D0084FB5D /* SalesList */ = {
+			isa = PBXGroup;
+			children = (
+				8DA542A82640EC880084FB5D /* SalesListViewController.swift */,
+				8DA542AA2640EDAD0084FB5D /* SalesListViewContainer.swift */,
+				8DA542AC2640EFFA0084FB5D /* SalesListViewModel.swift */,
+			);
+			path = SalesList;
+			sourceTree = "<group>";
+		};
 		8DC1E0DE25FAE56A00A1CA7E = {
 			isa = PBXGroup;
 			children = (
@@ -485,6 +501,7 @@
 				8D4FABEC2601FFC400D8701A /* ProductDetail */,
 				8DC864B125FEFA190081F52C /* City */,
 				8D64380C2609786E00F7C5FE /* MyInfo */,
+				8DA542A72640EC4D0084FB5D /* SalesList */,
 				8D6438072609778F00F7C5FE /* Profile */,
 			);
 			path = Scenes;
@@ -784,6 +801,7 @@
 				8DC864B325FEFA380081F52C /* CityViewController.swift in Sources */,
 				8DC1E12925FAEA2100A1CA7E /* StartViewContainer.swift in Sources */,
 				8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */,
+				8DA542A92640EC880084FB5D /* SalesListViewController.swift in Sources */,
 				8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */,
 				8D19EFC42638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift in Sources */,
 				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
@@ -813,6 +831,8 @@
 				8D19EFCE2639390E00DB654E /* CategoryListViewContainer.swift in Sources */,
 				8DC864A225FEF2CE0081F52C /* HomeViewController.swift in Sources */,
 				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
+				8DA542AD2640EFFA0084FB5D /* SalesListViewModel.swift in Sources */,
+				8DA542AB2640EDAD0084FB5D /* SalesListViewContainer.swift in Sources */,
 				8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */,
 				8D979EE62610670200E9DC32 /* ProductScrollNode.swift in Sources */,
 				8D475FAB2602FC1300F2911F /* Product.swift in Sources */,
