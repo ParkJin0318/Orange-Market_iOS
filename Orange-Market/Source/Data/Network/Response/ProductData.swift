@@ -17,7 +17,8 @@ struct ProductData: Codable {
     let isSold: Bool
     let userIdx: Int
     let city: String
-    let imageList: Array<String>
+    let images: Array<String>
+    let likeUsers: Array<Int>
 }
 
 extension ProductData {
@@ -32,7 +33,8 @@ extension ProductData {
             isSold: self.isSold,
             userIdx: self.userIdx,
             city: self.city,
-            image: self.imageList.first ?? ""
+            image: self.images.first ?? "",
+            like: self.likeUsers.count
         )
     }
     
@@ -48,7 +50,8 @@ extension ProductData {
             isSold: self.isSold,
             userIdx: self.userIdx,
             city: self.city,
-            imageList: self.imageList,
+            images: self.images,
+            likeUsers: self.likeUsers,
             name: user.name,
             location: user.location,
             profileImage: user.profileImage

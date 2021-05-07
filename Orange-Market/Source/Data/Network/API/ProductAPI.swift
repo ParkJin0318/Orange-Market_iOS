@@ -12,6 +12,7 @@ enum ProductAPI {
     case getProduct(idx: Int)
     case getAllCategory
     case saveProduct(productRequest: ProductRequest)
+    case likeProduct(idx: Int)
     case updateProduct(idx: Int, productRequest: ProductRequest)
     case updateSold(idx: Int)
     case deleteProduct(idx: Int)
@@ -33,6 +34,8 @@ extension ProductAPI: TargetType {
                 return "category"
             case .saveProduct:
                 return ""
+            case let .likeProduct(idx):
+                return "like/\(idx)"
             case let .updateProduct(idx, _):
                 return "\(idx)"
             case let .updateSold(idx):
@@ -51,6 +54,8 @@ extension ProductAPI: TargetType {
             case .getAllCategory:
                 return .get
             case .saveProduct:
+                return .post
+            case .likeProduct:
                 return .post
             case .updateProduct:
                 return .put
@@ -79,6 +84,9 @@ extension ProductAPI: TargetType {
                 
             case let .saveProduct(productRequest):
                 return .requestData(try! JSONEncoder().encode(productRequest))
+                
+            case let .likeProduct(idx):
+                return .requestPlain
                 
             case let .updateProduct(_, productRequest):
                 return .requestData(try! JSONEncoder().encode(productRequest))

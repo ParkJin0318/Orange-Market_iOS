@@ -59,6 +59,10 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    private func likeProduct() {
+        viewModel.likeProduct(idx: self.idx)
+    }
 }
 
 extension ProductDetailViewController: ViewControllerType {
@@ -113,6 +117,11 @@ extension ProductDetailViewController: ViewControllerType {
         moreButton.rx.tap
             .withUnretained(self)
             .bind { $0.0.moreAlret() }
+            .disposed(by: disposeBag)
+        
+        node.productBottomNode.likeNode
+            .rx.tap
+            .bind(onNext: likeProduct)
             .disposed(by: disposeBag)
             
         // output
@@ -170,13 +179,18 @@ extension ProductDetailViewController: ViewControllerType {
             .bind(to: node.productBottomNode.buyNode.rx.backgroundColor)
             .disposed(by: disposeBag)
         
+        viewModel.output.isLike
+            .map { $0 ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart") }
+            .bind(to: node.productBottomNode.likeNode.rx.image)
+            .disposed(by: disposeBag)
+        
         viewModel.output.onReloadEvent
             .filter { $0 }
             .withUnretained(self)
             .bind { $0.0.node.productScrollNode.collectionNode.reloadData() }
             .disposed(by: disposeBag)
         
-        viewModel.output.onFailureEvent
+        viewModel.output.onMessageEvent
             .withUnretained(self)
             .bind { owner, value in
                 MBProgressHUD.hide(for: owner.view, animated: true)
@@ -184,6 +198,7 @@ extension ProductDetailViewController: ViewControllerType {
             }.disposed(by: disposeBag)
         
         viewModel.output.onDeleteEvent
+            .filter { $0 }
             .withUnretained(self)
             .bind { owner, value in
                 owner.popViewController()

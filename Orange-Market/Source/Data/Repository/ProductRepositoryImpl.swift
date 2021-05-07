@@ -80,6 +80,10 @@ class ProductRepositoryImpl: ProductRepository {
         return productRemote.saveProduct(productRequest: productRequest)
     }
     
+    func likeProduct(idx: Int) -> Single<String> {
+        return productRemote.likeProduct(idx: idx)
+    }
+    
     func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<String> {
         return productRemote.updateProduct(idx: idx, productRequest: productRequest)
     }

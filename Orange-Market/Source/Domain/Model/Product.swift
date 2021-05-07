@@ -17,4 +17,5 @@ struct Product {
     let userIdx: Int
     let city: String
     let image: String
+    let like: Int
 }

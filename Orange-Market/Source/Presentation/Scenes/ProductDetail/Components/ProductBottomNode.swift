@@ -9,8 +9,8 @@ import AsyncDisplayKit
 
 class ProductBottomNode: ASDisplayNode {
     
-    lazy var likeNode = ASButtonNode().then {
-        $0.imageNode.image = UIImage(systemName: "heart")
+    lazy var likeNode = ASImageNode().then {
+        $0.image = UIImage(systemName: "heart")
     }
     
     lazy var priceNode = ASTextNode()

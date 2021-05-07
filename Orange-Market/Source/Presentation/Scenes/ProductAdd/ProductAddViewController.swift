@@ -130,7 +130,7 @@ extension ProductAddViewController: ViewControllerType {
             .bind(to: node.contentField.rx.text.orEmpty)
             .disposed(by: disposeBag)
             
-        productData.map { $0.imageList }
+        productData.map { $0.images }
             .withUnretained(self)
             .bind { owner, value in
                 owner.viewModel.output.imageList = value

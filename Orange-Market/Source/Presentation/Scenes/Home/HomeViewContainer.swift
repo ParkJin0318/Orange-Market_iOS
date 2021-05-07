@@ -10,7 +10,6 @@ import AsyncDisplayKit
 class HomeViewContainer: ASDisplayNode {
     
     private lazy var flowLayout = UICollectionViewFlowLayout().then {
-        $0.itemSize = CGSize(width: 60, height: 60)
         $0.scrollDirection = .vertical
         $0.minimumLineSpacing = 10
     }
