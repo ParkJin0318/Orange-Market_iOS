@@ -100,6 +100,7 @@
 		8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864E525FF1C3D0081F52C /* ProductRepositoryImpl.swift */; };
 		8DC864EA25FF1E180081F52C /* HomeViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864E925FF1E180081F52C /* HomeViewContainer.swift */; };
 		8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864EC25FF201E0081F52C /* ProductCell.swift */; };
+		8DCA2961264B6E6B0031D20F /* ProductType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA2960264B6E6B0031D20F /* ProductType.swift */; };
 		8DCA58C9260C5A7E00A775B0 /* PwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA58C8260C5A7E00A775B0 /* PwViewController.swift */; };
 		8DCA58CD260C5CCE00A775B0 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */; };
 		8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */; };
@@ -203,6 +204,7 @@
 		8DC864E525FF1C3D0081F52C /* ProductRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryImpl.swift; sourceTree = "<group>"; };
 		8DC864E925FF1E180081F52C /* HomeViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContainer.swift; sourceTree = "<group>"; };
 		8DC864EC25FF201E0081F52C /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		8DCA2960264B6E6B0031D20F /* ProductType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductType.swift; sourceTree = "<group>"; };
 		8DCA58C8260C5A7E00A775B0 /* PwViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwViewController.swift; sourceTree = "<group>"; };
 		8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
 		8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Ex.swift"; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 		8DC8649025FEEA2B0081F52C /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				8DCA295F264B6E3B0031D20F /* Enum */,
 				8D475FA92602FC0D00F2911F /* Model */,
 				8DC8649125FEEA350081F52C /* Repository */,
 			);
@@ -659,6 +662,14 @@
 				8DC864B225FEFA380081F52C /* CityViewController.swift */,
 			);
 			path = City;
+			sourceTree = "<group>";
+		};
+		8DCA295F264B6E3B0031D20F /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				8DCA2960264B6E6B0031D20F /* ProductType.swift */,
+			);
+			path = Enum;
 			sourceTree = "<group>";
 		};
 		9876297D34FE3BCC74DB3A16 /* Pods */ = {
@@ -866,6 +877,7 @@
 				8D4FABEE2601FFEB00D8701A /* ProductDetailViewController.swift in Sources */,
 				8D456E572627D630007DA760 /* IconButtonNode.swift in Sources */,
 				8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */,
+				8DCA2961264B6E6B0031D20F /* ProductType.swift in Sources */,
 				8DC864BD25FF05C70081F52C /* UserData.swift in Sources */,
 				8D148FBF26367D0000406E86 /* CategoryViewController.swift in Sources */,
 				8D19EFCC2639381D00DB654E /* CategoryListViewModel.swift in Sources */,

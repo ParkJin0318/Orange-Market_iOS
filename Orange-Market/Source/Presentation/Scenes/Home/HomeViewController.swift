@@ -139,7 +139,7 @@ extension HomeViewController: ASCollectionDataSource {
         return 1
     }
         
-    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    func collectionNode(_ collectionNzode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
         return viewModel.output.productList.count
     }
         

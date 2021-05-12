@@ -20,6 +20,14 @@ class ProductRemote {
             }
     }
     
+    func getAllLikeProduct() -> Single<Array<ProductData>> {
+        return provider.rx.request(.getAllLikeProduct)
+            .map(Response<Array<ProductData>>.self, using: JSONDecoder())
+            .map { response -> Array<ProductData> in
+                return response.data
+            }
+    }
+    
     func getProduct(idx: Int) -> Single<ProductData> {
         return provider.rx.request(.getProduct(idx: idx))
             .map(Response<ProductData>.self, using: JSONDecoder())

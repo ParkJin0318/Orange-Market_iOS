@@ -10,6 +10,7 @@ import RxSwift
 
 protocol ProductRepository {
     func getAllProduct() -> Single<Array<Product>>
+    func getAllLikeProduct() -> Single<Array<Product>>
     func getAllMyProduct() -> Single<Array<Product>>
     func getProduct(idx: Int) -> Single<ProductDetail>
     func getAllCategory() -> Single<Array<Category>>

@@ -27,14 +27,26 @@ class SalesListViewModel: ViewModelType {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     
-    func getProducts() {
-        productRepository.getAllMyProduct()
+    func getProducts(type: ProductType) {
+        var product: Single<Array<Product>> = Single.just(Array())
+        
+        switch (type) {
+        case .sales:
+            product = productRepository.getAllMyProduct()
+        case .like:
+            product = productRepository.getAllLikeProduct()
+        default:
+            break
+        }
+        
+        product
             .subscribe { [weak self] data in
                 guard let self = self else { return }
                 
                 self.output.productList = data.sorted(by: { $0.idx > $1.idx })
                 self.output.onReloadEvent.accept(true)
             } onFailure: { [weak self] error in
+                guard let self = self else { return }
                 
             }.disposed(by: disposeBag)
     }

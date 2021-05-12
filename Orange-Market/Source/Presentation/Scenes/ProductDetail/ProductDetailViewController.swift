@@ -78,7 +78,15 @@ extension ProductDetailViewController: ViewControllerType {
         }
     }
     
-    func loadNode() { }
+    func loadNode() {
+        self.node.do { container in
+            
+            container.productScrollNode.do {
+                $0.collectionNode.view.decelerationRate = .fast
+                $0.collectionNode.view.showsHorizontalScrollIndicator = false
+            }
+        }
+    }
     
     func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .label
@@ -217,6 +225,24 @@ extension ProductDetailViewController: ASCollectionDelegate {
             min: CGSize(width: 0, height: 0),
             max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         )
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let cellWidth = width + 10
+        
+        var offset = targetContentOffset.pointee
+        let index = offset.x / cellWidth
+        var roundedIndex = round(index)
+        
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else {
+            roundedIndex = ceil(index)
+        }
+        
+        offset = CGPoint(x: roundedIndex * cellWidth, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
     }
 }
 

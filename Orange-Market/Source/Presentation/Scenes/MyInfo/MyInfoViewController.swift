@@ -34,7 +34,18 @@ class MyInfoViewController: ASDKViewController<MyInfoViewContainer> {
     }
     
     func presentSalesListView() {
-        self.navigationController?.pushViewController(SalesListViewController(), animated: true)
+        self.present(type: ProductType.sales)
+    }
+    
+    func presentLikeListView() {
+        self.present(type: ProductType.like)
+    }
+    
+    func present(type: ProductType) {
+        let vc = SalesListViewController().then {
+            $0.type = type
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -71,6 +82,11 @@ extension MyInfoViewController: ViewControllerType {
             .bind(onNext: presentSalesListView)
             .disposed(by: disposeBag)
         
+        node.attentionNode
+            .rx.tap
+            .bind(onNext: presentLikeListView)
+            .disposed(by: disposeBag)
+            
         let userData = viewModel.output.userData.share()
         
         userData.map { $0.profileImage?.toUrl() }

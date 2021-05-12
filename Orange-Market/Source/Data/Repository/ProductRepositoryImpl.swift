@@ -33,6 +33,13 @@ class ProductRepositoryImpl: ProductRepository {
             }
     }
     
+    
+    func getAllLikeProduct() -> Single<Array<Product>> {
+        return productRemote.getAllLikeProduct().map {
+            $0.map { $0.toModel() }
+        }
+    }
+    
     func getAllMyProduct() -> Single<Array<Product>> {
         return userRemote.getUserProfile()
             .flatMap { profile in

@@ -13,6 +13,8 @@ class SalesListViewController: ASDKViewController<SalesListViewContainer> {
     lazy var disposeBag = DisposeBag()
     lazy var viewModel = SalesListViewModel()
     
+    var type: ProductType!
+    
     override init() {
         super.init(node: SalesListViewContainer())
         self.initNode()
@@ -30,7 +32,7 @@ class SalesListViewController: ASDKViewController<SalesListViewContainer> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
-        viewModel.getProducts()
+        viewModel.getProducts(type: type)
     }
 }
 
@@ -49,7 +51,14 @@ extension SalesListViewController: ViewControllerType {
     func loadNode() { }
     
     func setupNavigationBar() {
-        self.navigationItem.title = "판매내역"
+        switch (type!) {
+        case .sales:
+            self.navigationItem.title = "판매내역"
+        case .like:
+            self.navigationItem.title = "관심목록"
+        default:
+            break
+        }
         self.navigationController?.navigationBar.tintColor = .label
     }
     
