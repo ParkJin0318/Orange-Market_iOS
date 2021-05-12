@@ -26,7 +26,7 @@ class MyInfoViewModel: ViewModelType {
     
     private lazy var userRepository: UserRepository = UserRepositoryImpl()
     
-    init() {
+    func getProfile() {
         userRepository.getUserProfile()
             .subscribe { [weak self] user in
                 self?.output.userData.accept(user)

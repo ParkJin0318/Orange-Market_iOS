@@ -11,7 +11,7 @@ class MyInfoViewContainer: ASScrollNode {
     
     lazy var profileNode = ProfileNode()
     
-    lazy var profileOpenNode = ASButtonNode().then {
+    lazy var profileEditNode = ASButtonNode().then {
         $0.borderWidth = 1
         $0.borderColor = UIColor.lightGray.cgColor
         $0.cornerRadius = 5
@@ -47,7 +47,7 @@ class MyInfoViewContainer: ASScrollNode {
             spacing: 10,
             justifyContent: .start,
             alignItems: .center,
-            children: [profileNode, profileOpenNode, salesLayout]
+            children: [profileNode, profileEditNode, salesLayout]
         )
     }
     

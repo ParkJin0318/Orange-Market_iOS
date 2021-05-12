@@ -34,6 +34,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadNode()
         self.bind()
     }
     
@@ -79,7 +80,11 @@ extension HomeViewController: ViewControllerType {
         }
     }
     
-    func loadNode() { }
+    func loadNode() {
+        self.node.do {
+            $0.collectionNode.view.showsVerticalScrollIndicator = false
+        }
+    }
     
     func setupNavigationBar() {
         self.navigationItem.rightBarButtonItems = [

@@ -20,7 +20,11 @@ class UserRepositoryImpl: UserRepository {
         return remote.getUserProfile().map { $0.toModel() }
     }
     
-    func updateLocation(locationRequest: LocationRequest) -> Completable {
-        return remote.updateLocation(locationRequest: locationRequest).asCompletable()
+    func updateLocation(locationRequest: LocationRequest) -> Single<String> {
+        return remote.updateLocation(locationRequest: locationRequest)
+    }
+    
+    func updateUser(userRequest: UserRequest) -> Single<String> {
+        return remote.updateUser(userRequest: userRequest)
     }
 }

@@ -11,6 +11,7 @@ enum UserAPI {
     case getUserInfo(idx: Int)
     case getUserProfile
     case updateLocation(locationRequest: LocationRequest)
+    case updateUserProfile(userRequest: UserRequest)
 }
 
 extension UserAPI: TargetType {
@@ -26,6 +27,8 @@ extension UserAPI: TargetType {
                 return "profile"
             case .updateLocation:
                 return "location"
+            case .updateUserProfile:
+                return "profile"
         }
     }
     
@@ -36,6 +39,8 @@ extension UserAPI: TargetType {
             case .getUserProfile:
                 return .get
             case .updateLocation:
+                return .post
+            case .updateUserProfile:
                 return .post
         }
     }
@@ -53,6 +58,8 @@ extension UserAPI: TargetType {
                 return .requestPlain
             case let .updateLocation(locationRequest):
                 return .requestData(try! JSONEncoder().encode(locationRequest))
+            case let .updateUserProfile(userRequest):
+                return .requestData(try! JSONEncoder().encode(userRequest))
         }
     }
     

@@ -34,4 +34,12 @@ class UserRemote {
                 return response.message
             }
     }
+    
+    func updateUser(userRequest: UserRequest) -> Single<String> {
+        return provider.rx.request(.updateUserProfile(userRequest: userRequest))
+            .map(MessageResponse.self, using: JSONDecoder())
+            .map { response in
+                return response.message
+            }
+    }
 }

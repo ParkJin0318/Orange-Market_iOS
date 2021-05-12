@@ -25,25 +25,32 @@ class MyInfoViewController: ASDKViewController<MyInfoViewContainer> {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bind()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
+        viewModel.getProfile()
     }
     
-    func presentSalesListView() {
+    private func presentSalesListView() {
         self.present(type: ProductType.sales)
     }
     
-    func presentLikeListView() {
+    private func presentLikeListView() {
         self.present(type: ProductType.like)
     }
     
-    func present(type: ProductType) {
+    private func present(type: ProductType) {
         let vc = SalesListViewController().then {
             $0.type = type
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func presentMyInfoEditView() {
+        let vc = MyInfoEditViewController().then {
+            $0.hidesBottomBarWhenPushed = true
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -54,7 +61,7 @@ extension MyInfoViewController: ViewControllerType {
     func initNode() {
         self.node.do { container in
             container.backgroundColor = .systemBackground
-            container.profileOpenNode.setAttributedTitle("프로필 보기".toAttributed(color: .label, ofSize: 12), for: .normal)
+            container.profileEditNode.setAttributedTitle("프로필 수정".toAttributed(color: .label, ofSize: 12), for: .normal)
             container.profileNode.profileImageNode.style.preferredSize = CGSize(width: 70, height: 70)
             container.profileNode.profileImageNode.cornerRadius = 70 / 2
             container.profileNode.viewNode.isHidden = true
@@ -85,6 +92,11 @@ extension MyInfoViewController: ViewControllerType {
         node.attentionNode
             .rx.tap
             .bind(onNext: presentLikeListView)
+            .disposed(by: disposeBag)
+        
+        node.profileEditNode
+            .rx.tap
+            .bind(onNext: presentMyInfoEditView)
             .disposed(by: disposeBag)
             
         let userData = viewModel.output.userData.share()
