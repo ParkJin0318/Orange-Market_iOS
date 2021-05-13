@@ -51,6 +51,11 @@
 		8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */; };
 		8D64381326097A0900F7C5FE /* MyInfoViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */; };
 		8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */; };
+		8D6E10F6264CFA570085608C /* TownLifeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F5264CFA570085608C /* TownLifeAPI.swift */; };
+		8D6E10F8264CFB080085608C /* TownLifeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F7264CFB080085608C /* TownLifeRequest.swift */; };
+		8D6E10FA264CFF3A0085608C /* TownLifeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F9264CFF3A0085608C /* TownLifeData.swift */; };
+		8D6E10FC264D002E0085608C /* TownLifeRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10FB264D002E0085608C /* TownLifeRemote.swift */; };
+		8D6E10FE264D01990085608C /* TownLifeCommentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10FD264D01990085608C /* TownLifeCommentData.swift */; };
 		8D6E3128260B098A004FCB1A /* ViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E3127260B098A004FCB1A /* ViewControllerType.swift */; };
 		8D6E3131260B14B0004FCB1A /* IdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E3130260B14B0004FCB1A /* IdViewController.swift */; };
 		8D6E3135260B1627004FCB1A /* InputViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E3134260B1627004FCB1A /* InputViewContainer.swift */; };
@@ -156,6 +161,11 @@
 		8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewContainer.swift; sourceTree = "<group>"; };
 		8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
+		8D6E10F5264CFA570085608C /* TownLifeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeAPI.swift; sourceTree = "<group>"; };
+		8D6E10F7264CFB080085608C /* TownLifeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeRequest.swift; sourceTree = "<group>"; };
+		8D6E10F9264CFF3A0085608C /* TownLifeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeData.swift; sourceTree = "<group>"; };
+		8D6E10FB264D002E0085608C /* TownLifeRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeRemote.swift; sourceTree = "<group>"; };
+		8D6E10FD264D01990085608C /* TownLifeCommentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeCommentData.swift; sourceTree = "<group>"; };
 		8D6E3127260B098A004FCB1A /* ViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerType.swift; sourceTree = "<group>"; };
 		8D6E3130260B14B0004FCB1A /* IdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdViewController.swift; sourceTree = "<group>"; };
 		8D6E3134260B1627004FCB1A /* InputViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewContainer.swift; sourceTree = "<group>"; };
@@ -554,6 +564,7 @@
 				8DC864B625FF04DD0081F52C /* UserAPI.swift */,
 				8DC864D925FF18EB0081F52C /* ProductAPI.swift */,
 				8D2F989E2600437800C8BE0C /* UploadAPI.swift */,
+				8D6E10F5264CFA570085608C /* TownLifeAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -566,6 +577,7 @@
 				8D96E5B326006F9F00A1292D /* ProductRequest.swift */,
 				8DB670172612CC17006A3FD0 /* LocationRequest.swift */,
 				8DA0BC6E264BB517006C8CE7 /* UserRequest.swift */,
+				8D6E10F7264CFB080085608C /* TownLifeRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -597,9 +609,10 @@
 			isa = PBXGroup;
 			children = (
 				8DC8648425FEE6010081F52C /* AuthRemote.swift */,
-				8DC864DC25FF1A430081F52C /* ProductRemote.swift */,
 				8D2F98A12600469500C8BE0C /* UploadRemote.swift */,
 				8D475FA62602F84700F2911F /* UserRemote.swift */,
+				8DC864DC25FF1A430081F52C /* ProductRemote.swift */,
+				8D6E10FB264D002E0085608C /* TownLifeRemote.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -611,6 +624,8 @@
 				8DC864BC25FF05C70081F52C /* UserData.swift */,
 				8DC864DF25FF1AA70081F52C /* ProductData.swift */,
 				8D8F370F26366786008196D0 /* CategoryData.swift */,
+				8D6E10F9264CFF3A0085608C /* TownLifeData.swift */,
+				8D6E10FD264D01990085608C /* TownLifeCommentData.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -812,6 +827,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D6E10FA264CFF3A0085608C /* TownLifeData.swift in Sources */,
 				8D2F98A826004C9500C8BE0C /* UploadRepositoryImpl.swift in Sources */,
 				8D475FA22602DB9500F2911F /* ProductDetailViewContainer.swift in Sources */,
 				8DC864EA25FF1E180081F52C /* HomeViewContainer.swift in Sources */,
@@ -823,8 +839,10 @@
 				8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */,
 				8DA542A92640EC880084FB5D /* SalesListViewController.swift in Sources */,
 				8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */,
+				8D6E10F6264CFA570085608C /* TownLifeAPI.swift in Sources */,
 				8D19EFC42638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift in Sources */,
 				8DC864D725FF088E0081F52C /* HomeViewModel.swift in Sources */,
+				8D6E10FC264D002E0085608C /* TownLifeRemote.swift in Sources */,
 				8DDC18EF264B9721009697E4 /* MyInfoEditViewContainer.swift in Sources */,
 				8D59EB77263A723F001AB8C4 /* CategoryCell.swift in Sources */,
 				8D8F371026366786008196D0 /* CategoryData.swift in Sources */,
@@ -870,6 +888,7 @@
 				8D8F3713263669A2008196D0 /* Category.swift in Sources */,
 				8DDC18ED264B9286009697E4 /* MyInfoEditViewModel.swift in Sources */,
 				8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */,
+				8D6E10F8264CFB080085608C /* TownLifeRequest.swift in Sources */,
 				8DC864C325FF06D30081F52C /* UserRepository.swift in Sources */,
 				8DC864AA25FEF6390081F52C /* SplashViewContoller.swift in Sources */,
 				8D724D5726379A3900613B5A /* ASCheckBoxNode.swift in Sources */,
@@ -903,6 +922,7 @@
 				8D2F98A22600469500C8BE0C /* UploadRemote.swift in Sources */,
 				8D6E3131260B14B0004FCB1A /* IdViewController.swift in Sources */,
 				8DB670182612CC17006A3FD0 /* LocationRequest.swift in Sources */,
+				8D6E10FE264D01990085608C /* TownLifeCommentData.swift in Sources */,
 				8D64381326097A0900F7C5FE /* MyInfoViewContainer.swift in Sources */,
 				8D0EA9D825FAF95000514930 /* LoginViewContainer.swift in Sources */,
 				8D337BDE260846330042B1A0 /* ProfileNode.swift in Sources */,

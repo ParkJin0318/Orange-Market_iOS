@@ -93,7 +93,7 @@ extension ProductAPI: TargetType {
             case let .saveProduct(productRequest):
                 return .requestData(try! JSONEncoder().encode(productRequest))
                 
-            case let .likeProduct(idx):
+            case .likeProduct:
                 return .requestPlain
                 
             case let .updateProduct(_, productRequest):

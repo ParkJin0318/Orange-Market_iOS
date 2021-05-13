@@ -10,9 +10,4 @@ import Foundation
 struct LoginRequest: Codable {
     let userId: String
     let userPw: String
-    
-    init(userId: String, userPw: String) {
-        self.userId = userId
-        self.userPw = userPw
-    }
 }

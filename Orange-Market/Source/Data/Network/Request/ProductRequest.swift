@@ -16,16 +16,4 @@ struct ProductRequest: Codable {
     var userIdx: Int
     var city: String
     var imageList: Array<String>
-    
-    init(categoryIdx: Int, title: String, contents: String, price: String,
-         isSold: Int, userIdx: Int, city: String, imageList: Array<String>) {
-        self.categoryIdx = categoryIdx
-        self.title = title
-        self.contents = contents
-        self.price = price
-        self.isSold = isSold
-        self.userIdx = userIdx
-        self.city = city
-        self.imageList = imageList
-    }
 }
