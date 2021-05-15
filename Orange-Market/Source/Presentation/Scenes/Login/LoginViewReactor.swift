@@ -16,7 +16,7 @@ class LoginViewReactor: Reactor {
         isEnabledLogin: false,
         isSuccessLogin: false,
         isLoading: false,
-        onErrorMessage: nil
+        errorMessage: nil
     )
     
     enum Action {
@@ -41,7 +41,7 @@ class LoginViewReactor: Reactor {
         var isEnabledLogin: Bool
         var isSuccessLogin: Bool
         var isLoading: Bool
-        var onErrorMessage: String?
+        var errorMessage: String?
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -59,7 +59,6 @@ class LoginViewReactor: Reactor {
             case let .login(loginRequest):
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    validate(.login(loginRequest)),
                     repository.login(loginRequest: loginRequest)
                         .asObservable()
                         .map { Mutation.setSuccessLogin(true) },
@@ -70,7 +69,7 @@ class LoginViewReactor: Reactor {
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
-        state.onErrorMessage = nil
+        state.errorMessage = nil
         
         switch mutation {
             case let .setUserId(id):
@@ -96,28 +95,10 @@ class LoginViewReactor: Reactor {
                 state.isLoading = isLoading
                 
             case let .setError(error):
-                state.onErrorMessage = error.toMessage()
+                state.errorMessage = error.toMessage()
                 state.isLoading = false
-                state.isSuccessLogin = false
         }
         return state
     }
     
-}
-
-extension LoginViewReactor {
-    
-    private func validate(_ action: Action) -> Observable<Mutation> {
-        switch action {
-            case let .login(loginRequest):
-                if (loginRequest.userId.isEmpty) {
-                    return .error(OrangeError.error(message: "아이디를 입력해주세요"))
-                } else if (loginRequest.userPw.isEmpty) {
-                    return .error(OrangeError.error(message: "비밀번호를 입력해주세요"))
-                }
-            default:
-                break
-        }
-        return Observable.empty()
-    }
 }

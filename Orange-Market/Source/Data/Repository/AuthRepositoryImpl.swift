@@ -20,7 +20,10 @@ class AuthRepositoryImpl: AuthRepository {
             }
     }
     
-    func register(registerRequest: RegisterRequest) -> Completable {
-        return remote.register(registerRequest: registerRequest).asCompletable()
+    func register(registerRequest: RegisterRequest) -> Single<Void> {
+        return remote.register(registerRequest: registerRequest)
+            .flatMap { _ -> Single<Void> in
+                .just(Void())
+            }
     }
 }

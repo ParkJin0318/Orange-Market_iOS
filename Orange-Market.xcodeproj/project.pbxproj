@@ -45,7 +45,6 @@
 		8D59EB77263A723F001AB8C4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D59EB76263A723F001AB8C4 /* CategoryCell.swift */; };
 		8D631508260D690300EB3540 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D631507260D690300EB3540 /* RegisterViewController.swift */; };
 		8D63150C260D6AB800EB3540 /* RegisterViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D63150B260D6AB800EB3540 /* RegisterViewContainer.swift */; };
-		8D63150F260D76C100EB3540 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D63150E260D76C000EB3540 /* RegisterViewModel.swift */; };
 		8D6438092609779A00F7C5FE /* MyInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6438082609779A00F7C5FE /* MyInfoEditViewController.swift */; };
 		8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */; };
 		8D64381326097A0900F7C5FE /* MyInfoViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */; };
@@ -63,6 +62,7 @@
 		8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */; };
 		8D8F371026366786008196D0 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F370F26366786008196D0 /* CategoryData.swift */; };
 		8D8F3713263669A2008196D0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F3712263669A2008196D0 /* Category.swift */; };
+		8D94440C2650148D00582B6F /* RegisterViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D94440B2650148D00582B6F /* RegisterViewReactor.swift */; };
 		8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D96E5B326006F9F00A1292D /* ProductRequest.swift */; };
 		8D979EE62610670200E9DC32 /* ProductScrollNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D979EE52610670200E9DC32 /* ProductScrollNode.swift */; };
 		8DA0BC6F264BB517006C8CE7 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA0BC6E264BB517006C8CE7 /* UserRequest.swift */; };
@@ -155,7 +155,6 @@
 		8D59EB76263A723F001AB8C4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		8D631507260D690300EB3540 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		8D63150B260D6AB800EB3540 /* RegisterViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewContainer.swift; sourceTree = "<group>"; };
-		8D63150E260D76C000EB3540 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		8D6438082609779A00F7C5FE /* MyInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoEditViewController.swift; sourceTree = "<group>"; };
 		8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewContainer.swift; sourceTree = "<group>"; };
@@ -173,6 +172,7 @@
 		8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Ex.swift"; sourceTree = "<group>"; };
 		8D8F370F26366786008196D0 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 		8D8F3712263669A2008196D0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		8D94440B2650148D00582B6F /* RegisterViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewReactor.swift; sourceTree = "<group>"; };
 		8D96E5B326006F9F00A1292D /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
 		8D979EE52610670200E9DC32 /* ProductScrollNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScrollNode.swift; sourceTree = "<group>"; };
 		8DA0BC6E264BB517006C8CE7 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
@@ -399,7 +399,7 @@
 				8D6E3133260B1618004FCB1A /* Components */,
 				8D631507260D690300EB3540 /* RegisterViewController.swift */,
 				8D63150B260D6AB800EB3540 /* RegisterViewContainer.swift */,
-				8D63150E260D76C000EB3540 /* RegisterViewModel.swift */,
+				8D94440B2650148D00582B6F /* RegisterViewReactor.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -903,7 +903,6 @@
 				8D631508260D690300EB3540 /* RegisterViewController.swift in Sources */,
 				8DCA58C9260C5A7E00A775B0 /* PwViewController.swift in Sources */,
 				8D2F989926002BFF00C8BE0C /* ProductAddViewContainer.swift in Sources */,
-				8D63150F260D76C100EB3540 /* RegisterViewModel.swift in Sources */,
 				8DC1E11E25FAE8B200A1CA7E /* UIView+Ex.swift in Sources */,
 				8D4FABEE2601FFEB00D8701A /* ProductDetailViewController.swift in Sources */,
 				8D456E572627D630007DA760 /* IconButtonNode.swift in Sources */,
@@ -921,6 +920,7 @@
 				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,
 				8D2F98A22600469500C8BE0C /* UploadRemote.swift in Sources */,
 				8D6E3131260B14B0004FCB1A /* IdViewController.swift in Sources */,
+				8D94440C2650148D00582B6F /* RegisterViewReactor.swift in Sources */,
 				8DB670182612CC17006A3FD0 /* LocationRequest.swift in Sources */,
 				8D6E10FE264D01990085608C /* TownLifeCommentData.swift in Sources */,
 				8D64381326097A0900F7C5FE /* MyInfoViewContainer.swift in Sources */,

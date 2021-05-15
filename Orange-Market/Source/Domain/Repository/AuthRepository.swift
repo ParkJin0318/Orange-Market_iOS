@@ -10,5 +10,5 @@ import RxSwift
 
 protocol AuthRepository {
     func login(loginRequest: LoginRequest) -> Single<Void>
-    func register(registerRequest: RegisterRequest) -> Completable
+    func register(registerRequest: RegisterRequest) -> Single<Void>
 }

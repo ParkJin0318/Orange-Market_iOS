@@ -8,11 +8,11 @@
 import AsyncDisplayKit
 import RxSwift
 import MBProgressHUD
+import ReactorKit
 
-class RegisterViewController: ASDKViewController<RegisterViewContainer> {
+class RegisterViewController: ASDKViewController<RegisterViewContainer> & View {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
-    lazy var viewModel: RegisterViewModel = RegisterViewModel()
     
     var registerRequest: RegisterRequest!
     var locationManager:CLLocationManager!
@@ -33,17 +33,13 @@ class RegisterViewController: ASDKViewController<RegisterViewContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bind()
+        self.loadNode()
+        reactor = RegisterViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
-        self.loadNode()
-    }
-    
-    private func register() {
-        viewModel.register(registerRequest: self.registerRequest)
     }
     
     private func presentLoginView() {
@@ -68,10 +64,22 @@ extension RegisterViewController: ViewControllerType {
     }
     
     func loadNode() {
+        let request = Observable.just(registerRequest)
+            .filter { $0 != nil }
+            .share()
+        
         self.node.do { container in
-            container.idNode.attributedText = registerRequest.userId?.toAttributed(color: .label, ofSize: 14)
-            container.nameNode.attributedText = registerRequest.name?.toAttributed(color: .label, ofSize: 14)
-            container.locationNode.attributedText = registerRequest.location?.toAttributed(color: .label, ofSize: 14)
+            request.map { $0?.userId?.toAttributed(color: .label, ofSize: 14) }
+                .bind(to: container.idNode.rx.attributedText)
+                .disposed(by: disposeBag)
+            
+            request.map { $0?.name?.toAttributed(color: .label, ofSize: 14) }
+                .bind(to: container.nameNode.rx.attributedText)
+                .disposed(by: disposeBag)
+            
+            request.map { $0?.location?.toAttributed(color: .label, ofSize: 14) }
+                .bind(to: container.locationNode.rx.attributedText)
+                .disposed(by: disposeBag)
         }
     }
     
@@ -84,11 +92,12 @@ extension RegisterViewController: ViewControllerType {
         }
     }
     
-    func bind() {
-        // input
-        completeButton
-            .rx.tap
-            .bind(onNext: register)
+    func bind(reactor: RegisterViewReactor) {
+        // Action
+        completeButton.rx.tap
+            .withUnretained(self)
+            .map { .register($0.0.registerRequest) }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         node.addButton
@@ -96,28 +105,44 @@ extension RegisterViewController: ViewControllerType {
             .bind(onNext: presentImagePicker)
             .disposed(by: disposeBag)
         
-        // output
-        let imageUrl = viewModel.output.imageUrl.share()
+        // State
+        reactor.state.map { $0.isSuccessRegister }
+            .filter { $0 }
+            .withUnretained(self)
+            .bind { $0.0.presentLoginView() }
+            .disposed(by: disposeBag)
         
-        imageUrl
-            .map { $0.toUrl() }
+        let isSuccessUploadImage = reactor.state
+            .map { $0.isSuccessUploadImage }
+            .share()
+        
+        isSuccessUploadImage
+            .filter { $0 != nil }
+            .map { $0!.toUrl() }
             .bind(to: node.profileImageNode.rx.url)
             .disposed(by: disposeBag)
         
-        imageUrl
+        isSuccessUploadImage
             .withUnretained(self)
-            .bind { owner, value in
-                owner.registerRequest.profileImage = value
-            }.disposed(by: disposeBag)
+            .bind { $0.0.registerRequest.profileImage = $0.1 }
+            .disposed(by: disposeBag)
         
-        viewModel.output.isRegister
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
             .withUnretained(self)
             .bind { owner, value in
                 if (value) {
-                    owner.presentLoginView()
+                    MBProgressHUD.loading(from: owner.view)
                 } else {
-                    MBProgressHUD.errorShow("회원가입 실패", from: owner.view)
+                    MBProgressHUD.hide(for: owner.view, animated: true)
                 }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
             }.disposed(by: disposeBag)
     }
 }
@@ -135,8 +160,12 @@ extension RegisterViewController: UINavigationControllerDelegate & UIImagePicker
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as? UIImage
-        viewModel.uploadImage(image: image!)
+        if let reactor = self.reactor, let image = info[.originalImage] as? UIImage {
+            Observable.just(image)
+                .map { .uploadImage($0) }
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
         dismiss(animated: true, completion: nil)
     }
 }

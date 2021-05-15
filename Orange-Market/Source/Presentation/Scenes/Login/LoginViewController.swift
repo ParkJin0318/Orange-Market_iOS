@@ -159,7 +159,7 @@ extension LoginViewController: ViewControllerType {
                 }
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.onErrorMessage }
+        reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
             .withUnretained(self)
             .bind { owner, value in
