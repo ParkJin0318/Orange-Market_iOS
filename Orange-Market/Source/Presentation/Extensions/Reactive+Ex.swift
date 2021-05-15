@@ -27,8 +27,17 @@ public extension Reactive where Base: MoyaProviderType {
                             single(.success(response))
                             
                         case let .failure(error):
-                            let errorBody = (try? error.response?.mapJSON() as? Dictionary<String, String>) ?? Dictionary()
-                            single(.failure(OrangeError.error(message: errorBody["message"] ?? "네트워크 오류")))
+                            var errorMessage: String = "네트워크 오류"
+                            
+                            if let response = error.response {
+                                let response = try? JSONDecoder().decode(MessageResponse.self, from: response.data)
+                                
+                                if let message = response?.message {
+                                    errorMessage = message
+                                }
+                            }
+                            
+                            single(.failure(OrangeError.error(message: errorMessage)))
                     }
                 }
 

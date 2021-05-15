@@ -45,7 +45,6 @@ class LoginViewContainer: ASDisplayNode {
         $0.style.preferredSize = CGSize(width: width - 40, height: 50)
         $0.backgroundColor = .lightGray
         $0.cornerRadius = 5
-        $0.isEnabled = false
     }
     
     lazy var guideNode = ASTextNode().then {

@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import RxSwift
 
 struct LoginRequest: Codable {
-    let userId: String
-    let userPw: String
+    var userId: String
+    var userPw: String
 }

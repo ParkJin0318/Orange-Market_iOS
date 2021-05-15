@@ -21,6 +21,9 @@ PODS:
   - PINRemoteImage/PINCache (3.0.3):
     - PINCache (~> 3.0.3)
     - PINRemoteImage/Core
+  - ReactorKit (3.0.0):
+    - RxSwift (~> 6.0)
+    - WeakMapTable (~> 1.1)
   - Realm (10.7.4):
     - Realm/Headers (= 10.7.4)
   - Realm/Headers (10.7.4)
@@ -57,12 +60,14 @@ PODS:
   - Texture/Video (3.0.0):
     - Texture/Core
   - Then (2.7.0)
+  - WeakMapTable (1.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.4.1)
   - BEMCheckBox
   - MBProgressHUD (~> 1.2.0)
   - Moya (~> 14.0)
+  - ReactorKit
   - RealmSwift
   - RxTexture2 (~> 1.3.0)
   - Then
@@ -76,6 +81,7 @@ SPEC REPOS:
     - PINCache
     - PINOperation
     - PINRemoteImage
+    - ReactorKit
     - Realm
     - RealmSwift
     - RxCocoa
@@ -84,6 +90,7 @@ SPEC REPOS:
     - RxTexture2
     - Texture
     - Then
+    - WeakMapTable
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
@@ -93,6 +100,7 @@ SPEC CHECKSUMS:
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
+  ReactorKit: 5348c9881dcb546605b451e32759dccc9937d36e
   Realm: f08ce1a85649a41303ecfe1cbd914c62e9e6d710
   RealmSwift: 60ec49d165f23d040ab48811d8dd177e09baf4d3
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
@@ -101,7 +109,8 @@ SPEC CHECKSUMS:
   RxTexture2: afc37076fc7ac380642d569533ed858d296732fe
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
+  WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 159d992a0bf006fb0f283e86fca1e9e030b18f5a
+PODFILE CHECKSUM: 1fdd1194730cd855cc040862e6032c0f84fc218d
 
 COCOAPODS: 1.10.1

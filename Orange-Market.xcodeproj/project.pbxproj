@@ -11,7 +11,6 @@
 		8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D041E7A2627FAFC00AF9E7F /* OrangeError.swift */; };
 		8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9D125FAF8F800514930 /* LoginViewController.swift */; };
 		8D0EA9D825FAF95000514930 /* LoginViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9D725FAF95000514930 /* LoginViewContainer.swift */; };
-		8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9DB25FB020100514930 /* LoginViewModel.swift */; };
 		8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA9E025FB023E00514930 /* ViewModelType.swift */; };
 		8D148FBF26367D0000406E86 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FBE26367D0000406E86 /* CategoryViewController.swift */; };
 		8D148FC22636B9AA00406E86 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */; };
@@ -51,6 +50,7 @@
 		8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */; };
 		8D64381326097A0900F7C5FE /* MyInfoViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */; };
 		8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */; };
+		8D6D8AF7264FB2250079098A /* LoginViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6D8AF6264FB2250079098A /* LoginViewReactor.swift */; };
 		8D6E10F6264CFA570085608C /* TownLifeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F5264CFA570085608C /* TownLifeAPI.swift */; };
 		8D6E10F8264CFB080085608C /* TownLifeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F7264CFB080085608C /* TownLifeRequest.swift */; };
 		8D6E10FA264CFF3A0085608C /* TownLifeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F9264CFF3A0085608C /* TownLifeData.swift */; };
@@ -121,7 +121,6 @@
 		8D041E7A2627FAFC00AF9E7F /* OrangeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrangeError.swift; sourceTree = "<group>"; };
 		8D0EA9D125FAF8F800514930 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8D0EA9D725FAF95000514930 /* LoginViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewContainer.swift; sourceTree = "<group>"; };
-		8D0EA9DB25FB020100514930 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		8D0EA9E025FB023E00514930 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		8D148FBE26367D0000406E86 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		8D148FC12636B9AA00406E86 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
@@ -161,6 +160,7 @@
 		8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewContainer.swift; sourceTree = "<group>"; };
 		8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
+		8D6D8AF6264FB2250079098A /* LoginViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewReactor.swift; sourceTree = "<group>"; };
 		8D6E10F5264CFA570085608C /* TownLifeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeAPI.swift; sourceTree = "<group>"; };
 		8D6E10F7264CFB080085608C /* TownLifeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeRequest.swift; sourceTree = "<group>"; };
 		8D6E10F9264CFF3A0085608C /* TownLifeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeData.swift; sourceTree = "<group>"; };
@@ -251,7 +251,7 @@
 			children = (
 				8D0EA9D125FAF8F800514930 /* LoginViewController.swift */,
 				8D0EA9D725FAF95000514930 /* LoginViewContainer.swift */,
-				8D0EA9DB25FB020100514930 /* LoginViewModel.swift */,
+				8D6D8AF6264FB2250079098A /* LoginViewReactor.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -913,12 +913,12 @@
 				8D148FBF26367D0000406E86 /* CategoryViewController.swift in Sources */,
 				8D19EFCC2639381D00DB654E /* CategoryListViewModel.swift in Sources */,
 				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
+				8D6D8AF7264FB2250079098A /* LoginViewReactor.swift in Sources */,
 				8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */,
 				8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */,
 				8DC864DA25FF18EB0081F52C /* ProductAPI.swift in Sources */,
 				8D475FA72602F84700F2911F /* UserRemote.swift in Sources */,
 				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,
-				8D0EA9DC25FB020100514930 /* LoginViewModel.swift in Sources */,
 				8D2F98A22600469500C8BE0C /* UploadRemote.swift in Sources */,
 				8D6E3131260B14B0004FCB1A /* IdViewController.swift in Sources */,
 				8DB670182612CC17006A3FD0 /* LocationRequest.swift in Sources */,
