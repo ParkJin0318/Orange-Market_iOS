@@ -8,7 +8,7 @@
 import AsyncDisplayKit
 import BEMCheckBox
 
-class CategoryViewContainer: ASDisplayNode {
+class CategorySelectViewContainer: ASDisplayNode {
     
     lazy var titleNode = ASTextNode().then {
         $0.style.flexShrink = 1

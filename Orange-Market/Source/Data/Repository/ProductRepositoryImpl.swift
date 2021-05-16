@@ -79,7 +79,7 @@ class ProductRepositoryImpl: ProductRepository {
             }
     }
     
-    func updateCategory(idx: Int) -> Completable {
+    func updateCategory(idx: Int) -> Single<Void> {
         return categoryCache.updateCategory(idx: idx)
     }
     

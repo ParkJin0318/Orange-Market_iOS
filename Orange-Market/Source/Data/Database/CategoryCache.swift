@@ -73,10 +73,10 @@ class CategoryCache {
         }
     }
     
-    func updateCategory(idx: Int) -> Completable {
-        return Completable.create { [weak self] emitter in
+    func updateCategory(idx: Int) -> Single<Void> {
+        return Single.create { [weak self] emitter in
             guard let self = self else {
-                emitter(.error(OrangeError.error(message: "업데이트 성공")))
+                emitter(.failure(OrangeError.error(message: "업데이트 성공")))
                 return Disposables.create()
             }
             
@@ -88,10 +88,10 @@ class CategoryCache {
                         category.isSelected = !category.isSelected
                     }
                 }
-                emitter(.completed)
+                emitter(.success(Void()))
             }
             catch {
-                emitter(.error(OrangeError.error(message: "업데이트 실패")))
+                emitter(.failure(OrangeError.error(message: "업데이트 실패")))
             }
             
             return Disposables.create()

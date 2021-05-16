@@ -6,12 +6,14 @@
 //
 
 import AsyncDisplayKit
+import ReactorKit
 import RxSwift
+import MBProgressHUD
 
-class HomeViewController: ASDKViewController<HomeViewContainer> {
+class HomeViewController: ASDKViewController<HomeViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    lazy var viewModel = HomeViewModel()
+    lazy var products: [Product] = []
     
     private lazy var writeButton = UIButton().then {
         $0.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
@@ -35,13 +37,18 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        self.bind()
+        reactor = HomeViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
-        viewModel.getProducts()
+        
+        if let reactor = self.reactor {
+            Observable.just(.fetchProduct)
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     private func presentProductAddView() {
@@ -51,7 +58,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     }
     
     private func presentCategoryView() {
-        self.navigationController?.pushViewController(CategoryViewController().then {
+        self.navigationController?.pushViewController(CategorySelectViewController().then {
             $0.hidesBottomBarWhenPushed = true
         }, animated: true)
     }
@@ -93,7 +100,7 @@ extension HomeViewController: ViewControllerType {
         ]
     }
     
-    func bind() {
+    func bind(reactor: HomeViewReactor) {
         // input
         writeButton.rx.tap
             .bind(onNext: presentProductAddView)
@@ -104,17 +111,30 @@ extension HomeViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         // output
-        viewModel.output.city
+        reactor.state.map { $0.products }
             .withUnretained(self)
-            .bind(onNext: { owner, value in
-                owner.navigationController?.navigationBar.topItem?.title = value
+            .bind { owner, products in
+                owner.products = products
                 owner.node.collectionNode.reloadData()
-            }).disposed(by: disposeBag)
+                owner.navigationController?.navigationBar.topItem?.title = products.first?.city
+            }.disposed(by: disposeBag)
         
-        viewModel.output.onFailureEvent
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
             .withUnretained(self)
             .bind { owner, value in
-                owner.moveToStart()
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
             }.disposed(by: disposeBag)
     }
 }
@@ -129,7 +149,7 @@ extension HomeViewController: ASCollectionDelegate {
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        let item = viewModel.output.productList[indexPath.row]
+        let item = products[indexPath.row]
         
         let vc = ProductDetailViewController().then {
             $0.idx = item.idx
@@ -145,12 +165,12 @@ extension HomeViewController: ASCollectionDataSource {
     }
         
     func collectionNode(_ collectionNzode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.output.productList.count
+        return products.count
     }
         
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.viewModel.output.productList[indexPath.row]
+            let item = self?.products[indexPath.row]
             let cell = ProductCell()
             cell.setupNode(product: item!)
             

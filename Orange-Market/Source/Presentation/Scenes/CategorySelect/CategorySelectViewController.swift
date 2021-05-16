@@ -6,16 +6,18 @@
 //
 
 import AsyncDisplayKit
+import ReactorKit
 import RxSwift
 import BEMCheckBox
+import MBProgressHUD
 
-class CategoryViewController: ASDKViewController<CategoryViewContainer> {
+class CategorySelectViewController: ASDKViewController<CategorySelectViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    lazy var viewModel = CategoryViewModel()
+    lazy var categories: [Category] = []
     
     override init() {
-        super.init(node: CategoryViewContainer())
+        super.init(node: CategorySelectViewContainer())
         self.initNode()
     }
     
@@ -25,8 +27,14 @@ class CategoryViewController: ASDKViewController<CategoryViewContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bind()
-        viewModel.getAllCategory()
+        self.loadNode()
+        reactor = CategorySelectViewReactor()
+        
+        if let reactor = self.reactor {
+            Observable.just(.fetchCategory)
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,7 +43,7 @@ class CategoryViewController: ASDKViewController<CategoryViewContainer> {
     }
 }
 
-extension CategoryViewController: ViewControllerType {
+extension CategorySelectViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
@@ -59,20 +67,52 @@ extension CategoryViewController: ViewControllerType {
         self.navigationController?.navigationBar.tintColor = .label
     }
     
-    func bind() {
-        viewModel.output.onReloadEvent
+    func bind(reactor: CategorySelectViewReactor) {
+        reactor.state.map { $0.categories }
+            .withUnretained(self)
+            .bind { $0.0.categories = $0.1 }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isUpdateCategory }
+            .filter { $0 }
+            .bind { _ in
+                print("성공")
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isReloadData }
             .filter { $0 }
             .withUnretained(self)
+            .bind { $0.0.node.collectionNode.reloadData() }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .withUnretained(self)
             .bind { owner, value in
-                owner.node.collectionNode.reloadData()
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
             }.disposed(by: disposeBag)
     }
 }
 
-extension CategoryViewController: ASCollectionDelegate, CategoryCheckBoxCellDelegate {
+extension CategorySelectViewController: ASCollectionDelegate, CategoryCheckBoxCellDelegate {
     
     func setCheckedCategory(idx: Int) {
-        viewModel.updateCategory(idx: idx)
+        if let reactor = self.reactor {
+            Observable.just(.updateCategory(idx))
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
@@ -83,19 +123,19 @@ extension CategoryViewController: ASCollectionDelegate, CategoryCheckBoxCellDele
     }
 }
 
-extension CategoryViewController: ASCollectionDataSource {
+extension CategorySelectViewController: ASCollectionDataSource {
     
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
     }
         
     func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.output.categoryList.count
+        return categories.count
     }
         
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.viewModel.output.categoryList[indexPath.row]
+            let item = self?.categories[indexPath.row]
             
             return CategoryCheckBoxCell().then {
                 $0.delegate = self
