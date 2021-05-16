@@ -66,7 +66,7 @@ class CategorySelectViewReactor: Reactor {
         switch mutation {
             case let .setAllCategory(categories):
                 state.categories = categories
-                state.isReloadData = state.categories.count != categories.count
+                state.isReloadData = !categories.map { $0.idx }.elementsEqual(state.categories.map { $0.idx })
                 
             case let .updateCategory(isUpdate):
                 state.isUpdateCategory = isUpdate

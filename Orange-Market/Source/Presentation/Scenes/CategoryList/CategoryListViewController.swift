@@ -6,12 +6,14 @@
 //
 
 import AsyncDisplayKit
+import ReactorKit
 import RxSwift
+import MBProgressHUD
 
-class CategoryListViewController: ASDKViewController<CategoryListViewContainer> {
+class CategoryListViewController: ASDKViewController<CategoryListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    lazy var viewModel = CategoryListViewModel()
+    lazy var categories: [Category] = []
     
     var selectCategory: Category!
     
@@ -27,8 +29,13 @@ class CategoryListViewController: ASDKViewController<CategoryListViewContainer> 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        self.bind()
-        viewModel.getAllCategory()
+        reactor = CategoryListViewReactor()
+        
+        if let reactor = self.reactor {
+            Observable.just(.fetchCategory)
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,21 +60,41 @@ extension CategoryListViewController: ViewControllerType {
         }
     }
     
-    func loadNode() {
-        
-    }
+    func loadNode() { }
     
     func setupNavigationBar() {
         self.navigationItem.title = "카테고리 선택"
         self.navigationController?.navigationBar.tintColor = .label
     }
     
-    func bind() {
-        viewModel.output.onReloadEvent
+    func bind(reactor: CategoryListViewReactor) {
+        reactor.state.map { $0.categories }
+            .withUnretained(self)
+            .bind { $0.0.categories = $0.1 }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isReloadData }
             .filter { $0 }
             .withUnretained(self)
+            .bind { $0.0.node.tableNode.reloadData() }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .withUnretained(self)
             .bind { owner, value in
-                owner.node.tableNode.reloadData()
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
             }.disposed(by: disposeBag)
     }
 }
@@ -82,7 +109,7 @@ extension CategoryListViewController: ASTableDelegate {
     }
     
     func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        let item = viewModel.output.categoryList[indexPath.row]
+        let item = categories[indexPath.row]
         selectCategory = item
         popViewController()
     }
@@ -95,12 +122,12 @@ extension CategoryListViewController: ASTableDataSource {
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.output.categoryList.count
+        return categories.count
     }
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.viewModel.output.categoryList[indexPath.row]
+            let item = self?.categories[indexPath.row]
             
             return CategoryCell().then {
                 $0.setupNode(category: item!)

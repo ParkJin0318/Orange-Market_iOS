@@ -1,5 +1,5 @@
 //
-//  HomeViewReactor.swift
+//  CategoryListViewReactor.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/05/16.
@@ -7,40 +7,42 @@
 
 import ReactorKit
 
-class HomeViewReactor: Reactor {
+class CategoryListViewReactor: Reactor {
     
     private lazy var productRepository: ProductRepository = ProductRepositoryImpl()
     
     var initialState: State = State(
-        products: [],
+        categories: [],
+        isReloadData: false,
         isLoading: false,
         errorMessage: nil
     )
     
     enum Action {
-        case fetchProduct
+        case fetchCategory
     }
     
     enum Mutation {
-        case setAllProduct([Product])
+        case setAllCategory([Category])
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
-        var products: [Product]
+        var categories: [Category]
+        var isReloadData: Bool
         var isLoading: Bool
         var errorMessage: String?
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-            case .fetchProduct:
+            case .fetchCategory:
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    productRepository.getAllProduct()
+                    productRepository.getAllCategory()
                         .asObservable()
-                        .map { Mutation.setAllProduct($0.sorted(by: { $0.idx > $1.idx })) },
+                        .map { Mutation.setAllCategory($0) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
         }
@@ -51,8 +53,9 @@ class HomeViewReactor: Reactor {
         state.errorMessage = nil
         
         switch mutation {
-            case let .setAllProduct(products):
-                state.products = products
+            case let .setAllCategory(categories):
+                state.categories = categories
+                state.isReloadData = !categories.map { $0.idx }.elementsEqual(state.categories.map { $0.idx })
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

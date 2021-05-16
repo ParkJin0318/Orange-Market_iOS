@@ -18,7 +18,6 @@
 		8D19EFC42638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC32638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift */; };
 		8D19EFC826392FAE00DB654E /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC726392FAE00DB654E /* CategoryListViewController.swift */; };
 		8D19EFCA2639322300DB654E /* ArrowButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFC92639322300DB654E /* ArrowButtonNode.swift */; };
-		8D19EFCC2639381D00DB654E /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFCB2639381D00DB654E /* CategoryListViewModel.swift */; };
 		8D19EFCE2639390E00DB654E /* CategoryListViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D19EFCD2639390E00DB654E /* CategoryListViewContainer.swift */; };
 		8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E862638159B0033CDA2 /* CategoryEntity.swift */; };
 		8D279E8B26381F810033CDA2 /* CategoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8A26381F810033CDA2 /* CategoryCache.swift */; };
@@ -36,7 +35,6 @@
 		8D3CEA8C26031D0500D9486A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3CEA8B26031D0500D9486A /* User.swift */; };
 		8D3CEA9026031D7900D9486A /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3CEA8F26031D7900D9486A /* ProductDetail.swift */; };
 		8D456E572627D630007DA760 /* IconButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D456E562627D630007DA760 /* IconButtonNode.swift */; };
-		8D475F9D2602D95500F2911F /* ProductDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475F9C2602D95500F2911F /* ProductDetailViewModel.swift */; };
 		8D475FA22602DB9500F2911F /* ProductDetailViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */; };
 		8D475FA72602F84700F2911F /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA62602F84700F2911F /* UserRemote.swift */; };
 		8D475FAB2602FC1300F2911F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FAA2602FC1300F2911F /* Product.swift */; };
@@ -60,6 +58,8 @@
 		8D724D5726379A3900613B5A /* ASCheckBoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D724D5626379A3900613B5A /* ASCheckBoxNode.swift */; };
 		8D89DB262650E8B00006345E /* HomeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB252650E8B00006345E /* HomeViewReactor.swift */; };
 		8D89DB282650EF8A0006345E /* CategoryViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB272650EF8A0006345E /* CategoryViewReactor.swift */; };
+		8D89DB2A2650FB3B0006345E /* CategoryListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB292650FB3B0006345E /* CategoryListViewReactor.swift */; };
+		8D89DB2C2650FE550006345E /* ProductDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB2B2650FE550006345E /* ProductDetailViewReactor.swift */; };
 		8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */; };
 		8D8F371026366786008196D0 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F370F26366786008196D0 /* CategoryData.swift */; };
 		8D8F3713263669A2008196D0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F3712263669A2008196D0 /* Category.swift */; };
@@ -128,7 +128,6 @@
 		8D19EFC32638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCheckBoxCellDelegate.swift; sourceTree = "<group>"; };
 		8D19EFC726392FAE00DB654E /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		8D19EFC92639322300DB654E /* ArrowButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowButtonNode.swift; sourceTree = "<group>"; };
-		8D19EFCB2639381D00DB654E /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
 		8D19EFCD2639390E00DB654E /* CategoryListViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewContainer.swift; sourceTree = "<group>"; };
 		8D279E862638159B0033CDA2 /* CategoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEntity.swift; sourceTree = "<group>"; };
 		8D279E8A26381F810033CDA2 /* CategoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCache.swift; path = "Orange-Market/Source/Data/Database/CategoryCache.swift"; sourceTree = SOURCE_ROOT; };
@@ -146,7 +145,6 @@
 		8D3CEA8B26031D0500D9486A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8D3CEA8F26031D7900D9486A /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
 		8D456E562627D630007DA760 /* IconButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonNode.swift; sourceTree = "<group>"; };
-		8D475F9C2602D95500F2911F /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
 		8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewContainer.swift; sourceTree = "<group>"; };
 		8D475FA62602F84700F2911F /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
 		8D475FAA2602FC1300F2911F /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -170,6 +168,8 @@
 		8D724D5626379A3900613B5A /* ASCheckBoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCheckBoxNode.swift; sourceTree = "<group>"; };
 		8D89DB252650E8B00006345E /* HomeViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewReactor.swift; sourceTree = "<group>"; };
 		8D89DB272650EF8A0006345E /* CategoryViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewReactor.swift; sourceTree = "<group>"; };
+		8D89DB292650FB3B0006345E /* CategoryListViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewReactor.swift; sourceTree = "<group>"; };
+		8D89DB2B2650FE550006345E /* ProductDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewReactor.swift; sourceTree = "<group>"; };
 		8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Ex.swift"; sourceTree = "<group>"; };
 		8D8F370F26366786008196D0 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 		8D8F3712263669A2008196D0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -280,7 +280,7 @@
 				8D59EB75263A722F001AB8C4 /* Components */,
 				8D19EFC726392FAE00DB654E /* CategoryListViewController.swift */,
 				8D19EFCD2639390E00DB654E /* CategoryListViewContainer.swift */,
-				8D19EFCB2639381D00DB654E /* CategoryListViewModel.swift */,
+				8D89DB292650FB3B0006345E /* CategoryListViewReactor.swift */,
 			);
 			path = CategoryList;
 			sourceTree = "<group>";
@@ -347,7 +347,7 @@
 				8D475FA02602DB8800F2911F /* Components */,
 				8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */,
 				8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */,
-				8D475F9C2602D95500F2911F /* ProductDetailViewModel.swift */,
+				8D89DB2B2650FE550006345E /* ProductDetailViewReactor.swift */,
 			);
 			path = ProductDetail;
 			sourceTree = "<group>";
@@ -852,6 +852,7 @@
 				8DA0BC6F264BB517006C8CE7 /* UserRequest.swift in Sources */,
 				8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */,
 				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
+				8D89DB2A2650FB3B0006345E /* CategoryListViewReactor.swift in Sources */,
 				8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */,
 				8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */,
 				8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */,
@@ -875,7 +876,6 @@
 				8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */,
 				8D979EE62610670200E9DC32 /* ProductScrollNode.swift in Sources */,
 				8D475FAB2602FC1300F2911F /* Product.swift in Sources */,
-				8D475F9D2602D95500F2911F /* ProductDetailViewModel.swift in Sources */,
 				8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */,
 				8D148FC52636C16400406E86 /* CategorySelectViewContainer.swift in Sources */,
 				8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */,
@@ -910,7 +910,6 @@
 				8DCA2961264B6E6B0031D20F /* ProductType.swift in Sources */,
 				8DC864BD25FF05C70081F52C /* UserData.swift in Sources */,
 				8D148FBF26367D0000406E86 /* CategorySelectViewController.swift in Sources */,
-				8D19EFCC2639381D00DB654E /* CategoryListViewModel.swift in Sources */,
 				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
 				8D6D8AF7264FB2250079098A /* LoginViewReactor.swift in Sources */,
 				8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */,
@@ -919,6 +918,7 @@
 				8D475FA72602F84700F2911F /* UserRemote.swift in Sources */,
 				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,
 				8D2F98A22600469500C8BE0C /* UploadRemote.swift in Sources */,
+				8D89DB2C2650FE550006345E /* ProductDetailViewReactor.swift in Sources */,
 				8D6E3131260B14B0004FCB1A /* IdViewController.swift in Sources */,
 				8D94440C2650148D00582B6F /* RegisterViewReactor.swift in Sources */,
 				8DB670182612CC17006A3FD0 /* LocationRequest.swift in Sources */,

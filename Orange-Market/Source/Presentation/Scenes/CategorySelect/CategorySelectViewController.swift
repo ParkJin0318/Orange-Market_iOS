@@ -73,12 +73,6 @@ extension CategorySelectViewController: ViewControllerType {
             .bind { $0.0.categories = $0.1 }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isUpdateCategory }
-            .filter { $0 }
-            .bind { _ in
-                print("성공")
-            }.disposed(by: disposeBag)
-        
         reactor.state.map { $0.isReloadData }
             .filter { $0 }
             .withUnretained(self)

@@ -87,19 +87,28 @@ class ProductRepositoryImpl: ProductRepository {
         return productRemote.saveProduct(productRequest: productRequest)
     }
     
-    func likeProduct(idx: Int) -> Single<String> {
+    func likeProduct(idx: Int) -> Single<Void> {
         return productRemote.likeProduct(idx: idx)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
     
     func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<String> {
         return productRemote.updateProduct(idx: idx, productRequest: productRequest)
     }
     
-    func updateSold(idx: Int) -> Single<String> {
+    func updateSold(idx: Int) -> Single<Void> {
         return productRemote.updateSold(idx: idx)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
     
-    func deleteProduct(idx: Int) -> Single<String> {
+    func deleteProduct(idx: Int) -> Single<Void> {
         return productRemote.deleteProduct(idx: idx)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
 }
