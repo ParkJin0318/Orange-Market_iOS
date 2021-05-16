@@ -224,6 +224,24 @@ extension ProductDetailViewController: ViewControllerType {
             .withUnretained(self)
             .bind { $0.0.popViewController() }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .bind { owner, value in
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
+            }.disposed(by: disposeBag)
     }
 }
 

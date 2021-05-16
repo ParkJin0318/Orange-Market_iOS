@@ -45,7 +45,6 @@
 		8D6438092609779A00F7C5FE /* MyInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6438082609779A00F7C5FE /* MyInfoEditViewController.swift */; };
 		8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */; };
 		8D64381326097A0900F7C5FE /* MyInfoViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */; };
-		8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */; };
 		8D6D8AF7264FB2250079098A /* LoginViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6D8AF6264FB2250079098A /* LoginViewReactor.swift */; };
 		8D6E10F6264CFA570085608C /* TownLifeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F5264CFA570085608C /* TownLifeAPI.swift */; };
 		8D6E10F8264CFB080085608C /* TownLifeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6E10F7264CFB080085608C /* TownLifeRequest.swift */; };
@@ -60,6 +59,8 @@
 		8D89DB282650EF8A0006345E /* CategoryViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB272650EF8A0006345E /* CategoryViewReactor.swift */; };
 		8D89DB2A2650FB3B0006345E /* CategoryListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB292650FB3B0006345E /* CategoryListViewReactor.swift */; };
 		8D89DB2C2650FE550006345E /* ProductDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB2B2650FE550006345E /* ProductDetailViewReactor.swift */; };
+		8D89DB2E26510E990006345E /* MyInfoViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB2D26510E990006345E /* MyInfoViewReactor.swift */; };
+		8D89DB302651119D0006345E /* MyInfoEditViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D89DB2F2651119D0006345E /* MyInfoEditViewReactor.swift */; };
 		8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */; };
 		8D8F371026366786008196D0 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F370F26366786008196D0 /* CategoryData.swift */; };
 		8D8F3713263669A2008196D0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F3712263669A2008196D0 /* Category.swift */; };
@@ -110,7 +111,6 @@
 		8DCA58C9260C5A7E00A775B0 /* PwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA58C8260C5A7E00A775B0 /* PwViewController.swift */; };
 		8DCA58CD260C5CCE00A775B0 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */; };
 		8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */; };
-		8DDC18ED264B9286009697E4 /* MyInfoEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC18EC264B9286009697E4 /* MyInfoEditViewModel.swift */; };
 		8DDC18EF264B9721009697E4 /* MyInfoEditViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC18EE264B9721009697E4 /* MyInfoEditViewContainer.swift */; };
 /* End PBXBuildFile section */
 
@@ -155,7 +155,6 @@
 		8D6438082609779A00F7C5FE /* MyInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoEditViewController.swift; sourceTree = "<group>"; };
 		8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewContainer.swift; sourceTree = "<group>"; };
-		8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
 		8D6D8AF6264FB2250079098A /* LoginViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewReactor.swift; sourceTree = "<group>"; };
 		8D6E10F5264CFA570085608C /* TownLifeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeAPI.swift; sourceTree = "<group>"; };
 		8D6E10F7264CFB080085608C /* TownLifeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownLifeRequest.swift; sourceTree = "<group>"; };
@@ -170,6 +169,8 @@
 		8D89DB272650EF8A0006345E /* CategoryViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewReactor.swift; sourceTree = "<group>"; };
 		8D89DB292650FB3B0006345E /* CategoryListViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewReactor.swift; sourceTree = "<group>"; };
 		8D89DB2B2650FE550006345E /* ProductDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewReactor.swift; sourceTree = "<group>"; };
+		8D89DB2D26510E990006345E /* MyInfoViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewReactor.swift; sourceTree = "<group>"; };
+		8D89DB2F2651119D0006345E /* MyInfoEditViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoEditViewReactor.swift; sourceTree = "<group>"; };
 		8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Ex.swift"; sourceTree = "<group>"; };
 		8D8F370F26366786008196D0 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 		8D8F3712263669A2008196D0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -222,7 +223,6 @@
 		8DCA58C8260C5A7E00A775B0 /* PwViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwViewController.swift; sourceTree = "<group>"; };
 		8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
 		8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Ex.swift"; sourceTree = "<group>"; };
-		8DDC18EC264B9286009697E4 /* MyInfoEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoEditViewModel.swift; sourceTree = "<group>"; };
 		8DDC18EE264B9721009697E4 /* MyInfoEditViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoEditViewContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -365,7 +365,7 @@
 			children = (
 				8D6438082609779A00F7C5FE /* MyInfoEditViewController.swift */,
 				8DDC18EE264B9721009697E4 /* MyInfoEditViewContainer.swift */,
-				8DDC18EC264B9286009697E4 /* MyInfoEditViewModel.swift */,
+				8D89DB2F2651119D0006345E /* MyInfoEditViewReactor.swift */,
 			);
 			path = MyInfoEdit;
 			sourceTree = "<group>";
@@ -375,7 +375,7 @@
 			children = (
 				8D64380D2609787A00F7C5FE /* MyInfoViewController.swift */,
 				8D64381226097A0900F7C5FE /* MyInfoViewContainer.swift */,
-				8D64381626097C4500F7C5FE /* MyInfoViewModel.swift */,
+				8D89DB2D26510E990006345E /* MyInfoViewReactor.swift */,
 			);
 			path = MyInfo;
 			sourceTree = "<group>";
@@ -854,8 +854,8 @@
 				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
 				8D89DB2A2650FB3B0006345E /* CategoryListViewReactor.swift in Sources */,
 				8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */,
-				8D64381726097C4500F7C5FE /* MyInfoViewModel.swift in Sources */,
 				8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */,
+				8D89DB2E26510E990006345E /* MyInfoViewReactor.swift in Sources */,
 				8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */,
 				8DC8648A25FEE6D20081F52C /* Response.swift in Sources */,
 				8DC864C025FF06AC0081F52C /* UserRepositoryImpl.swift in Sources */,
@@ -872,6 +872,7 @@
 				8DC864A225FEF2CE0081F52C /* HomeViewController.swift in Sources */,
 				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
 				8DA542AD2640EFFA0084FB5D /* SalesListViewModel.swift in Sources */,
+				8D89DB302651119D0006345E /* MyInfoEditViewReactor.swift in Sources */,
 				8DA542AB2640EDAD0084FB5D /* SalesListViewContainer.swift in Sources */,
 				8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */,
 				8D979EE62610670200E9DC32 /* ProductScrollNode.swift in Sources */,
@@ -886,7 +887,6 @@
 				8DC1E11625FAE87100A1CA7E /* String+Ex.swift in Sources */,
 				8D8F3713263669A2008196D0 /* Category.swift in Sources */,
 				8D89DB282650EF8A0006345E /* CategoryViewReactor.swift in Sources */,
-				8DDC18ED264B9286009697E4 /* MyInfoEditViewModel.swift in Sources */,
 				8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */,
 				8D6E10F8264CFB080085608C /* TownLifeRequest.swift in Sources */,
 				8DC864C325FF06D30081F52C /* UserRepository.swift in Sources */,
