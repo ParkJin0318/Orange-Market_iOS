@@ -9,11 +9,11 @@ import AsyncDisplayKit
 import RxSwift
 import MBProgressHUD
 import CoreLocation
+import ReactorKit
 
-class LoginViewController: ASDKViewController<LoginViewContainer> {
+class LoginViewController: ASDKViewController<LoginViewContainer> & View {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
-    lazy var viewModel: LoginViewModel = LoginViewModel()
     
     var locationManager: CLLocationManager!
 
@@ -28,7 +28,8 @@ class LoginViewController: ASDKViewController<LoginViewContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bind()
+        self.loadNode()
+        reactor = LoginViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,30 +98,32 @@ extension LoginViewController: ViewControllerType {
         }
     }
     
-    func bind() {
-        // Input
-        node.idField
-            .rx.text.orEmpty
-            .bind(to: viewModel.input.idText)
+    func bind(reactor: LoginViewReactor) {
+        // Action
+        node.idField.rx.text.orEmpty
+            .map { .userId($0) }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        node.passwordField
-            .rx.text.orEmpty
-            .bind(to: viewModel.input.passwordText)
+        node.passwordField.rx.text.orEmpty
+            .map { .userPw($0) }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        node.loginNode
-            .rx.tap
-            .bind(to: viewModel.input.tapLogin)
+        node.loginNode.rx.tap
+            .map { .login }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        node.registerNode
-            .rx.tap
-            .bind(onNext: presentRegisterView)
+        node.registerNode.rx.tap
+            .withUnretained(self)
+            .bind { $0.0.presentRegisterView() }
             .disposed(by: disposeBag)
         
-        // Output
-        let isEnabled = viewModel.output.isEnabled.share()
+        // State
+        let isEnabled = reactor.state
+            .map { $0.isEnabledLogin }
+            .share()
         
         isEnabled
             .bind(to: node.loginNode.rx.isEnabled)
@@ -131,21 +134,28 @@ extension LoginViewController: ViewControllerType {
             .bind(to: node.loginNode.rx.backgroundColor)
             .disposed(by: disposeBag)
         
-        viewModel.output.isLoading
+        reactor.state.map { $0.isSuccessLogin }
             .filter { $0 }
             .withUnretained(self)
-            .bind { MBProgressHUD.loading(from: $0.0.view) }
+            .bind { $0.0.presentHomeView() }
             .disposed(by: disposeBag)
         
-        viewModel.output.isLogin
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
             .withUnretained(self)
             .bind { owner, value in
                 if (value) {
-                    MBProgressHUD.successShow("로그인 성공!", from: owner.view)
-                    owner.presentHomeView()
+                    MBProgressHUD.loading(from: owner.view)
                 } else {
-                    MBProgressHUD.errorShow("로그인 실패", from: owner.view)
+                    MBProgressHUD.hide(for: owner.view, animated: true)
                 }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
             }.disposed(by: disposeBag)
     }
 }

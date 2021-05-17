@@ -6,12 +6,16 @@
 //
 
 import AsyncDisplayKit
+import ReactorKit
 import RxSwift
+import MBProgressHUD
 
-class HomeViewController: ASDKViewController<HomeViewContainer> {
+class ProductListViewController: ASDKViewController<ProductListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    lazy var viewModel = HomeViewModel()
+    
+    lazy var products: [Product] = []
+    var type: ProductType = .none
     
     private lazy var writeButton = UIButton().then {
         $0.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
@@ -24,7 +28,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     }
     
     override init() {
-        super.init(node: HomeViewContainer())
+        super.init(node: ProductListViewContainer())
         self.initNode()
     }
     
@@ -35,13 +39,36 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        self.bind()
+        reactor = ProductListViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
-        viewModel.getProducts()
+        
+        if let reactor = self.reactor {
+            var data: Observable<ProductListViewReactor.Action> = .empty()
+            
+            switch (self.type) {
+                case .none:
+                    data = Observable.just(Reactor.Action.fetchProduct)
+                case .sales:
+                    data = Observable.just(Reactor.Action.fetchMyProduct)
+                    self.navigationItem.title = "판매내역"
+                case .like:
+                    data = Observable.just(Reactor.Action.fetchLikeProduct)
+                    self.navigationItem.title = "관심목록"
+                default:
+                    break
+            }
+        
+            Observable.just(type != .none)
+                .bind(to: writeButton.rx.isHidden, categoryButton.rx.isHidden)
+                .disposed(by: disposeBag)
+            
+            data.bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     private func presentProductAddView() {
@@ -51,7 +78,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     }
     
     private func presentCategoryView() {
-        self.navigationController?.pushViewController(CategoryViewController().then {
+        self.navigationController?.pushViewController(CategorySelectViewController().then {
             $0.hidesBottomBarWhenPushed = true
         }, animated: true)
     }
@@ -68,7 +95,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> {
     }
 }
 
-extension HomeViewController: ViewControllerType {
+extension ProductListViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
@@ -87,14 +114,15 @@ extension HomeViewController: ViewControllerType {
     }
     
     func setupNavigationBar() {
+        self.navigationController?.navigationBar.tintColor = .label
         self.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(customView: writeButton),
             UIBarButtonItem(customView: categoryButton)
         ]
     }
     
-    func bind() {
-        // input
+    func bind(reactor: ProductListViewReactor) {
+        // Action
         writeButton.rx.tap
             .bind(onNext: presentProductAddView)
             .disposed(by: disposeBag)
@@ -103,23 +131,42 @@ extension HomeViewController: ViewControllerType {
             .bind(onNext: presentCategoryView)
             .disposed(by: disposeBag)
         
-        // output
-        viewModel.output.city
+        // State
+        reactor.state.map { $0.products }
             .withUnretained(self)
-            .bind(onNext: { owner, value in
-                owner.navigationController?.navigationBar.topItem?.title = value
+            .bind { owner, products in
+                owner.products = products
                 owner.node.collectionNode.reloadData()
-            }).disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
-        viewModel.output.onFailureEvent
+        reactor.state.map { $0.currentCity }
+            .withUnretained(self)
+            .filter { $0.1 != nil && $0.0.type == .none }
+            .bind { $0.0.navigationItem.title = $0.1 }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
             .withUnretained(self)
             .bind { owner, value in
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
                 owner.moveToStart()
             }.disposed(by: disposeBag)
     }
 }
 
-extension HomeViewController: ASCollectionDelegate {
+extension ProductListViewController: ASCollectionDelegate {
     
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         return ASSizeRange(
@@ -129,7 +176,7 @@ extension HomeViewController: ASCollectionDelegate {
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        let item = viewModel.output.productList[indexPath.row]
+        let item = products[indexPath.row]
         
         let vc = ProductDetailViewController().then {
             $0.idx = item.idx
@@ -139,18 +186,18 @@ extension HomeViewController: ASCollectionDelegate {
     }
 }
 
-extension HomeViewController: ASCollectionDataSource {
+extension ProductListViewController: ASCollectionDataSource {
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
     }
         
     func collectionNode(_ collectionNzode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.output.productList.count
+        return products.count
     }
         
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.viewModel.output.productList[indexPath.row]
+            let item = self?.products[indexPath.row]
             let cell = ProductCell()
             cell.setupNode(product: item!)
             

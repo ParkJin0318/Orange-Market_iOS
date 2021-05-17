@@ -6,18 +6,20 @@
 //
 
 import AsyncDisplayKit
+import ReactorKit
 import RxSwift
 import RxCocoa
 import MBProgressHUD
 
-class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer> {
+class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    lazy var viewModel = ProductDetailViewModel()
+    
+    lazy var images: [String] = []
+    var soldMessage: String? = nil
     
     var idx: Int = -1
-    
-    var soldMessage: String? = nil
+    var product: ProductDetail? = nil
     
     private lazy var moreButton = UIButton().then {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
@@ -35,14 +37,19 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.loadNode()
-        self.bind()
+        reactor = ProductDetailViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getProduct(idx: idx)
+        self.setupNavigationBar()
+        
+        if let reactor = self.reactor {
+            Observable.just(.fetchProduct(idx))
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,13 +62,9 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     
     private func moveToEdit() {
         let vc = ProductAddViewController().then {
-            $0.product = self.viewModel.output.product
+            $0.product = self.product
         }
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    private func likeProduct() {
-        viewModel.likeProduct(idx: self.idx)
     }
 }
 
@@ -109,31 +112,43 @@ extension ProductDetailViewController: ViewControllerType {
             .subscribe { owner, value in
                 switch (value) {
                     case 0:
-                        owner.viewModel.updateSold(idx: owner.idx)
+                        Observable.just(.updateSold(owner.idx))
+                            .bind(to: owner.reactor!.action)
+                            .disposed(by: owner.disposeBag)
                     case 1:
                         owner.moveToEdit()
                     case 2:
-                        owner.viewModel.deleteProduct(idx: owner.idx)
+                        Observable.just(.deleteProduct(owner.idx))
+                            .bind(to: owner.reactor!.action)
+                            .disposed(by: owner.disposeBag)
                     default:
                         break
                 }
             }.disposed(by: disposeBag)
     }
     
-    func bind() {
-        // input
+    func bind(reactor: ProductDetailViewReactor) {
+        // Action
         moreButton.rx.tap
             .withUnretained(self)
             .bind { $0.0.moreAlret() }
             .disposed(by: disposeBag)
         
-        node.productBottomNode.likeNode
-            .rx.tap
-            .bind(onNext: likeProduct)
+        node.productBottomNode.likeNode.rx.tap
+            .map { .likeProduct(self.idx) }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
-            
-        // output
-        let productData = viewModel.output.productData.share()
+        
+        // State
+        let productData = reactor.state
+            .filter { $0.product != nil }
+            .map { $0.product! }
+            .share()
+        
+        productData
+            .withUnretained(self)
+            .bind { $0.0.product = $0.1 }
+            .disposed(by: disposeBag)
         
         productData
             .map { $0.profileImage?.toUrl() }
@@ -187,34 +202,46 @@ extension ProductDetailViewController: ViewControllerType {
             .bind(to: node.productBottomNode.buyNode.rx.backgroundColor)
             .disposed(by: disposeBag)
         
-        viewModel.output.isLike
+        productData.map { $0.images }
+            .withUnretained(self)
+            .filter { !$0.1.elementsEqual($0.0.images) }
+            .bind { owner, value in
+                owner.images = value
+                owner.node.productScrollNode.collectionNode.reloadData()
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLikeProduct }
             .map { $0 ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart") }
             .bind(to: node.productBottomNode.likeNode.rx.image)
             .disposed(by: disposeBag)
         
-        viewModel.output.onReloadEvent
-            .filter { $0 }
-            .withUnretained(self)
-            .bind { $0.0.node.productScrollNode.collectionNode.reloadData() }
-            .disposed(by: disposeBag)
-        
-        viewModel.output.onMessageEvent
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.hide(for: owner.view, animated: true)
-                MBProgressHUD.errorShow(value, from: owner.view)
-            }.disposed(by: disposeBag)
-        
-        viewModel.output.onDeleteEvent
-            .filter { $0 }
-            .withUnretained(self)
-            .bind { owner, value in
-                owner.popViewController()
-            }.disposed(by: disposeBag)
-        
-        viewModel.output.isMyProduct
+        reactor.state.map { $0.isMyProduct }
             .bind(to: moreButton.rx.isHidden)
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isSuccessDelete }
+            .filter { $0 }
+            .withUnretained(self)
+            .bind { $0.0.popViewController() }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .bind { owner, value in
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
+            }.disposed(by: disposeBag)
     }
 }
 
@@ -252,12 +279,12 @@ extension ProductDetailViewController: ASCollectionDataSource {
     }
         
     func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.output.imageList.count
+        return images.count
     }
         
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.viewModel.output.imageList[indexPath.row]
+            let item = self?.images[indexPath.row]
             let cell = ProductImageCell().then {
                 $0.setupNode(url: item!)
                 $0.imageNode.style.preferredSize = CGSize(width: width, height: 300)

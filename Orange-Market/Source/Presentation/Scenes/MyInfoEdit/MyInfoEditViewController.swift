@@ -6,13 +6,13 @@
 //
 
 import AsyncDisplayKit
+import ReactorKit
 import RxSwift
 import MBProgressHUD
 
-class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> {
+class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & View {
     
-    var disposeBag = DisposeBag()
-    var viewModel = MyInfoEditViewModel()
+    lazy var disposeBag = DisposeBag()
     
     lazy var closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
@@ -38,10 +38,13 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
+        reactor = MyInfoEditViewReactor()
         
-        
-        
-        self.bind()
+        if let reactor = self.reactor {
+            Observable.just(.fetchUserInfo)
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,9 +66,7 @@ extension MyInfoEditViewController: ViewControllerType {
         }
     }
     
-    func loadNode() {
-        
-    }
+    func loadNode() { }
     
     func setupNavigationBar() {
         self.navigationItem.do {
@@ -80,51 +81,63 @@ extension MyInfoEditViewController: ViewControllerType {
         }
     }
     
-    func bind() {
-        // input
-        closeButton
-            .rx.tap
+    func bind(reactor: MyInfoEditViewReactor) {
+        // Action
+        closeButton.rx.tap
             .bind(onNext: popViewController)
             .disposed(by: disposeBag)
-        
-        completeButton
-            .rx.tap
-            .bind(to: viewModel.input.tapComplete)
+
+        completeButton.rx.tap
+            .map { .updateUerInfo }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        node.nameField
-            .rx.text.orEmpty
-            .bind(to: viewModel.output.name)
+
+        node.nameField.rx.text.orEmpty
+            .map { .name($0) }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        node.addButton
-            .rx.tap
+
+        node.addButton.rx.tap
             .bind(onNext: presentImagePicker)
             .disposed(by: disposeBag)
         
-        // output
-        viewModel.output.profileImage
+        // State
+        reactor.state.map { $0.userName }
+            .filter { !$0.isEmpty }
+            .distinctUntilChanged()
+            .bind(to: node.nameField.rx.text.orEmpty)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.imageUrl ?? "" }
+            .filter { !$0.isEmpty }
+            .distinctUntilChanged()
             .map { $0.toUrl() }
             .bind(to: node.profileImageNode.rx.url)
             .disposed(by: disposeBag)
         
-        viewModel.output.name
-            .bind(to: node.nameField.rx.text.orEmpty)
-            .disposed(by: disposeBag)
-        
-        viewModel.output.onSuccessEvent
+        reactor.state.map { $0.isSuccessUserInfo }
+            .distinctUntilChanged()
             .filter { $0 }
             .withUnretained(self)
-            .bind { owner, value in
-                owner.popViewController()
-            }.disposed(by: disposeBag)
-        
-        viewModel.output.onErrorEvent
+            .bind { $0.0.popViewController() }
+            .disposed(by: disposeBag)
+            
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
             .withUnretained(self)
             .bind { owner, value in
-                MBProgressHUD.hide(for: owner.view, animated: true)
-                MBProgressHUD.successShow(value, from: owner.view)
-                owner.popViewController()
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
             }.disposed(by: disposeBag)
     }
 }
@@ -142,8 +155,12 @@ extension MyInfoEditViewController: UINavigationControllerDelegate & UIImagePick
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as? UIImage
-        viewModel.uploadImage(image: image!)
+        
+        if let reactor = self.reactor, let image = info[.originalImage] as? UIImage {
+            Observable.just(.uploadImage(image))
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
         dismiss(animated: true, completion: nil)
     }
 }

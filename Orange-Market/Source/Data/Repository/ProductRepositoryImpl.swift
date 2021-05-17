@@ -79,27 +79,42 @@ class ProductRepositoryImpl: ProductRepository {
             }
     }
     
-    func updateCategory(idx: Int) -> Completable {
+    func updateCategory(idx: Int) -> Single<Void> {
         return categoryCache.updateCategory(idx: idx)
     }
     
-    func saveProduct(productRequest: ProductRequest) -> Single<String> {
+    func saveProduct(productRequest: ProductRequest) -> Single<Void> {
         return productRemote.saveProduct(productRequest: productRequest)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
     
-    func likeProduct(idx: Int) -> Single<String> {
+    func likeProduct(idx: Int) -> Single<Void> {
         return productRemote.likeProduct(idx: idx)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
     
-    func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<String> {
+    func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<Void> {
         return productRemote.updateProduct(idx: idx, productRequest: productRequest)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
     
-    func updateSold(idx: Int) -> Single<String> {
+    func updateSold(idx: Int) -> Single<Void> {
         return productRemote.updateSold(idx: idx)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
     
-    func deleteProduct(idx: Int) -> Single<String> {
+    func deleteProduct(idx: Int) -> Single<Void> {
         return productRemote.deleteProduct(idx: idx)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
 }

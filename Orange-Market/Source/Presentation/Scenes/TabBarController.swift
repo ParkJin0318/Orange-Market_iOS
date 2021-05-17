@@ -9,7 +9,7 @@ import AsyncDisplayKit
 
 class TabBarController: ASTabBarController {
     
-    private lazy var homeViewController = HomeViewController().then {
+    private lazy var homeViewController = ProductListViewController().then {
         $0.tabBarItem = UITabBarItem(
             title: "홈",
             image: UIImage(systemName: "house"),

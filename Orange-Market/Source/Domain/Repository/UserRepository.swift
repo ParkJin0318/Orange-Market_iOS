@@ -12,5 +12,5 @@ protocol UserRepository {
     func getUserInfo(idx: Int) -> Single<User>
     func getUserProfile() -> Single<User>
     func updateLocation(locationRequest: LocationRequest) -> Single<String>
-    func updateUser(userRequest: UserRequest) -> Single<String>
+    func updateUser(userRequest: UserRequest) -> Single<Void>
 }

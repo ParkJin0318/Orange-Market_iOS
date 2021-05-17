@@ -14,10 +14,10 @@ protocol ProductRepository {
     func getAllMyProduct() -> Single<Array<Product>>
     func getProduct(idx: Int) -> Single<ProductDetail>
     func getAllCategory() -> Single<Array<Category>>
-    func updateCategory(idx: Int) -> Completable
-    func saveProduct(productRequest: ProductRequest) -> Single<String>
-    func likeProduct(idx: Int) -> Single<String>
-    func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<String>
-    func updateSold(idx: Int) -> Single<String>
-    func deleteProduct(idx: Int) -> Single<String>
+    func updateCategory(idx: Int) -> Single<Void>
+    func saveProduct(productRequest: ProductRequest) -> Single<Void>
+    func likeProduct(idx: Int) -> Single<Void>
+    func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<Void>
+    func updateSold(idx: Int) -> Single<Void>
+    func deleteProduct(idx: Int) -> Single<Void>
 }

@@ -24,7 +24,10 @@ class UserRepositoryImpl: UserRepository {
         return remote.updateLocation(locationRequest: locationRequest)
     }
     
-    func updateUser(userRequest: UserRequest) -> Single<String> {
+    func updateUser(userRequest: UserRequest) -> Single<Void> {
         return remote.updateUser(userRequest: userRequest)
+            .flatMap { _ in
+                .just(Void())
+            }
     }
 }

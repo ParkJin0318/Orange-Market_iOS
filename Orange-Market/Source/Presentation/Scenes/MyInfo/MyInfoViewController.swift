@@ -6,11 +6,12 @@
 //
 
 import AsyncDisplayKit
+import ReactorKit
 import RxSwift
+import MBProgressHUD
 
-class MyInfoViewController: ASDKViewController<MyInfoViewContainer> {
+class MyInfoViewController: ASDKViewController<MyInfoViewContainer> & View {
     
-    lazy var viewModel = MyInfoViewModel()
     lazy var disposeBag = DisposeBag()
     
     override init() {
@@ -24,13 +25,19 @@ class MyInfoViewController: ASDKViewController<MyInfoViewContainer> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bind()
+        self.loadNode()
+        reactor = MyInfoViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
-        viewModel.getProfile()
+        
+        if let reactor = self.reactor {
+            Observable.just(.fetchUserInfo)
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
     }
     
     private func presentSalesListView() {
@@ -42,7 +49,7 @@ class MyInfoViewController: ASDKViewController<MyInfoViewContainer> {
     }
     
     private func present(type: ProductType) {
-        let vc = SalesListViewController().then {
+        let vc = ProductListViewController().then {
             $0.type = type
         }
         self.navigationController?.pushViewController(vc, animated: true)
@@ -83,34 +90,55 @@ extension MyInfoViewController: ViewControllerType {
         self.navigationController?.navigationBar.topItem?.title = "나의 오렌지"
     }
     
-    func bind() {
+    func bind(reactor: MyInfoViewReactor) {
         node.salesNode
             .rx.tap
             .bind(onNext: presentSalesListView)
             .disposed(by: disposeBag)
-        
+
         node.attentionNode
             .rx.tap
             .bind(onNext: presentLikeListView)
             .disposed(by: disposeBag)
-        
+
         node.profileEditNode
             .rx.tap
             .bind(onNext: presentMyInfoEditView)
             .disposed(by: disposeBag)
-            
-        let userData = viewModel.output.userData.share()
         
+        let userData = reactor.state
+            .filter { $0.user != nil }
+            .map { $0.user! }
+            .share()
+
         userData.map { $0.profileImage?.toUrl() }
             .bind(to: node.profileNode.profileImageNode.rx.url)
             .disposed(by: disposeBag)
-        
+
         userData.map { $0.name.toAttributed(color: .label, ofSize: 16) }
             .bind(to: node.profileNode.nameNode.rx.attributedText)
             .disposed(by: disposeBag)
-        
+
         userData.map { $0.location.toAttributed(color: .gray, ofSize: 14) }
             .bind(to: node.profileNode.locationNode.rx.attributedText)
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .bind { owner, value in
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
+            }.disposed(by: disposeBag)
     }
 }
