@@ -13,7 +13,6 @@ class CategoryListViewReactor: Reactor {
     
     var initialState: State = State(
         categories: [],
-        isReloadData: false,
         isLoading: false,
         errorMessage: nil
     )
@@ -30,7 +29,6 @@ class CategoryListViewReactor: Reactor {
     
     struct State {
         var categories: [Category]
-        var isReloadData: Bool
         var isLoading: Bool
         var errorMessage: String?
     }
@@ -55,7 +53,6 @@ class CategoryListViewReactor: Reactor {
         switch mutation {
             case let .setAllCategory(categories):
                 state.categories = categories
-                state.isReloadData = !categories.map { $0.idx }.elementsEqual(state.categories.map { $0.idx })
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

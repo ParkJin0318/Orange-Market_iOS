@@ -10,10 +10,12 @@ import ReactorKit
 import RxSwift
 import MBProgressHUD
 
-class HomeViewController: ASDKViewController<HomeViewContainer> & View {
+class ProductListViewController: ASDKViewController<ProductListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
+    
     lazy var products: [Product] = []
+    var type: ProductType = .none
     
     private lazy var writeButton = UIButton().then {
         $0.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
@@ -26,7 +28,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> & View {
     }
     
     override init() {
-        super.init(node: HomeViewContainer())
+        super.init(node: ProductListViewContainer())
         self.initNode()
     }
     
@@ -37,7 +39,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> & View {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        reactor = HomeViewReactor()
+        reactor = ProductListViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,8 +47,26 @@ class HomeViewController: ASDKViewController<HomeViewContainer> & View {
         self.setupNavigationBar()
         
         if let reactor = self.reactor {
-            Observable.just(.fetchProduct)
-                .bind(to: reactor.action)
+            var data: Observable<ProductListViewReactor.Action> = .empty()
+            
+            switch (self.type) {
+                case .none:
+                    data = Observable.just(Reactor.Action.fetchProduct)
+                case .sales:
+                    data = Observable.just(Reactor.Action.fetchMyProduct)
+                    self.navigationItem.title = "판매내역"
+                case .like:
+                    data = Observable.just(Reactor.Action.fetchLikeProduct)
+                    self.navigationItem.title = "관심목록"
+                default:
+                    break
+            }
+        
+            Observable.just(type != .none)
+                .bind(to: writeButton.rx.isHidden, categoryButton.rx.isHidden)
+                .disposed(by: disposeBag)
+            
+            data.bind(to: reactor.action)
                 .disposed(by: disposeBag)
         }
     }
@@ -75,7 +95,7 @@ class HomeViewController: ASDKViewController<HomeViewContainer> & View {
     }
 }
 
-extension HomeViewController: ViewControllerType {
+extension ProductListViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
@@ -100,8 +120,8 @@ extension HomeViewController: ViewControllerType {
         ]
     }
     
-    func bind(reactor: HomeViewReactor) {
-        // input
+    func bind(reactor: ProductListViewReactor) {
+        // Action
         writeButton.rx.tap
             .bind(onNext: presentProductAddView)
             .disposed(by: disposeBag)
@@ -110,14 +130,20 @@ extension HomeViewController: ViewControllerType {
             .bind(onNext: presentCategoryView)
             .disposed(by: disposeBag)
         
-        // output
+        // State
         reactor.state.map { $0.products }
             .withUnretained(self)
+            .filter { !$0.1.map { $0.idx }.elementsEqual($0.0.products.map { $0.idx }) }
             .bind { owner, products in
                 owner.products = products
                 owner.node.collectionNode.reloadData()
-                owner.navigationController?.navigationBar.topItem?.title = products.first?.city
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.currentCity }
+            .withUnretained(self)
+            .filter { $0.1 != nil && $0.0.type == .none }
+            .bind { $0.0.navigationItem.title = $0.1 }
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
@@ -135,11 +161,12 @@ extension HomeViewController: ViewControllerType {
             .withUnretained(self)
             .bind { owner, value in
                 MBProgressHUD.errorShow(value!, from: owner.view)
+                owner.moveToStart()
             }.disposed(by: disposeBag)
     }
 }
 
-extension HomeViewController: ASCollectionDelegate {
+extension ProductListViewController: ASCollectionDelegate {
     
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         return ASSizeRange(
@@ -159,7 +186,7 @@ extension HomeViewController: ASCollectionDelegate {
     }
 }
 
-extension HomeViewController: ASCollectionDataSource {
+extension ProductListViewController: ASCollectionDataSource {
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
     }

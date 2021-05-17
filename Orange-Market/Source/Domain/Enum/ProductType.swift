@@ -11,4 +11,5 @@ enum ProductType {
     case sales
     case buy
     case like
+    case none
 }

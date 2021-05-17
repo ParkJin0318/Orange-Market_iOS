@@ -70,14 +70,11 @@ extension CategoryListViewController: ViewControllerType {
     func bind(reactor: CategoryListViewReactor) {
         reactor.state.map { $0.categories }
             .withUnretained(self)
-            .bind { $0.0.categories = $0.1 }
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.isReloadData }
-            .filter { $0 }
-            .withUnretained(self)
-            .bind { $0.0.node.tableNode.reloadData() }
-            .disposed(by: disposeBag)
+            .filter { !$0.1.map { $0.idx }.elementsEqual($0.0.categories.map { $0.idx }) }
+            .bind { owner, value in
+                owner.categories = value
+                owner.node.tableNode.reloadData()
+            }.disposed(by: disposeBag)
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()

@@ -14,8 +14,6 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
     
     lazy var disposeBag = DisposeBag()
     
-    lazy var userRequest = UserRequest()
-    
     lazy var closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
         $0.setTitleColor(.label, for: .normal)
@@ -90,7 +88,7 @@ extension MyInfoEditViewController: ViewControllerType {
             .disposed(by: disposeBag)
 
         completeButton.rx.tap
-            .map { .updateUerInfo(self.userRequest) }
+            .map { .updateUerInfo }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
 
@@ -104,26 +102,18 @@ extension MyInfoEditViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         // State
-        let userData = reactor.state
-            .filter { $0.userRequest != nil }
-            .map { $0.userRequest! }
-            .share()
-        
-        userData
-            .map { $0.profileImage?.toUrl() }
-            .bind(to: node.profileImageNode.rx.url)
-            .disposed(by: disposeBag)
-
-        userData
-            .map { $0.name ?? "" }
+        reactor.state.map { $0.userName }
+            .filter { !$0.isEmpty }
+            .distinctUntilChanged()
             .bind(to: node.nameField.rx.text.orEmpty)
             .disposed(by: disposeBag)
         
-        userData
-            .withUnretained(self)
-            .bind { owner, value in
-                owner.userRequest = value
-            }.disposed(by: disposeBag)
+        reactor.state.map { $0.imageUrl ?? "" }
+            .filter { !$0.isEmpty }
+            .distinctUntilChanged()
+            .map { $0.toUrl() }
+            .bind(to: node.profileImageNode.rx.url)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.isSuccessUploadImage }
             .distinctUntilChanged()

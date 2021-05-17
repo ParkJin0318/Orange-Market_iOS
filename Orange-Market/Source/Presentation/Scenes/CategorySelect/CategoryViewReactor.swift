@@ -14,7 +14,6 @@ class CategorySelectViewReactor: Reactor {
     var initialState: State = State(
         categories: [],
         isUpdateCategory: false,
-        isReloadData: false,
         isLoading: false,
         errorMessage: nil
     )
@@ -34,7 +33,6 @@ class CategorySelectViewReactor: Reactor {
     struct State {
         var categories: [Category]
         var isUpdateCategory: Bool
-        var isReloadData: Bool
         var isLoading: Bool
         var errorMessage: String?
     }
@@ -66,7 +64,6 @@ class CategorySelectViewReactor: Reactor {
         switch mutation {
             case let .setAllCategory(categories):
                 state.categories = categories
-                state.isReloadData = !categories.map { $0.idx }.elementsEqual(state.categories.map { $0.idx })
                 
             case let .updateCategory(isUpdate):
                 state.isUpdateCategory = isUpdate

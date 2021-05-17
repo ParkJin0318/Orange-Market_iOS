@@ -14,7 +14,6 @@ class ProductDetailViewReactor: Reactor {
     
     var initialState: State = State(
         product: nil,
-        images: [],
         isMyProduct: false,
         isLikeProduct: false,
         isSuccessSold: false,
@@ -43,7 +42,6 @@ class ProductDetailViewReactor: Reactor {
     
     struct State {
         var product: ProductDetail?
-        var images: [String]
         
         var isMyProduct: Bool
         var isLikeProduct: Bool
@@ -107,7 +105,6 @@ class ProductDetailViewReactor: Reactor {
         switch mutation {
             case let .setProduct(product, user):
                 state.product = product
-                state.images = product.images
                 state.isMyProduct = product.userIdx != user.idx
                 state.isLikeProduct = product.likeUsers.contains(user.idx)
                 

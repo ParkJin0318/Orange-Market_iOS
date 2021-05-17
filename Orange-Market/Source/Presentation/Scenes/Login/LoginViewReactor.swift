@@ -12,7 +12,8 @@ class LoginViewReactor: Reactor {
     lazy var repository: AuthRepository = AuthRepositoryImpl()
     
     lazy var initialState: State = State(
-        loginRequest: LoginRequest(userId: "", userPw: ""),
+        userId: "",
+        userPw: "",
         isEnabledLogin: false,
         isSuccessLogin: false,
         isLoading: false,
@@ -22,24 +23,27 @@ class LoginViewReactor: Reactor {
     enum Action {
         case userId(String)
         case userPw(String)
-        case login(LoginRequest)
+        
+        case login
     }
     
     enum Mutation {
         case setUserId(String)
         case setUserPw(String)
         
-        case setEnabledLogin
         case setSuccessLogin(Bool)
+        
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
-        var loginRequest: LoginRequest
+        var userId: String
+        var userPw: String
         
         var isEnabledLogin: Bool
         var isSuccessLogin: Bool
+        
         var isLoading: Bool
         var errorMessage: String?
     }
@@ -47,19 +51,15 @@ class LoginViewReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
             case let .userId(id):
-                return Observable.concat([
-                    .just(Mutation.setUserId(id)),
-                    .just(Mutation.setEnabledLogin)
-                ])
+                return Observable.just(Mutation.setUserId(id))
+                
             case let .userPw(pw):
-                return Observable.concat([
-                    .just(Mutation.setUserPw(pw)),
-                    .just(Mutation.setEnabledLogin)
-                ])
-            case let .login(loginRequest):
+                return Observable.just(Mutation.setUserPw(pw))
+                
+            case .login:
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    repository.login(loginRequest: loginRequest)
+                    repository.login(loginRequest: LoginRequest(userId: currentState.userId, userPw: currentState.userPw))
                         .asObservable()
                         .map { Mutation.setSuccessLogin(true) },
                     .just(Mutation.setLoading(false)),
@@ -73,20 +73,12 @@ class LoginViewReactor: Reactor {
         
         switch mutation {
             case let .setUserId(id):
-                state.loginRequest = LoginRequest(
-                    userId: id,
-                    userPw: state.loginRequest.userPw
-                )
+                state.userId = id
+                state.isEnabledLogin = !state.userId.isEmpty && !state.userPw.isEmpty
                 
             case let .setUserPw(pw):
-                state.loginRequest = LoginRequest(
-                    userId: state.loginRequest.userId,
-                    userPw: pw
-                )
-                
-            case .setEnabledLogin:
-                state.isEnabledLogin =
-                    !state.loginRequest.userId.isEmpty && !state.loginRequest.userPw.isEmpty
+                state.userPw = pw
+                state.isEnabledLogin = !state.userId.isEmpty && !state.userPw.isEmpty
                 
             case let .setSuccessLogin(isSuccessLogin):
                 state.isSuccessLogin = isSuccessLogin

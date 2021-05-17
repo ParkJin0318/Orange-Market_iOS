@@ -49,7 +49,7 @@ class MyInfoViewController: ASDKViewController<MyInfoViewContainer> & View {
     }
     
     private func present(type: ProductType) {
-        let vc = SalesListViewController().then {
+        let vc = ProductListViewController().then {
             $0.type = type
         }
         self.navigationController?.pushViewController(vc, animated: true)

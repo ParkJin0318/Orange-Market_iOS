@@ -13,7 +13,8 @@ class MyInfoEditViewReactor: Reactor {
     private lazy var uploadRepository: UploadRepository = UploadRepositoryImpl()
     
     var initialState: State = State(
-        userRequest: nil,
+        userName: "",
+        imageUrl: nil,
         isSuccessUploadImage: nil,
         isSuccessUserInfo: false,
         isLoading: false,
@@ -23,25 +24,31 @@ class MyInfoEditViewReactor: Reactor {
     enum Action {
         case name(String)
         case image(String)
+        
         case fetchUserInfo
         case uploadImage(UIImage)
-        case updateUerInfo(UserRequest)
+        case updateUerInfo
     }
     
     enum Mutation {
         case setName(String)
         case setImage(String)
+        
         case setUserInfo(User)
         case setSuccessUploadImage(String)
         case setSuccessUpdateUserInfo(Bool)
+        
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
-        var userRequest: UserRequest?
+        var userName: String
+        var imageUrl: String?
+        
         var isSuccessUploadImage: String?
         var isSuccessUserInfo: Bool
+        
         var isLoading: Bool
         var errorMessage: String?
     }
@@ -50,14 +57,10 @@ class MyInfoEditViewReactor: Reactor {
         switch action {
         
         case let .name(name):
-            return Observable.concat([
-                .just(Mutation.setName(name))
-            ])
+            return Observable.just(Mutation.setName(name))
             
         case let .image(image):
-            return Observable.concat([
-                .just(Mutation.setImage(image))
-            ])
+            return Observable.just(Mutation.setImage(image))
         
             case .fetchUserInfo:
                 return Observable.concat([
@@ -77,10 +80,10 @@ class MyInfoEditViewReactor: Reactor {
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
-        case let .updateUerInfo(request):
+        case .updateUerInfo:
             return Observable.concat([
                 .just(Mutation.setLoading(true)),
-                userRepository.updateUser(userRequest: request)
+                userRepository.updateUser(userRequest: UserRequest(name: currentState.userName, profileImage: currentState.imageUrl))
                     .asObservable()
                     .map { Mutation.setSuccessUpdateUserInfo(true) },
                 .just(Mutation.setLoading(false))
@@ -94,13 +97,14 @@ class MyInfoEditViewReactor: Reactor {
         
         switch mutation {
             case let .setName(name):
-                state.userRequest = UserRequest(name: name, profileImage: state.userRequest?.profileImage)
+                state.userName = name
             
             case let .setImage(image):
-                state.userRequest = UserRequest(name: state.userRequest?.name, profileImage: image)
+                state.imageUrl = image
         
             case let .setUserInfo(user):
-                state.userRequest = UserRequest(name: user.name, profileImage: user.profileImage)
+                state.userName = user.name
+                state.imageUrl = user.profileImage
                 
             case let .setSuccessUploadImage(image):
                 state.isSuccessUploadImage = image

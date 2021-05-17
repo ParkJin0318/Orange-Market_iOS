@@ -202,7 +202,7 @@ extension ProductDetailViewController: ViewControllerType {
             .bind(to: node.productBottomNode.buyNode.rx.backgroundColor)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.images }
+        productData.map { $0.images }
             .withUnretained(self)
             .filter { !$0.1.elementsEqual($0.0.images) }
             .bind { owner, value in

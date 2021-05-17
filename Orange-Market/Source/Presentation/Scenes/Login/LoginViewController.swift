@@ -15,7 +15,6 @@ class LoginViewController: ASDKViewController<LoginViewContainer> & View {
     
     lazy var disposeBag: DisposeBag = DisposeBag()
     
-    var loginRequest: LoginRequest?
     var locationManager: CLLocationManager!
 
     override init() {
@@ -112,9 +111,7 @@ extension LoginViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         node.loginNode.rx.tap
-            .withUnretained(self)
-            .filter { $0.0.loginRequest != nil }
-            .map { .login($0.0.loginRequest!) }
+            .map { .login }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -124,11 +121,6 @@ extension LoginViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         // State
-        reactor.state.map { $0.loginRequest }
-            .withUnretained(self)
-            .bind { $0.0.loginRequest = $0.1 }
-            .disposed(by: disposeBag)
-        
         let isEnabled = reactor.state
             .map { $0.isEnabledLogin }
             .share()

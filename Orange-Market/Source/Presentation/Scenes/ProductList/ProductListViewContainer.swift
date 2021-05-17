@@ -1,16 +1,15 @@
 //
-//  SalesListViewContainer.swift
+//  HomeContainer.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/05/04.
+//  Created by 박진 on 2021/03/15.
 //
 
 import AsyncDisplayKit
 
-class SalesListViewContainer: ASDisplayNode {
+class ProductListViewContainer: ASDisplayNode {
     
     private lazy var flowLayout = UICollectionViewFlowLayout().then {
-        $0.itemSize = CGSize(width: 60, height: 60)
         $0.scrollDirection = .vertical
         $0.minimumLineSpacing = 10
     }
