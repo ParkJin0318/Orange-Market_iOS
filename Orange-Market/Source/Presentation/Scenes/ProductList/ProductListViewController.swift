@@ -114,6 +114,7 @@ extension ProductListViewController: ViewControllerType {
     }
     
     func setupNavigationBar() {
+        self.navigationController?.navigationBar.tintColor = .label
         self.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(customView: writeButton),
             UIBarButtonItem(customView: categoryButton)
@@ -133,7 +134,6 @@ extension ProductListViewController: ViewControllerType {
         // State
         reactor.state.map { $0.products }
             .withUnretained(self)
-            .filter { !$0.1.map { $0.idx }.elementsEqual($0.0.products.map { $0.idx }) }
             .bind { owner, products in
                 owner.products = products
                 owner.node.collectionNode.reloadData()

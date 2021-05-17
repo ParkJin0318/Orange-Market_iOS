@@ -15,7 +15,6 @@ class MyInfoEditViewReactor: Reactor {
     var initialState: State = State(
         userName: "",
         imageUrl: nil,
-        isSuccessUploadImage: nil,
         isSuccessUserInfo: false,
         isLoading: false,
         errorMessage: nil
@@ -26,6 +25,7 @@ class MyInfoEditViewReactor: Reactor {
         case image(String)
         
         case fetchUserInfo
+        
         case uploadImage(UIImage)
         case updateUerInfo
     }
@@ -35,7 +35,6 @@ class MyInfoEditViewReactor: Reactor {
         case setImage(String)
         
         case setUserInfo(User)
-        case setSuccessUploadImage(String)
         case setSuccessUpdateUserInfo(Bool)
         
         case setLoading(Bool)
@@ -46,7 +45,6 @@ class MyInfoEditViewReactor: Reactor {
         var userName: String
         var imageUrl: String?
         
-        var isSuccessUploadImage: String?
         var isSuccessUserInfo: Bool
         
         var isLoading: Bool
@@ -56,11 +54,11 @@ class MyInfoEditViewReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         
-        case let .name(name):
-            return Observable.just(Mutation.setName(name))
-            
-        case let .image(image):
-            return Observable.just(Mutation.setImage(image))
+            case let .name(name):
+                return Observable.just(Mutation.setName(name))
+                
+            case let .image(image):
+                return Observable.just(Mutation.setImage(image))
         
             case .fetchUserInfo:
                 return Observable.concat([
@@ -76,7 +74,7 @@ class MyInfoEditViewReactor: Reactor {
                     .just(Mutation.setLoading(true)),
                     uploadRepository.uploadImage(image: image)
                         .asObservable()
-                        .map { Mutation.setSuccessUploadImage($0) },
+                        .map { Mutation.setImage($0) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
@@ -105,9 +103,6 @@ class MyInfoEditViewReactor: Reactor {
             case let .setUserInfo(user):
                 state.userName = user.name
                 state.imageUrl = user.profileImage
-                
-            case let .setSuccessUploadImage(image):
-                state.isSuccessUploadImage = image
                 
             case let .setSuccessUpdateUserInfo(isSuccess):
                 state.isSuccessUserInfo = isSuccess

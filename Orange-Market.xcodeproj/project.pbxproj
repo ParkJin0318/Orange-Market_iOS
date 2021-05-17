@@ -24,7 +24,6 @@
 		8D279E8D26381FA10033CDA2 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D279E8C26381FA10033CDA2 /* AppDatabase.swift */; };
 		8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F98922600285400C8BE0C /* ProductAddViewController.swift */; };
 		8D2F989926002BFF00C8BE0C /* ProductAddViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F989826002BFF00C8BE0C /* ProductAddViewContainer.swift */; };
-		8D2F989C260042CB00C8BE0C /* ProductAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F989B260042CB00C8BE0C /* ProductAddViewModel.swift */; };
 		8D2F989F2600437800C8BE0C /* UploadAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F989E2600437800C8BE0C /* UploadAPI.swift */; };
 		8D2F98A22600469500C8BE0C /* UploadRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F98A12600469500C8BE0C /* UploadRemote.swift */; };
 		8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F98A426004C5000C8BE0C /* UploadRepository.swift */; };
@@ -34,6 +33,7 @@
 		8D337BE42608561B0042B1A0 /* ProductBottomNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D337BE32608561B0042B1A0 /* ProductBottomNode.swift */; };
 		8D3CEA8C26031D0500D9486A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3CEA8B26031D0500D9486A /* User.swift */; };
 		8D3CEA9026031D7900D9486A /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3CEA8F26031D7900D9486A /* ProductDetail.swift */; };
+		8D3D16762652443B005B8B02 /* ProductAddViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D16752652443B005B8B02 /* ProductAddViewReactor.swift */; };
 		8D456E572627D630007DA760 /* IconButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D456E562627D630007DA760 /* IconButtonNode.swift */; };
 		8D475FA22602DB9500F2911F /* ProductDetailViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */; };
 		8D475FA72602F84700F2911F /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA62602F84700F2911F /* UserRemote.swift */; };
@@ -131,7 +131,6 @@
 		8D279E8C26381FA10033CDA2 /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		8D2F98922600285400C8BE0C /* ProductAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddViewController.swift; sourceTree = "<group>"; };
 		8D2F989826002BFF00C8BE0C /* ProductAddViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddViewContainer.swift; sourceTree = "<group>"; };
-		8D2F989B260042CB00C8BE0C /* ProductAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddViewModel.swift; sourceTree = "<group>"; };
 		8D2F989E2600437800C8BE0C /* UploadAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAPI.swift; sourceTree = "<group>"; };
 		8D2F98A12600469500C8BE0C /* UploadRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRemote.swift; sourceTree = "<group>"; };
 		8D2F98A426004C5000C8BE0C /* UploadRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRepository.swift; sourceTree = "<group>"; };
@@ -141,6 +140,7 @@
 		8D337BE32608561B0042B1A0 /* ProductBottomNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBottomNode.swift; sourceTree = "<group>"; };
 		8D3CEA8B26031D0500D9486A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8D3CEA8F26031D7900D9486A /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
+		8D3D16752652443B005B8B02 /* ProductAddViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddViewReactor.swift; sourceTree = "<group>"; };
 		8D456E562627D630007DA760 /* IconButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonNode.swift; sourceTree = "<group>"; };
 		8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewContainer.swift; sourceTree = "<group>"; };
 		8D475FA62602F84700F2911F /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
@@ -310,7 +310,7 @@
 			children = (
 				8D2F98922600285400C8BE0C /* ProductAddViewController.swift */,
 				8D2F989826002BFF00C8BE0C /* ProductAddViewContainer.swift */,
-				8D2F989B260042CB00C8BE0C /* ProductAddViewModel.swift */,
+				8D3D16752652443B005B8B02 /* ProductAddViewReactor.swift */,
 			);
 			path = ProductAdd;
 			sourceTree = "<group>";
@@ -815,7 +815,6 @@
 				8D475FA22602DB9500F2911F /* ProductDetailViewContainer.swift in Sources */,
 				8DC864EA25FF1E180081F52C /* ProductListViewContainer.swift in Sources */,
 				8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */,
-				8D2F989C260042CB00C8BE0C /* ProductAddViewModel.swift in Sources */,
 				8DC864E025FF1AA70081F52C /* ProductData.swift in Sources */,
 				8DC864B325FEFA380081F52C /* CityViewController.swift in Sources */,
 				8DC1E12925FAEA2100A1CA7E /* StartViewContainer.swift in Sources */,
@@ -835,6 +834,7 @@
 				8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */,
 				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
 				8D89DB2A2650FB3B0006345E /* CategoryListViewReactor.swift in Sources */,
+				8D3D16762652443B005B8B02 /* ProductAddViewReactor.swift in Sources */,
 				8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */,
 				8D279E872638159B0033CDA2 /* CategoryEntity.swift in Sources */,
 				8D89DB2E26510E990006345E /* MyInfoViewReactor.swift in Sources */,

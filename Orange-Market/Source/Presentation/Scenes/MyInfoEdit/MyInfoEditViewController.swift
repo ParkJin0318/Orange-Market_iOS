@@ -115,17 +115,6 @@ extension MyInfoEditViewController: ViewControllerType {
             .bind(to: node.profileImageNode.rx.url)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isSuccessUploadImage }
-            .distinctUntilChanged()
-            .filter { $0 != nil}
-            .withUnretained(self)
-            .bind { owner, value in
-                
-                Observable.just(.image(value!))
-                    .bind(to: reactor.action)
-                    .disposed(by: owner.disposeBag)
-            }.disposed(by: disposeBag)
-        
         reactor.state.map { $0.isSuccessUserInfo }
             .distinctUntilChanged()
             .filter { $0 }
