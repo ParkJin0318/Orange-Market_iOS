@@ -10,111 +10,49 @@ import RxSwift
 
 class ProductRepositoryImpl: ProductRepository {
     
-    private lazy var userRemote = UserRemote()
-    private lazy var productRemote = ProductRemote()
-    private lazy var categoryCache = CategoryCache()
+    private lazy var dataSource = ProductDataSource()
     
     func getAllProduct() -> Single<Array<Product>> {
-        return userRemote.getUserProfile()
-            .flatMap { profile in
-                Single.zip(
-                    self.productRemote.getAllProduct(city: profile.city),
-                    self.getAllCategory()
-                ) { productDataList, categoryList in
-                    
-                    let selectCategotyList = categoryList
-                        .filter { $0.isSelected }
-                        .map { $0.idx }
-                    
-                    return productDataList
-                        .filter { selectCategotyList.contains($0.categoryIdx) }
-                        .map { $0.toModel() }
-                }
-            }
+        return dataSource.getAllProduct()
     }
     
-    
     func getAllLikeProduct() -> Single<Array<Product>> {
-        return productRemote.getAllLikeProduct().map {
-            $0.map { $0.toModel() }
-        }
+        return dataSource.getAllLikeProduct()
     }
     
     func getAllMyProduct() -> Single<Array<Product>> {
-        return userRemote.getUserProfile()
-            .flatMap { profile in
-                self.productRemote.getAllProduct(city: profile.city)
-                    .map { productDataList in
-                        productDataList
-                            .map { $0.toModel() }
-                            .filter { $0.userIdx == profile.idx }
-                    }
-            }
+        return dataSource.getAllMyProduct()
     }
     
     func getProduct(idx: Int) -> Single<ProductDetail> {
-        return productRemote.getProduct(idx: idx)
-            .flatMap { productData in
-                Single.zip(
-                    self.userRemote.getUserInfo(idx: productData.userIdx),
-                    self.categoryCache.getCategory(idx: productData.categoryIdx)
-                ) { userData, categoryEntity in
-                    return productData.toDetailModel(user: userData, category: categoryEntity)
-                }
-            }
+        return dataSource.getProduct(idx: idx)
     }
     
     func getAllCategory() -> Single<Array<Category>> {
-        return categoryCache.getAllCategory()
-            .map { $0.map { $0.toModel() } }
-            .catch { error in
-                self.productRemote
-                    .getAllCategory()
-                    .map { $0.map { $0.toModel() } }
-                    .flatMap {
-                        self.categoryCache
-                            .insertCategory($0.map { $0.toEntity() })
-                            .andThen(Single.just($0))
-                    }
-            }
+        return dataSource.getAllCategory()
     }
     
     func updateCategory(idx: Int) -> Single<Void> {
-        return categoryCache.updateCategory(idx: idx)
+        return dataSource.updateSold(idx: idx)
     }
     
     func saveProduct(productRequest: ProductRequest) -> Single<Void> {
-        return productRemote.saveProduct(productRequest: productRequest)
-            .flatMap { _ in
-                .just(Void())
-            }
+        return dataSource.saveProduct(productRequest: productRequest)
     }
     
     func likeProduct(idx: Int) -> Single<Void> {
-        return productRemote.likeProduct(idx: idx)
-            .flatMap { _ in
-                .just(Void())
-            }
+        return dataSource.likeProduct(idx: idx)
     }
     
     func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<Void> {
-        return productRemote.updateProduct(idx: idx, productRequest: productRequest)
-            .flatMap { _ in
-                .just(Void())
-            }
+        return dataSource.updateProduct(idx: idx, productRequest: productRequest)
     }
     
     func updateSold(idx: Int) -> Single<Void> {
-        return productRemote.updateSold(idx: idx)
-            .flatMap { _ in
-                .just(Void())
-            }
+        return dataSource.updateSold(idx: idx)
     }
     
     func deleteProduct(idx: Int) -> Single<Void> {
-        return productRemote.deleteProduct(idx: idx)
-            .flatMap { _ in
-                .just(Void())
-            }
+        return dataSource.deleteProduct(idx: idx)
     }
 }

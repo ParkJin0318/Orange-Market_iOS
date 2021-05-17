@@ -44,43 +44,38 @@ class ProductRemote {
             }
     }
     
-    func saveProduct(productRequest: ProductRequest) -> Single<String> {
+    func saveProduct(productRequest: ProductRequest) -> Single<Void> {
         return provider.rx.request(.saveProduct(productRequest: productRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func likeProduct(idx: Int) -> Single<String> {
+    func likeProduct(idx: Int) -> Single<Void> {
         return provider.rx.request(.likeProduct(idx: idx))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<String> {
+    func updateProduct(idx: Int, productRequest: ProductRequest) -> Single<Void> {
         return provider.rx.request(.updateProduct(idx: idx, productRequest: productRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func updateSold(idx: Int) -> Single<String> {
+    func updateSold(idx: Int) -> Single<Void> {
         return provider.rx.request(.updateSold(idx: idx))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func deleteProduct(idx: Int) -> Single<String> {
+    func deleteProduct(idx: Int) -> Single<Void> {
         return provider.rx.request(.deleteProduct(idx: idx))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
 }

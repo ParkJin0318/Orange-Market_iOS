@@ -10,24 +10,21 @@ import RxSwift
 
 class UserRepositoryImpl: UserRepository {
     
-    private lazy var remote = UserRemote()
+    private lazy var dataSource = UserDataSource()
     
     func getUserInfo(idx: Int) -> Single<User> {
-        return remote.getUserInfo(idx: idx).map { $0.toModel() }
+        return dataSource.getUserInfo(idx: idx)
     }
     
     func getUserProfile() -> Single<User> {
-        return remote.getUserProfile().map { $0.toModel() }
+        return dataSource.getUserProfile()
     }
     
-    func updateLocation(locationRequest: LocationRequest) -> Single<String> {
-        return remote.updateLocation(locationRequest: locationRequest)
+    func updateLocation(locationRequest: LocationRequest) -> Single<Void> {
+        return dataSource.updateLocation(locationRequest: locationRequest)
     }
     
     func updateUser(userRequest: UserRequest) -> Single<Void> {
-        return remote.updateUser(userRequest: userRequest)
-            .flatMap { _ in
-                .just(Void())
-            }
+        return dataSource.updateUser(userRequest: userRequest)
     }
 }

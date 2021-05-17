@@ -36,27 +36,24 @@ class TownLifeRemote {
             }
     }
     
-    func saveTownLife(townLifeRequest: TownLifeRequest) -> Single<String> {
+    func saveTownLife(townLifeRequest: TownLifeRequest) -> Single<Void> {
         return provider.rx.request(.saveTownLife(townLifeRequest: townLifeRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response -> String in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func updateTownLife(idx: Int, townLifeRequest: TownLifeRequest) -> Single<String> {
+    func updateTownLife(idx: Int, townLifeRequest: TownLifeRequest) -> Single<Void> {
         return provider.rx.request(.updateTownLife(idx: idx, townLifeRequest: townLifeRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response -> String in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func deleteTownLife(idx: Int) -> Single<String> {
+    func deleteTownLife(idx: Int) -> Single<Void> {
         return provider.rx.request(.deleteTownLife(idx: idx))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response -> String in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
 }

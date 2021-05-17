@@ -38,6 +38,10 @@
 		8D475FA22602DB9500F2911F /* ProductDetailViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */; };
 		8D475FA72602F84700F2911F /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FA62602F84700F2911F /* UserRemote.swift */; };
 		8D475FAB2602FC1300F2911F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D475FAA2602FC1300F2911F /* Product.swift */; };
+		8D487E30265268BB00869F1F /* AuthDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D487E2F265268BB00869F1F /* AuthDataSource.swift */; };
+		8D487E32265268C700869F1F /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D487E31265268C700869F1F /* UserDataSource.swift */; };
+		8D487E34265268D200869F1F /* ProductDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D487E33265268D200869F1F /* ProductDataSource.swift */; };
+		8D487E36265268DD00869F1F /* UploadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D487E35265268DD00869F1F /* UploadDataSource.swift */; };
 		8D4FABEE2601FFEB00D8701A /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */; };
 		8D59EB77263A723F001AB8C4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D59EB76263A723F001AB8C4 /* CategoryCell.swift */; };
 		8D631508260D690300EB3540 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D631507260D690300EB3540 /* RegisterViewController.swift */; };
@@ -145,6 +149,10 @@
 		8D475FA12602DB9500F2911F /* ProductDetailViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewContainer.swift; sourceTree = "<group>"; };
 		8D475FA62602F84700F2911F /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
 		8D475FAA2602FC1300F2911F /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		8D487E2F265268BB00869F1F /* AuthDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataSource.swift; sourceTree = "<group>"; };
+		8D487E31265268C700869F1F /* UserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
+		8D487E33265268D200869F1F /* ProductDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataSource.swift; sourceTree = "<group>"; };
+		8D487E35265268DD00869F1F /* UploadDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataSource.swift; sourceTree = "<group>"; };
 		8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		8D59EB76263A723F001AB8C4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		8D631507260D690300EB3540 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -333,6 +341,17 @@
 				8D8F3712263669A2008196D0 /* Category.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8D487E2E2652689200869F1F /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				8D487E2F265268BB00869F1F /* AuthDataSource.swift */,
+				8D487E31265268C700869F1F /* UserDataSource.swift */,
+				8D487E33265268D200869F1F /* ProductDataSource.swift */,
+				8D487E35265268DD00869F1F /* UploadDataSource.swift */,
+			);
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		8D4FABEC2601FFC400D8701A /* ProductDetail */ = {
@@ -569,8 +588,9 @@
 			isa = PBXGroup;
 			children = (
 				8D279E85263815900033CDA2 /* Database */,
-				8DC8649725FEEAB60081F52C /* Repository */,
 				8DC8647325FEDD870081F52C /* Network */,
+				8D487E2E2652689200869F1F /* DataSource */,
+				8DC8649725FEEAB60081F52C /* Repository */,
 				8DC1E12F25FAEC8500A1CA7E /* Utils */,
 			);
 			path = Data;
@@ -823,6 +843,8 @@
 				8D6E10F6264CFA570085608C /* TownLifeAPI.swift in Sources */,
 				8D19EFC42638FF8F00DB654E /* CategoryCheckBoxCellDelegate.swift in Sources */,
 				8D89DB262650E8B00006345E /* ProductListViewReactor.swift in Sources */,
+				8D487E36265268DD00869F1F /* UploadDataSource.swift in Sources */,
+				8D487E32265268C700869F1F /* UserDataSource.swift in Sources */,
 				8D6E10FC264D002E0085608C /* TownLifeRemote.swift in Sources */,
 				8DDC18EF264B9721009697E4 /* MyInfoEditViewContainer.swift in Sources */,
 				8D59EB77263A723F001AB8C4 /* CategoryCell.swift in Sources */,
@@ -852,6 +874,7 @@
 				8DC864DD25FF1A430081F52C /* ProductRemote.swift in Sources */,
 				8D19EFCE2639390E00DB654E /* CategoryListViewContainer.swift in Sources */,
 				8DC864A225FEF2CE0081F52C /* ProductListViewController.swift in Sources */,
+				8D487E30265268BB00869F1F /* AuthDataSource.swift in Sources */,
 				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
 				8D89DB302651119D0006345E /* MyInfoEditViewReactor.swift in Sources */,
 				8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */,
@@ -860,6 +883,7 @@
 				8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */,
 				8D148FC52636C16400406E86 /* CategorySelectViewContainer.swift in Sources */,
 				8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */,
+				8D487E34265268D200869F1F /* ProductDataSource.swift in Sources */,
 				8D6E3135260B1627004FCB1A /* InputViewContainer.swift in Sources */,
 				8D63150C260D6AB800EB3540 /* RegisterViewContainer.swift in Sources */,
 				8D2F98AB2600561A00C8BE0C /* ProductImageCell.swift in Sources */,

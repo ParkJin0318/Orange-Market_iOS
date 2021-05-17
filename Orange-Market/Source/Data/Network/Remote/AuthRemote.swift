@@ -20,11 +20,11 @@ class AuthRemote {
             }
     }
     
-    func register(registerRequest: RegisterRequest) -> Single<String> {
+    func register(registerRequest: RegisterRequest) -> Single<Void> {
         return provider.rx.request(.register(registerRequest: registerRequest))
             .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
 }

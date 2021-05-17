@@ -11,6 +11,6 @@ import RxSwift
 protocol UserRepository {
     func getUserInfo(idx: Int) -> Single<User>
     func getUserProfile() -> Single<User>
-    func updateLocation(locationRequest: LocationRequest) -> Single<String>
+    func updateLocation(locationRequest: LocationRequest) -> Single<Void>
     func updateUser(userRequest: UserRequest) -> Single<Void>
 }

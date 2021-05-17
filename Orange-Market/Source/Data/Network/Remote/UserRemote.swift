@@ -27,19 +27,17 @@ class UserRemote {
             }
     }
     
-    func updateLocation(locationRequest: LocationRequest) -> Single<String> {
+    func updateLocation(locationRequest: LocationRequest) -> Single<Void> {
         return provider.rx.request(.updateLocation(locationRequest: locationRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func updateUser(userRequest: UserRequest) -> Single<String> {
+    func updateUser(userRequest: UserRequest) -> Single<Void> {
         return provider.rx.request(.updateUserProfile(userRequest: userRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
 }
