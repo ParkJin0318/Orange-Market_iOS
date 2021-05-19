@@ -1,5 +1,5 @@
 //
-//  CategoryCell.swift
+//  CategoryCheckBoxCell.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/04/26.
@@ -11,7 +11,7 @@ import BEMCheckBox
 class CategoryCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
     
     var delegate: CategoryCheckBoxCellDelegate?
-    var category: Category!
+    var category: ProductCategory!
     
     lazy var checkBoxNode = ASCheckBoxNode().then {
         $0.style.preferredSize = CGSize(width: 20, height: 20)
@@ -26,7 +26,7 @@ class CategoryCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
         self.automaticallyManagesSubnodes = true
     }
     
-    func setupNode(category: Category) {
+    func setupNode(category: ProductCategory) {
         self.category = category
         nameNode.attributedText = category.name.toAttributed(color: .label, ofSize: 16)
     }

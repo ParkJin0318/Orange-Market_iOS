@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  ProductListViewController.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/03/15.
@@ -102,14 +102,15 @@ extension ProductListViewController: ViewControllerType {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
             
-            $0.collectionNode.delegate = self
-            $0.collectionNode.dataSource = self
+            $0.tableNode.delegate = self
+            $0.tableNode.dataSource = self
         }
     }
     
     func loadNode() {
         self.node.do {
-            $0.collectionNode.view.showsVerticalScrollIndicator = false
+            $0.tableNode.view.showsVerticalScrollIndicator = false
+            $0.tableNode.view.tableFooterView = UIView(frame: CGRect.zero)
         }
     }
     
@@ -136,7 +137,7 @@ extension ProductListViewController: ViewControllerType {
             .withUnretained(self)
             .bind { owner, products in
                 owner.products = products
-                owner.node.collectionNode.reloadData()
+                owner.node.tableNode.reloadData()
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.currentCity }
@@ -166,16 +167,16 @@ extension ProductListViewController: ViewControllerType {
     }
 }
 
-extension ProductListViewController: ASCollectionDelegate {
+extension ProductListViewController: ASTableDelegate {
     
-    func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
         return ASSizeRange(
             min: CGSize(width: width, height: 0),
             max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         )
     }
     
-    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         let item = products[indexPath.row]
         
         let vc = ProductDetailViewController().then {
@@ -186,23 +187,28 @@ extension ProductListViewController: ASCollectionDelegate {
     }
 }
 
-extension ProductListViewController: ASCollectionDataSource {
-    func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+extension ProductListViewController: ASTableDataSource {
+    
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1
     }
-        
-    func collectionNode(_ collectionNzode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         return products.count
     }
-        
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.products[indexPath.row]
-            let cell = ProductCell()
-            cell.setupNode(product: item!)
             
-            if (item?.isSold == true) {
-                cell.alpha = 0.5
+            let cell = ProductCell().then {
+                $0.selectionStyle = .none
+            }
+            
+            if let item = self?.products[indexPath.row] {
+                cell.do {
+                    $0.setupNode(product: item)
+                    $0.alpha = item.isSold ? 0.5 : 1
+                }
             }
             return cell
         }

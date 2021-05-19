@@ -22,13 +22,13 @@ class CategoryListViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setAllCategory([Category])
+        case setAllCategory([ProductCategory])
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
-        var categories: [Category]
+        var categories: [ProductCategory]
         var isLoading: Bool
         var errorMessage: String?
     }

@@ -19,7 +19,7 @@ class CategoryCell: ASCellNode {
         self.selectionStyle = .none
     }
     
-    func setupNode(category: Category) {
+    func setupNode(category: ProductCategory) {
         nameNode.attributedText = category.name.toAttributed(color: .label, ofSize: 14)
     }
     

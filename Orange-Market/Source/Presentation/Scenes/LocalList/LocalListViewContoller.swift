@@ -1,5 +1,5 @@
 //
-//  CityViewController.swift
+//  LocalListViewContoller.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/03/15.
@@ -8,7 +8,7 @@
 import AsyncDisplayKit
 import RxSwift
 
-class CityViewContoller: ASDKViewController<ASDisplayNode> {
+class LocalListViewContoller: ASDKViewController<ASDisplayNode> {
     
     lazy var disposeBag = DisposeBag()
     
@@ -32,7 +32,7 @@ class CityViewContoller: ASDKViewController<ASDisplayNode> {
     }
 }
 
-extension CityViewContoller: ViewControllerType {
+extension LocalListViewContoller: ViewControllerType {
     
     func initNode() {
         self.node.do { container in

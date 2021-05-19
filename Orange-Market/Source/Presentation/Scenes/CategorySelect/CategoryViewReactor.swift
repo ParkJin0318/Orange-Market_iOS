@@ -1,5 +1,5 @@
 //
-//  CategoryViewReactor.swift
+//  CategorySelectViewReactor.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/05/16.
@@ -24,14 +24,14 @@ class CategorySelectViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setAllCategory([Category])
+        case setAllCategory([ProductCategory])
         case updateCategory(Bool)
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
-        var categories: [Category]
+        var categories: [ProductCategory]
         var isUpdateCategory: Bool
         var isLoading: Bool
         var errorMessage: String?

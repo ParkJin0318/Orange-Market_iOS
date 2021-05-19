@@ -1,5 +1,5 @@
 //
-//  CategoryEntity.swift
+//  ProductCategoryEntity.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/04/27.
@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class CategoryEntity: Object {
+class ProductCategoryEntity: Object {
     @objc dynamic var idx: Int = -1
     @objc dynamic var name: String?
     @objc dynamic var isSelected: Bool = false
@@ -21,10 +21,10 @@ class CategoryEntity: Object {
     }
 }
 
-extension CategoryEntity {
+extension ProductCategoryEntity {
     
-    func toModel() -> Category {
-        return Category(
+    func toModel() -> ProductCategory {
+        return ProductCategory(
             idx: self.idx,
             name: self.name ?? "",
             isSelected: self.isSelected

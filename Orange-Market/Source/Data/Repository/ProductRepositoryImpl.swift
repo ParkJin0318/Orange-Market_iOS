@@ -28,7 +28,7 @@ class ProductRepositoryImpl: ProductRepository {
         return dataSource.getProduct(idx: idx)
     }
     
-    func getAllCategory() -> Single<Array<Category>> {
+    func getAllCategory() -> Single<Array<ProductCategory>> {
         return dataSource.getAllCategory()
     }
     

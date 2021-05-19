@@ -26,11 +26,6 @@ class ProductCell: ASCellNode {
         $0.alpha = 0.7
     }
     
-    private lazy var viewNode = ASDisplayNode().then {
-        $0.style.preferredSize = CGSize(width: width, height: 1)
-        $0.backgroundColor = .lightGray
-    }
-    
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
@@ -54,7 +49,7 @@ class ProductCell: ASCellNode {
         let borderLayout = self.borderLayoutSpec()
         
         return ASInsetLayoutSpec(
-            insets: .init(top: 5, left: 20, bottom: 0, right: 20),
+            insets: .init(top: 10, left: 10, bottom: 10, right: 10),
             child: borderLayout
         )
     }
@@ -62,21 +57,12 @@ class ProductCell: ASCellNode {
     private func borderLayoutSpec() -> ASLayoutSpec {
         let productLayout = self.productLayoutSpec()
         
-        let layout = ASStackLayoutSpec(
+        return ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 0,
             justifyContent: .spaceBetween,
             alignItems: .end,
             children: [productLayout, likeNode]
-        )
-        layout.style.preferredSize = CGSize(width: width, height: 90)
-        
-        return ASStackLayoutSpec(
-            direction: .vertical,
-            spacing: 8,
-            justifyContent: .start,
-            alignItems: .start,
-            children: [layout, viewNode]
         )
     }
     

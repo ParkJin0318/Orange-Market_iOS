@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  UserRepositoryImpl.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/03/15.
@@ -20,11 +20,11 @@ class UserRepositoryImpl: UserRepository {
         return dataSource.getUserProfile()
     }
     
-    func updateLocation(locationRequest: LocationRequest) -> Single<Void> {
+    func updateLocation(locationRequest: LocationInfoRequest) -> Single<Void> {
         return dataSource.updateLocation(locationRequest: locationRequest)
     }
     
-    func updateUser(userRequest: UserRequest) -> Single<Void> {
+    func updateUser(userRequest: UserInfoRequest) -> Single<Void> {
         return dataSource.updateUser(userRequest: userRequest)
     }
 }

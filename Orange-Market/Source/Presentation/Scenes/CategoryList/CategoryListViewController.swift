@@ -13,9 +13,9 @@ import MBProgressHUD
 class CategoryListViewController: ASDKViewController<CategoryListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    lazy var categories: [Category] = []
+    lazy var categories: [ProductCategory] = []
     
-    var selectCategory: Category!
+    var selectCategory: ProductCategory!
     
     override init() {
         super.init(node: CategoryListViewContainer())

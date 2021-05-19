@@ -1,5 +1,5 @@
 //
-//  CategoryViewController.swift
+//  CategorySelectViewController.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/04/26.
@@ -14,7 +14,7 @@ import MBProgressHUD
 class CategorySelectViewController: ASDKViewController<CategorySelectViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    lazy var categories: [Category] = []
+    lazy var categories: [ProductCategory] = []
     
     override init() {
         super.init(node: CategorySelectViewContainer())

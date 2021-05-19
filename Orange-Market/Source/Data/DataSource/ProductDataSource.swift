@@ -12,7 +12,7 @@ class ProductDataSource {
     
     private lazy var userRemote = UserRemote()
     private lazy var productRemote = ProductRemote()
-    private lazy var categoryCache = CategoryCache()
+    private lazy var categoryCache = ProductCategoryCache()
     
     func getAllProduct() -> Single<Array<Product>> {
         return userRemote.getUserProfile()
@@ -64,17 +64,17 @@ class ProductDataSource {
             }
     }
     
-    func getAllCategory() -> Single<Array<Category>> {
+    func getAllCategory() -> Single<Array<ProductCategory>> {
         return categoryCache.getAllCategory()
             .map { $0.map { $0.toModel() } }
             .catch { error in
                 self.productRemote
                     .getAllCategory()
                     .map { $0.map { $0.toModel() } }
-                    .flatMap {
+                    .flatMap { categoryList in
                         self.categoryCache
-                            .insertCategory($0.map { $0.toEntity() })
-                            .andThen(Single.just($0))
+                            .insertCategory(categoryList.map { $0.toEntity() })
+                            .flatMap { _ in .just(categoryList)}
                     }
             }
     }

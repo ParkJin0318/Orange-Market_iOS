@@ -20,11 +20,11 @@ class UserDataSource {
         return remote.getUserProfile().map { $0.toModel() }
     }
     
-    func updateLocation(locationRequest: LocationRequest) -> Single<Void> {
+    func updateLocation(locationRequest: LocationInfoRequest) -> Single<Void> {
         return remote.updateLocation(locationRequest: locationRequest)
     }
     
-    func updateUser(userRequest: UserRequest) -> Single<Void> {
+    func updateUser(userRequest: UserInfoRequest) -> Single<Void> {
         return remote.updateUser(userRequest: userRequest)
     }
 }

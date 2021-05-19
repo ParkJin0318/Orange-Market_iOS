@@ -1,5 +1,5 @@
 //
-//  CategoryCache.swift
+//  ProductCategoryCache.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/04/27.
@@ -9,40 +9,40 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-class CategoryCache {
+class ProductCategoryCache {
     lazy var database: Realm! = AppDatabase().getInstance()
     
-    func insertCategory(_ categoryList: Array<CategoryEntity>) -> Completable {
-        return Completable.create { [weak self] emitter in
+    func insertCategory(_ categoryList: Array<ProductCategoryEntity>) -> Single<Void> {
+        return Single.create { [weak self] emitter in
             guard let self = self else {
-                emitter(.error(OrangeError.error(message: "저장 실패")))
+                emitter(.failure(OrangeError.error(message: "저장 실패")))
                 return Disposables.create()
             }
             
             do {
                 try self.database.write {
-                    let entity = self.database.objects(CategoryEntity.self)
+                    let entity = self.database.objects(ProductCategoryEntity.self)
                     self.database.delete(entity)
                     
                     self.database.add(categoryList)
                 }
-                emitter(.completed)
+                emitter(.success(Void()))
             }
             catch {
-                emitter(.error(OrangeError.error(message: "저장 실패")))
+                emitter(.failure(OrangeError.error(message: "저장 실패")))
             }
             return Disposables.create()
         }
     }
     
-    func getAllCategory() -> Single<Array<CategoryEntity>> {
-        return Single<[CategoryEntity]>.create { [weak self] emitter in
+    func getAllCategory() -> Single<Array<ProductCategoryEntity>> {
+        return Single.create { [weak self] emitter in
             guard let self = self else {
                 emitter(.failure(OrangeError.error(message: "조회 실패")))
                 return Disposables.create()
             }
             
-            let data = self.database.objects(CategoryEntity.self)
+            let data = self.database.objects(ProductCategoryEntity.self)
             
             if (data.isEmpty) {
                 emitter(.failure(OrangeError.error(message: "조회 실패")))
@@ -53,8 +53,8 @@ class CategoryCache {
         }
     }
     
-    func getCategory(idx: Int) -> Single<CategoryEntity> {
-        return Single<CategoryEntity>.create { [weak self] emitter in
+    func getCategory(idx: Int) -> Single<ProductCategoryEntity> {
+        return Single.create { [weak self] emitter in
             guard let self = self else {
                 emitter(.failure(OrangeError.error(message: "조회 실패")))
                 return Disposables.create()
@@ -62,7 +62,7 @@ class CategoryCache {
             
             let idxPredicate = NSPredicate(format: "idx = %d", idx)
             
-            let data = self.database.objects(CategoryEntity.self).filter(idxPredicate).first
+            let data = self.database.objects(ProductCategoryEntity.self).filter(idxPredicate).first
             
             if (data == nil) {
                 emitter(.failure(OrangeError.error(message: "조회 실패")))
@@ -83,7 +83,7 @@ class CategoryCache {
             let idxPredicate = NSPredicate(format: "idx = %d", idx)
             
             do {
-                if let category = self.database.objects(CategoryEntity.self).filter(idxPredicate).first {
+                if let category = self.database.objects(ProductCategoryEntity.self).filter(idxPredicate).first {
                     try self.database.write {
                         category.isSelected = !category.isSelected
                     }
@@ -94,27 +94,6 @@ class CategoryCache {
                 emitter(.failure(OrangeError.error(message: "업데이트 실패")))
             }
             
-            return Disposables.create()
-        }
-    }
-    
-    func deleteAllCategory() -> Completable {
-        return Completable.create { [weak self] emitter in
-            guard let self = self else {
-                emitter(.error(OrangeError.error(message: "삭제 실패")))
-                return Disposables.create()
-            }
-            
-            do {
-                try self.database.write {
-                    let entity = self.database.objects(CategoryEntity.self)
-                    self.database.delete(entity)
-                }
-                emitter(.completed)
-            }
-            catch {
-                emitter(.error(OrangeError.error(message: "저장 실패")))
-            }
             return Disposables.create()
         }
     }
