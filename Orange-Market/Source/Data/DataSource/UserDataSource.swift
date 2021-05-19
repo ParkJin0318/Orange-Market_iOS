@@ -13,11 +13,11 @@ class UserDataSource {
     private lazy var remote = UserRemote()
     
     func getUserInfo(idx: Int) -> Single<User> {
-        return remote.getUserInfo(idx: idx).map { $0.toModel() }
+        return remote.getUserInfo(idx: idx)
     }
     
     func getUserProfile() -> Single<User> {
-        return remote.getUserProfile().map { $0.toModel() }
+        return remote.getUserProfile()
     }
     
     func updateLocation(locationRequest: LocationInfoRequest) -> Single<Void> {

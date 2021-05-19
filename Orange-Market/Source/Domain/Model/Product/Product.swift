@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductDetail {
+struct Product: Codable {
     let idx: Int
     var categoryIdx: Int
     var category: String
@@ -25,7 +25,7 @@ struct ProductDetail {
     let profileImage: String?
 }
 
-extension ProductDetail {
+extension Product {
     
     func getIsSold() -> Int {
         return isSold ? 1 : 0

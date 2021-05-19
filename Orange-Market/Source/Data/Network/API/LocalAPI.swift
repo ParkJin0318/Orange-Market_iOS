@@ -11,6 +11,7 @@ enum LocalAPI {
     case getAllPost(city: String)
     case getPost(idx: Int)
     case getAllComment(idx: Int)
+    case getAllTopic
     case savePost(townLifeRequest: LocalPostRequest)
     case saveComment(localCommentRequest: LocalCommentRequest)
     case updatePost(idx: Int, townLifeRequest: LocalPostRequest)
@@ -31,6 +32,8 @@ extension LocalAPI: TargetType {
                 return "\(idx)"
             case let .getAllComment(idx):
                 return "comment/\(idx)"
+            case .getAllTopic:
+                return "topic"
             case .savePost:
                 return ""
             case .saveComment:
@@ -51,6 +54,8 @@ extension LocalAPI: TargetType {
             case .getPost:
                 return .get
             case .getAllComment:
+                return .get
+            case .getAllTopic:
                 return .get
             case .savePost:
                 return .post
@@ -78,6 +83,9 @@ extension LocalAPI: TargetType {
                 return .requestPlain
                 
             case .getAllComment:
+                return .requestPlain
+                
+            case .getAllTopic:
                 return .requestPlain
                 
             case let .savePost(request):

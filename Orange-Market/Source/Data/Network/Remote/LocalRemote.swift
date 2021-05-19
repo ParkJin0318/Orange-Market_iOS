@@ -12,26 +12,34 @@ import Moya
 class LocalRemote {
     private lazy var provider: MoyaProvider<LocalAPI> = MoyaProvider()
     
-    func getAllLocalPost(city: String) -> Single<Array<LocalPostData>> {
+    func getAllLocalPost(city: String) -> Single<Array<LocalPost>> {
         return provider.rx.request(.getAllPost(city: city))
-            .map(Response<Array<LocalPostData>>.self, using: JSONDecoder())
-            .map { response -> Array<LocalPostData> in
+            .map(Response<Array<LocalPost>>.self, using: JSONDecoder())
+            .map { response -> Array<LocalPost> in
                 return response.data
             }
     }
     
-    func getLocalPost(idx: Int) -> Single<LocalPostData> {
+    func getLocalPost(idx: Int) -> Single<LocalPost> {
         return provider.rx.request(.getPost(idx: idx))
-            .map(Response<LocalPostData>.self, using: JSONDecoder())
-            .map { response -> LocalPostData in
+            .map(Response<LocalPost>.self, using: JSONDecoder())
+            .map { response -> LocalPost in
                 return response.data
             }
     }
     
-    func getAllComment(idx: Int) -> Single<Array<LocalCommentData>> {
+    func getAllComment(idx: Int) -> Single<Array<LocalComment>> {
         return provider.rx.request(.getAllComment(idx: idx))
-            .map(Response<Array<LocalCommentData>>.self, using: JSONDecoder())
-            .map { response -> Array<LocalCommentData> in
+            .map(Response<Array<LocalComment>>.self, using: JSONDecoder())
+            .map { response -> Array<LocalComment> in
+                return response.data
+            }
+    }
+    
+    func getAllTopic() -> Single<Array<LocalTopicData>> {
+        return provider.rx.request(.getAllTopic)
+            .map(Response<Array<LocalTopicData>>.self, using: JSONDecoder())
+            .map { response -> Array<LocalTopicData> in
                 return response.data
             }
     }

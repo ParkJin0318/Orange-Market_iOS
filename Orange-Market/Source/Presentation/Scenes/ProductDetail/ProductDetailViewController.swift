@@ -19,7 +19,7 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     var soldMessage: String? = nil
     
     var idx: Int = -1
-    var product: ProductDetail? = nil
+    var product: Product? = nil
     
     private lazy var moreButton = UIButton().then {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)

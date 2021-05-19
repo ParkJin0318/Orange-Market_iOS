@@ -24,7 +24,7 @@ class ProductRepositoryImpl: ProductRepository {
         return dataSource.getAllMyProduct()
     }
     
-    func getProduct(idx: Int) -> Single<ProductDetail> {
+    func getProduct(idx: Int) -> Single<Product> {
         return dataSource.getProduct(idx: idx)
     }
     
@@ -33,7 +33,7 @@ class ProductRepositoryImpl: ProductRepository {
     }
     
     func updateCategory(idx: Int) -> Single<Void> {
-        return dataSource.updateSold(idx: idx)
+        return dataSource.updateCategory(idx: idx)
     }
     
     func saveProduct(productRequest: ProductRequest) -> Single<Void> {

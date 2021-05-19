@@ -11,18 +11,18 @@ import RxSwift
 class UserRemote {
     private lazy var provider: MoyaProvider<UserAPI> = MoyaProvider()
     
-    func getUserInfo(idx: Int) -> Single<UserData> {
+    func getUserInfo(idx: Int) -> Single<User> {
         return provider.rx.request(.getUserInfo(idx: idx))
-            .map(Response<UserData>.self, using: JSONDecoder())
-            .map { response -> UserData in
+            .map(Response<User>.self, using: JSONDecoder())
+            .map { response -> User in
                 return response.data
             }
     }
     
-    func getUserProfile() -> Single<UserData> {
+    func getUserProfile() -> Single<User> {
         return provider.rx.request(.getUserProfile)
-            .map(Response<UserData>.self, using: JSONDecoder())
-            .map { response -> UserData in
+            .map(Response<User>.self, using: JSONDecoder())
+            .map { response -> User in
                 return response.data
             }
     }

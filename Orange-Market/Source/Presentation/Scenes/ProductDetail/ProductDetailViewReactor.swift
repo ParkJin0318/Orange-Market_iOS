@@ -31,7 +31,7 @@ class ProductDetailViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setProduct(ProductDetail, User)
+        case setProduct(Product, User)
         case updateSold(Bool)
         case deleteProduct(Bool)
         case likeProduct(Bool)
@@ -41,7 +41,7 @@ class ProductDetailViewReactor: Reactor {
     }
     
     struct State {
-        var product: ProductDetail?
+        var product: Product?
         
         var isMyProduct: Bool
         var isLikeProduct: Bool

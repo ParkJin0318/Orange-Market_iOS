@@ -35,13 +35,13 @@ class ProductCell: ASCellNode {
         self.titleNode.attributedText = product.title.toAttributed(color: .label, ofSize: 17)
         self.locationNode.attributedText = product.city.toAttributed(color: .gray, ofSize: 14)
         self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .label, ofSize: 15)
-        self.likeNode.titleNode.attributedText = "\(product.like)".toAttributed(color: .label, ofSize: 13)
+        self.likeNode.titleNode.attributedText = "\(product.likeUsers.count)".toAttributed(color: .label, ofSize: 13)
         
-        if (product.like < 1) {
+        if (product.likeUsers.count < 1) {
             self.likeNode.isHidden = true
         }
-        if (!product.image.isEmpty) {
-            self.imageNode.url = product.image.toUrl()
+        if (!product.images.isEmpty) {
+            self.imageNode.url = product.images.first?.toUrl()
         }
     }
     

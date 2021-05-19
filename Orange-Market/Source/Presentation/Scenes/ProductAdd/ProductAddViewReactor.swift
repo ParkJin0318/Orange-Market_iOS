@@ -35,7 +35,7 @@ class ProductAddViewReactor: Reactor {
         case price(String)
         case content(String)
         
-        case fetchProduct(ProductDetail?)
+        case fetchProduct(Product?)
         case uploadImage(UIImage)
         case saveProduct
         case updateProduct
@@ -49,7 +49,7 @@ class ProductAddViewReactor: Reactor {
         case setPrice(String)
         case setContent(String)
         
-        case setProduct(ProductDetail)
+        case setProduct(Product)
         case setUser(User)
         case setSuccess(Bool)
         
@@ -65,7 +65,7 @@ class ProductAddViewReactor: Reactor {
         var price: String
         var content: String
         
-        var product: ProductDetail?
+        var product: Product?
         var user: User?
         
         var isSuccess: Bool

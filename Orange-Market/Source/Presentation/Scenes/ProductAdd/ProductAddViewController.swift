@@ -18,7 +18,7 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
     lazy var categoryListViewController = CategoryListViewController()
     lazy var images: [String] = []
     
-    var product: ProductDetail? = nil
+    var product: Product? = nil
     var category: Category? = nil
     
     lazy var closeButton = UIButton().then {

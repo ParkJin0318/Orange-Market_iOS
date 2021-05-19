@@ -12,26 +12,26 @@ import Moya
 class ProductRemote {
     private lazy var provider: MoyaProvider<ProductAPI> = MoyaProvider()
     
-    func getAllProduct(city: String) -> Single<Array<ProductData>> {
+    func getAllProduct(city: String) -> Single<Array<Product>> {
         return provider.rx.request(.getAllProduct(city: city))
-            .map(Response<Array<ProductData>>.self, using: JSONDecoder())
-            .map { response -> Array<ProductData> in
+            .map(Response<Array<Product>>.self, using: JSONDecoder())
+            .map { response -> Array<Product> in
                 return response.data
             }
     }
     
-    func getAllLikeProduct() -> Single<Array<ProductData>> {
+    func getAllLikeProduct() -> Single<Array<Product>> {
         return provider.rx.request(.getAllLikeProduct)
-            .map(Response<Array<ProductData>>.self, using: JSONDecoder())
-            .map { response -> Array<ProductData> in
+            .map(Response<Array<Product>>.self, using: JSONDecoder())
+            .map { response -> Array<Product> in
                 return response.data
             }
     }
     
-    func getProduct(idx: Int) -> Single<ProductData> {
+    func getProduct(idx: Int) -> Single<Product> {
         return provider.rx.request(.getProduct(idx: idx))
-            .map(Response<ProductData>.self, using: JSONDecoder())
-            .map { response -> ProductData in
+            .map(Response<Product>.self, using: JSONDecoder())
+            .map { response -> Product in
                 return response.data
             }
     }
