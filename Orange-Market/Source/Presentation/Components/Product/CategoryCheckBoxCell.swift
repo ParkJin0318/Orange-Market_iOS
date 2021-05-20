@@ -8,6 +8,10 @@
 import AsyncDisplayKit
 import BEMCheckBox
 
+protocol CategoryCheckBoxCellDelegate {
+    func setCheckedCategory(idx: Int)
+}
+
 class CategoryCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
     
     var delegate: CategoryCheckBoxCellDelegate?
