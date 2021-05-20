@@ -1,5 +1,5 @@
 //
-//  LocalListViewReactor.swift
+//  LocalPostListViewReactor.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/05/20.
@@ -7,7 +7,7 @@
 
 import ReactorKit
 
-class LocalListViewReactor: Reactor {
+class LocalPostListViewReactor: Reactor {
     
     private lazy var localRepository: LocalRepository = LocalRepositoryImpl()
     
@@ -48,6 +48,7 @@ class LocalListViewReactor: Reactor {
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
+        state.errorMessage = nil
         
         switch mutation {
             case let .setLocalPost(posts):

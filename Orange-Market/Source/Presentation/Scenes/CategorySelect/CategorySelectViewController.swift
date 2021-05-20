@@ -126,12 +126,21 @@ extension CategorySelectViewController: ASCollectionDataSource {
         
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.categories[indexPath.row]
+            guard let self = self else { return ASCellNode() }
             
-            return CategoryCheckBoxCell().then {
+            let item = self.categories[indexPath.row]
+            
+            let cell = CategoryCheckBoxCell().then {
+                $0.category = item
                 $0.delegate = self
-                $0.setupNode(category: item!)
             }
+            
+            Observable.just(item)
+                .map { $0.name.toAttributed(color: .label, ofSize: 16) }
+                .bind(to: cell.nameNode.rx.attributedText)
+                .disposed(by: self.disposeBag)
+            
+            return cell
         }
     }
 }

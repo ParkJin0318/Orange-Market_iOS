@@ -17,7 +17,7 @@ class TabBarController: ASTabBarController {
         )
     }
     
-    private lazy var localViewController = LocalListViewContoller().then {
+    private lazy var localViewController = LocalPostListViewContoller().then {
         $0.tabBarItem = UITabBarItem(
             title: "지역생활",
             image: UIImage(systemName: "doc.plaintext"),

@@ -37,4 +37,8 @@ extension UIColor {
     static func primaryColor() -> UIColor {
         return UIColor(rgb: 0xFFCD4A)
     }
+    
+    static func lightGray() -> UIColor {
+        return UIColor(rgb: 0xf1f3f4)
+    }
 }

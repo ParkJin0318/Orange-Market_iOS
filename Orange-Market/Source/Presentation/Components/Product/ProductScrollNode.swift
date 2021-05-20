@@ -6,6 +6,7 @@
 //
 
 import AsyncDisplayKit
+import RxSwift
 
 class ProductScrollNode: ASScrollNode {
     
@@ -43,6 +44,24 @@ class ProductScrollNode: ASScrollNode {
         
         self.scrollableDirections = [.up, .down]
     }
+}
+
+extension Reactive where Base: ProductScrollNode {
+    
+    var product: Binder<Product> {
+        Binder(base) { base, product in
+            base.profileNode.profileImageNode.url = product.profileImage?.toUrl()
+            base.profileNode.nameNode.attributedText = product.name.toBoldAttributed(color: .black, ofSize: 14)
+            base.profileNode.locationNode.attributedText = product.location.toAttributed(color: .black, ofSize: 12)
+            
+            base.titleNode.attributedText = product.title.toBoldAttributed(color: .black, ofSize: 18)
+            base.dateNode.attributedText = product.createAt.toAttributed(color: .gray, ofSize: 14)
+            base.contentsNode.attributedText = product.contents.toAttributed(color: .black, ofSize: 14)
+        }
+    }
+}
+
+extension ProductScrollNode {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let profileLayout = self.profileLayoutSpec()

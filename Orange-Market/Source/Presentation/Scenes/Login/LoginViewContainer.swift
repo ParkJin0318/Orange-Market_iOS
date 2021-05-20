@@ -57,6 +57,9 @@ class LoginViewContainer: ASDisplayNode {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
+}
+
+extension LoginViewContainer {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let loginLayout = self.loginLayoutSpec()

@@ -37,6 +37,9 @@ class RegisterViewContainer: ASDisplayNode {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
+}
+
+extension RegisterViewContainer {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let registerLayout = self.registerLayoutSpec()

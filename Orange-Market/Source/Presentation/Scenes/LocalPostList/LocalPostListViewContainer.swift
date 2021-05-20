@@ -1,5 +1,5 @@
 //
-//  LocalListViewContainer.swift
+//  LocalPostListViewContainer.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/05/20.
@@ -7,7 +7,7 @@
 
 import AsyncDisplayKit
 
-class LocalListViewContainer: ASDisplayNode {
+class LocalPostListViewContainer: ASDisplayNode {
     
     lazy var tableNode = ASTableNode().then {
         $0.allowsSelectionDuringEditing = false

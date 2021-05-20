@@ -146,60 +146,22 @@ extension ProductDetailViewController: ViewControllerType {
             .share()
         
         productData
+            .bind(to: node.productScrollNode.rx.product)
+            .disposed(by: disposeBag)
+        
+        productData
+            .bind(to: node.productBottomNode.rx.product)
+            .disposed(by: disposeBag)
+        
+        productData
             .withUnretained(self)
             .bind { $0.0.product = $0.1 }
             .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.profileImage?.toUrl() }
-            .bind(to: node.productScrollNode.profileNode.profileImageNode.rx.url)
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.name.toBoldAttributed(color: .black, ofSize: 14) }
-            .bind(to: node.productScrollNode.profileNode.nameNode.rx.attributedText)
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.location.toAttributed(color: .black, ofSize: 12) }
-            .bind(to: node.productScrollNode.profileNode.locationNode.rx.attributedText)
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.title.toBoldAttributed(color: .black, ofSize: 18) }
-            .bind(to: node.productScrollNode.titleNode.rx.attributedText)
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.createAt.toAttributed(color: .gray, ofSize: 14) }
-            .bind(to: node.productScrollNode.dateNode.rx.attributedText)
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.contents.toAttributed(color: .black, ofSize: 14) }
-            .bind(to: node.productScrollNode.contentsNode.rx.attributedText)
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { "\($0.price)원".toAttributed(color: .black, ofSize: 16) }
-            .bind(to: node.productBottomNode.priceNode.rx.attributedText)
-            .disposed(by: disposeBag)
-        
+    
         productData
             .map { $0.isSold ? "판매중" : "판매완료" }
             .withUnretained(self)
             .bind { $0.0.soldMessage = $0.1 }
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.isSold ? "판매완료" : "구매하기" }
-            .withUnretained(self)
-            .bind { $0.0.node.productBottomNode.buyNode.setAttributedTitle($0.1.toAttributed(color: .systemBackground, ofSize: 16), for: .normal) }
-            .disposed(by: disposeBag)
-        
-        productData
-            .map { $0.isSold ? UIColor.lightGray : UIColor.primaryColor() }
-            .bind(to: node.productBottomNode.buyNode.rx.backgroundColor)
             .disposed(by: disposeBag)
         
         productData.map { $0.images }

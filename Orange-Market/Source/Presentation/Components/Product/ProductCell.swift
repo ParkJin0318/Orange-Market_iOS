@@ -6,21 +6,22 @@
 //
 
 import AsyncDisplayKit
+import RxSwift
 
 class ProductCell: ASCellNode {
     
-    private lazy var imageNode = ASNetworkImageNode().then {
+    lazy var imageNode = ASNetworkImageNode().then {
         $0.style.preferredSize = CGSize(width: 90, height: 90)
         $0.cornerRadius = 5
     }
     
-    private lazy var titleNode = ASTextNode()
+    lazy var titleNode = ASTextNode()
     
-    private lazy var locationNode = ASTextNode()
+    lazy var locationNode = ASTextNode()
     
-    private lazy var priceNode = ASTextNode()
+    lazy var priceNode = ASTextNode()
     
-    private lazy var likeNode = ASButtonNode().then {
+    lazy var likeNode = ASButtonNode().then {
         $0.imageNode.image = UIImage(systemName: "heart")
         $0.imageNode.style.preferredSize = CGSize(width: 13, height: 13)
         $0.alpha = 0.7
@@ -30,20 +31,28 @@ class ProductCell: ASCellNode {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
+}
+
+extension Reactive where Base: ProductCell {
     
-    func setupNode(product: Product) {
-        self.titleNode.attributedText = product.title.toAttributed(color: .label, ofSize: 17)
-        self.locationNode.attributedText = product.city.toAttributed(color: .gray, ofSize: 14)
-        self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .label, ofSize: 15)
-        self.likeNode.titleNode.attributedText = "\(product.likeUsers.count)".toAttributed(color: .label, ofSize: 13)
-        
-        if (product.likeUsers.count < 1) {
-            self.likeNode.isHidden = true
-        }
-        if (!product.images.isEmpty) {
-            self.imageNode.url = product.images.first?.toUrl()
+    var product: Binder<Product> {
+        Binder(base) { base, product in
+            base.titleNode.attributedText = product.title.toAttributed(color: .label, ofSize: 17)
+            base.locationNode.attributedText = product.city.toAttributed(color: .gray, ofSize: 14)
+            base.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .label, ofSize: 15)
+            base.likeNode.titleNode.attributedText = "\(product.likeUsers.count)".toAttributed(color: .label, ofSize: 13)
+            
+            if (product.likeUsers.count < 1) {
+                base.likeNode.isHidden = true
+            }
+            if (!product.images.isEmpty) {
+                base.imageNode.url = product.images.first?.toUrl()
+            }
         }
     }
+}
+
+extension ProductCell {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let borderLayout = self.borderLayoutSpec()

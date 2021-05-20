@@ -29,11 +29,9 @@ class CategoryCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
-    
-    func setupNode(category: ProductCategory) {
-        self.category = category
-        nameNode.attributedText = category.name.toAttributed(color: .label, ofSize: 16)
-    }
+}
+
+extension CategoryCheckBoxCell {
     
     override func layout() {
         super.layout()

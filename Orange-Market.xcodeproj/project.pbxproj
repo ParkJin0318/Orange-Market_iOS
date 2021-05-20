@@ -102,7 +102,7 @@
 		8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A525FEF4E80081F52C /* AuthController.swift */; };
 		8DC864AA25FEF6390081F52C /* SplashViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A925FEF6390081F52C /* SplashViewContoller.swift */; };
 		8DC864AF25FEF9F60081F52C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864AE25FEF9F60081F52C /* TabBarController.swift */; };
-		8DC864B325FEFA380081F52C /* LocalListViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864B225FEFA380081F52C /* LocalListViewContoller.swift */; };
+		8DC864B325FEFA380081F52C /* LocalPostListViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864B225FEFA380081F52C /* LocalPostListViewContoller.swift */; };
 		8DC864B725FF04DD0081F52C /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864B625FF04DD0081F52C /* UserAPI.swift */; };
 		8DC864C025FF06AC0081F52C /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */; };
 		8DC864C325FF06D30081F52C /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864C225FF06D30081F52C /* UserRepository.swift */; };
@@ -117,9 +117,12 @@
 		8DCA58CD260C5CCE00A775B0 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */; };
 		8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */; };
 		8DDC18EF264B9721009697E4 /* MyInfoEditViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC18EE264B9721009697E4 /* MyInfoEditViewContainer.swift */; };
-		8DE4BF75265643A900F60F63 /* LocalListViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF74265643A900F60F63 /* LocalListViewContainer.swift */; };
-		8DE4BF7C2656460D00F60F63 /* LocalListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF7B2656460D00F60F63 /* LocalListViewReactor.swift */; };
+		8DE4BF75265643A900F60F63 /* LocalPostListViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF74265643A900F60F63 /* LocalPostListViewContainer.swift */; };
+		8DE4BF7C2656460D00F60F63 /* LocalPostListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF7B2656460D00F60F63 /* LocalPostListViewReactor.swift */; };
 		8DE4BF7F2656467700F60F63 /* LocalPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF7E2656467700F60F63 /* LocalPostCell.swift */; };
+		8DE4BF822656758000F60F63 /* LocalPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF812656758000F60F63 /* LocalPostDetailViewController.swift */; };
+		8DE4BF84265676FE00F60F63 /* LocalPostDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF83265676FE00F60F63 /* LocalPostDetailViewReactor.swift */; };
+		8DE4BF86265677C400F60F63 /* LocalPostDetailViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4BF85265677C400F60F63 /* LocalPostDetailViewContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -222,7 +225,7 @@
 		8DC864A525FEF4E80081F52C /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		8DC864A925FEF6390081F52C /* SplashViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewContoller.swift; sourceTree = "<group>"; };
 		8DC864AE25FEF9F60081F52C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		8DC864B225FEFA380081F52C /* LocalListViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalListViewContoller.swift; sourceTree = "<group>"; };
+		8DC864B225FEFA380081F52C /* LocalPostListViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostListViewContoller.swift; sourceTree = "<group>"; };
 		8DC864B625FF04DD0081F52C /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		8DC864BF25FF06AC0081F52C /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
 		8DC864C225FF06D30081F52C /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -237,9 +240,12 @@
 		8DCA58CC260C5CCE00A775B0 /* NameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
 		8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Ex.swift"; sourceTree = "<group>"; };
 		8DDC18EE264B9721009697E4 /* MyInfoEditViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoEditViewContainer.swift; sourceTree = "<group>"; };
-		8DE4BF74265643A900F60F63 /* LocalListViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalListViewContainer.swift; sourceTree = "<group>"; };
-		8DE4BF7B2656460D00F60F63 /* LocalListViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalListViewReactor.swift; sourceTree = "<group>"; };
+		8DE4BF74265643A900F60F63 /* LocalPostListViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostListViewContainer.swift; sourceTree = "<group>"; };
+		8DE4BF7B2656460D00F60F63 /* LocalPostListViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostListViewReactor.swift; sourceTree = "<group>"; };
 		8DE4BF7E2656467700F60F63 /* LocalPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostCell.swift; sourceTree = "<group>"; };
+		8DE4BF812656758000F60F63 /* LocalPostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostDetailViewController.swift; sourceTree = "<group>"; };
+		8DE4BF83265676FE00F60F63 /* LocalPostDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostDetailViewReactor.swift; sourceTree = "<group>"; };
+		8DE4BF85265677C400F60F63 /* LocalPostDetailViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostDetailViewContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,7 +566,8 @@
 				8D2F98912600282400C8BE0C /* ProductAdd */,
 				8D8F371526366A73008196D0 /* CategorySelect */,
 				8D19EFC626392FA000DB654E /* CategoryList */,
-				8DC864B125FEFA190081F52C /* LocalList */,
+				8DC864B125FEFA190081F52C /* LocalPostList */,
+				8DE4BF802656756700F60F63 /* LocalPostDetail */,
 				8D64380C2609786E00F7C5FE /* MyInfo */,
 				8D6438072609778F00F7C5FE /* MyInfoEdit */,
 			);
@@ -718,14 +725,14 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		8DC864B125FEFA190081F52C /* LocalList */ = {
+		8DC864B125FEFA190081F52C /* LocalPostList */ = {
 			isa = PBXGroup;
 			children = (
-				8DC864B225FEFA380081F52C /* LocalListViewContoller.swift */,
-				8DE4BF74265643A900F60F63 /* LocalListViewContainer.swift */,
-				8DE4BF7B2656460D00F60F63 /* LocalListViewReactor.swift */,
+				8DC864B225FEFA380081F52C /* LocalPostListViewContoller.swift */,
+				8DE4BF74265643A900F60F63 /* LocalPostListViewContainer.swift */,
+				8DE4BF7B2656460D00F60F63 /* LocalPostListViewReactor.swift */,
 			);
-			path = LocalList;
+			path = LocalPostList;
 			sourceTree = "<group>";
 		};
 		8DCA295F264B6E3B0031D20F /* Enum */ = {
@@ -766,6 +773,16 @@
 				8DE4BF7E2656467700F60F63 /* LocalPostCell.swift */,
 			);
 			path = Local;
+			sourceTree = "<group>";
+		};
+		8DE4BF802656756700F60F63 /* LocalPostDetail */ = {
+			isa = PBXGroup;
+			children = (
+				8DE4BF812656758000F60F63 /* LocalPostDetailViewController.swift */,
+				8DE4BF85265677C400F60F63 /* LocalPostDetailViewContainer.swift */,
+				8DE4BF83265676FE00F60F63 /* LocalPostDetailViewReactor.swift */,
+			);
+			path = LocalPostDetail;
 			sourceTree = "<group>";
 		};
 		9876297D34FE3BCC74DB3A16 /* Pods */ = {
@@ -903,7 +920,7 @@
 				8D475FA22602DB9500F2911F /* ProductDetailViewContainer.swift in Sources */,
 				8DC864EA25FF1E180081F52C /* ProductListViewContainer.swift in Sources */,
 				8D0EA9D225FAF8F800514930 /* LoginViewController.swift in Sources */,
-				8DC864B325FEFA380081F52C /* LocalListViewContoller.swift in Sources */,
+				8DC864B325FEFA380081F52C /* LocalPostListViewContoller.swift in Sources */,
 				8DC1E12925FAEA2100A1CA7E /* StartViewContainer.swift in Sources */,
 				8D64380E2609787A00F7C5FE /* MyInfoViewController.swift in Sources */,
 				8DD077B8262E68EA00089F71 /* UIAlertController+Ex.swift in Sources */,
@@ -922,7 +939,7 @@
 				8D279E8D26381FA10033CDA2 /* AppDatabase.swift in Sources */,
 				8D8641DD26552216000D8B10 /* LocalTopic.swift in Sources */,
 				8DA0BC6F264BB517006C8CE7 /* UserInfoRequest.swift in Sources */,
-				8DE4BF7C2656460D00F60F63 /* LocalListViewReactor.swift in Sources */,
+				8DE4BF7C2656460D00F60F63 /* LocalPostListViewReactor.swift in Sources */,
 				8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */,
 				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
 				8D89DB2A2650FB3B0006345E /* CategoryListViewReactor.swift in Sources */,
@@ -940,7 +957,9 @@
 				8D2F989F2600437800C8BE0C /* UploadAPI.swift in Sources */,
 				8D148FDF2636D75100406E86 /* CategoryCheckBoxCell.swift in Sources */,
 				8DC864B725FF04DD0081F52C /* UserAPI.swift in Sources */,
+				8DE4BF84265676FE00F60F63 /* LocalPostDetailViewReactor.swift in Sources */,
 				8D8641E52655492B000D8B10 /* LocalRepositoryImpl.swift in Sources */,
+				8DE4BF86265677C400F60F63 /* LocalPostDetailViewContainer.swift in Sources */,
 				8DC8649925FEEAD70081F52C /* AuthRepositoryImpl.swift in Sources */,
 				8D3CEA9026031D7900D9486A /* Product.swift in Sources */,
 				8DC1E0EF25FAE56A00A1CA7E /* StartViewController.swift in Sources */,
@@ -955,7 +974,7 @@
 				8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */,
 				8D148FC52636C16400406E86 /* CategorySelectViewContainer.swift in Sources */,
 				8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */,
-				8DE4BF75265643A900F60F63 /* LocalListViewContainer.swift in Sources */,
+				8DE4BF75265643A900F60F63 /* LocalPostListViewContainer.swift in Sources */,
 				8D487E34265268D200869F1F /* ProductDataSource.swift in Sources */,
 				8D6E3135260B1627004FCB1A /* InputViewContainer.swift in Sources */,
 				8D63150C260D6AB800EB3540 /* RegisterViewContainer.swift in Sources */,
@@ -990,6 +1009,7 @@
 				8DC864ED25FF201E0081F52C /* ProductCell.swift in Sources */,
 				8DCA2961264B6E6B0031D20F /* ProductType.swift in Sources */,
 				8D148FBF26367D0000406E86 /* CategorySelectViewController.swift in Sources */,
+				8DE4BF822656758000F60F63 /* LocalPostDetailViewController.swift in Sources */,
 				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
 				8D6D8AF7264FB2250079098A /* LoginViewReactor.swift in Sources */,
 				8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */,

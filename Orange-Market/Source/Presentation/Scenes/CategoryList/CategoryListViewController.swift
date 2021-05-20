@@ -124,11 +124,18 @@ extension CategoryListViewController: ASTableDataSource {
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
-            let item = self?.categories[indexPath.row]
+            guard let self = self else { return ASCellNode() }
             
-            return CategoryCell().then {
-                $0.setupNode(category: item!)
-            }
+            let item = self.categories[indexPath.row]
+            
+            let cell = CategoryCell()
+            
+            Observable.just(item)
+                .map { $0.name.toAttributed(color: .label, ofSize: 14) }
+                .bind(to: cell.nameNode.rx.attributedText)
+                .disposed(by: self.disposeBag)
+            
+            return cell
         }
     }
 }

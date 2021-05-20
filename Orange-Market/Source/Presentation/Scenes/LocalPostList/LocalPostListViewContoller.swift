@@ -1,5 +1,5 @@
 //
-//  LocalListViewContoller.swift
+//  LocalPostListViewContoller.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/03/15.
@@ -7,14 +7,15 @@
 
 import AsyncDisplayKit
 import ReactorKit
+import MBProgressHUD
 
-class LocalListViewContoller: ASDKViewController<LocalListViewContainer> & View {
+class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
     lazy var localPosts: [LocalPost] = []
     
     override init() {
-        super.init(node: LocalListViewContainer())
+        super.init(node: LocalPostListViewContainer())
         self.initNode()
     }
     
@@ -25,7 +26,7 @@ class LocalListViewContoller: ASDKViewController<LocalListViewContainer> & View 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        reactor = LocalListViewReactor()
+        reactor = LocalPostListViewReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,7 +41,7 @@ class LocalListViewContoller: ASDKViewController<LocalListViewContainer> & View 
     }
 }
 
-extension LocalListViewContoller: ViewControllerType {
+extension LocalPostListViewContoller: ViewControllerType {
     
     func initNode() {
         self.node.do {
@@ -55,6 +56,7 @@ extension LocalListViewContoller: ViewControllerType {
     func loadNode() {
         self.node.do {
             $0.tableNode.view.showsVerticalScrollIndicator = false
+            $0.tableNode.view.separatorStyle = .none
             $0.tableNode.view.tableFooterView = UIView(frame: CGRect.zero)
         }
     }
@@ -63,7 +65,8 @@ extension LocalListViewContoller: ViewControllerType {
         self.navigationController?.navigationBar.tintColor = .label
     }
     
-    func bind(reactor: LocalListViewReactor) {
+    func bind(reactor: LocalPostListViewReactor) {
+        // State
         reactor.state.map { $0.localPosts }
             .withUnretained(self)
             .bind { owner, value in
@@ -71,10 +74,28 @@ extension LocalListViewContoller: ViewControllerType {
                 owner.navigationItem.title = value.first?.city
                 owner.node.tableNode.reloadData()
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .bind { owner, value in
+                if (value) {
+                    MBProgressHUD.loading(from: owner.view)
+                } else {
+                    MBProgressHUD.hide(for: owner.view, animated: true)
+                }
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .filter { $0 != nil }
+            .withUnretained(self)
+            .bind { owner, value in
+                MBProgressHUD.errorShow(value!, from: owner.view)
+            }.disposed(by: disposeBag)
     }
 }
 
-extension LocalListViewContoller: ASTableDelegate {
+extension LocalPostListViewContoller: ASTableDelegate {
     
     func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
         return ASSizeRange(
@@ -85,11 +106,16 @@ extension LocalListViewContoller: ASTableDelegate {
     
     func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         let item = localPosts[indexPath.row]
-        print(item.contents)
+        
+        let vc = LocalPostDetailViewController().then {
+            $0.idx = item.idx
+            $0.hidesBottomBarWhenPushed = true
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-extension LocalListViewContoller: ASTableDataSource {
+extension LocalPostListViewContoller: ASTableDataSource {
     
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1
@@ -101,16 +127,18 @@ extension LocalListViewContoller: ASTableDataSource {
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
+            guard let self = self else { return ASCellNode() }
+            
+            let item = self.localPosts[indexPath.row]
             
             let cell = LocalPostCell().then {
                 $0.selectionStyle = .none
             }
             
-            if let item = self?.localPosts[indexPath.row] {
-                cell.do {
-                    $0.setupNode(post: item)
-                }
-            }
+            Observable.just(item)
+                .bind(to: cell.rx.post)
+                .disposed(by: self.disposeBag)
+            
             return cell
         }
     }

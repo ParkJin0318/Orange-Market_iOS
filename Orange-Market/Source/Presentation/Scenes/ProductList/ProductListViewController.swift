@@ -199,17 +199,19 @@ extension ProductListViewController: ASTableDataSource {
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
+            guard let self = self else { return ASCellNode() }
+            
+            let item = self.products[indexPath.row]
             
             let cell = ProductCell().then {
+                $0.alpha = item.isSold ? 0.5 : 1
                 $0.selectionStyle = .none
             }
             
-            if let item = self?.products[indexPath.row] {
-                cell.do {
-                    $0.setupNode(product: item)
-                    $0.alpha = item.isSold ? 0.5 : 1
-                }
-            }
+            Observable.just(item)
+                .bind(to: cell.rx.product)
+                .disposed(by: self.disposeBag)
+            
             return cell
         }
     }

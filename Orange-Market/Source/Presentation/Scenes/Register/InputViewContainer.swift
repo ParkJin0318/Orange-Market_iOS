@@ -34,6 +34,9 @@ class InputViewContainer: ASDisplayNode {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
+}
+
+extension InputViewContainer {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let registerLayout = self.registerLayoutSpec()

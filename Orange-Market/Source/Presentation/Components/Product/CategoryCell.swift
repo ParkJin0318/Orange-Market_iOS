@@ -19,10 +19,6 @@ class CategoryCell: ASCellNode {
         self.selectionStyle = .none
     }
     
-    func setupNode(category: ProductCategory) {
-        nameNode.attributedText = category.name.toAttributed(color: .label, ofSize: 14)
-    }
-    
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASInsetLayoutSpec(
             insets: .init(top: 15, left: 15, bottom: 15, right: 15),

@@ -6,6 +6,7 @@
 //
 
 import AsyncDisplayKit
+import RxSwift
 
 class ProductBottomNode: ASDisplayNode {
     
@@ -26,6 +27,20 @@ class ProductBottomNode: ASDisplayNode {
         self.automaticallyManagesSubnodes = true
         self.backgroundColor = .systemBackground
     }
+}
+
+extension Reactive where Base: ProductBottomNode {
+    
+    var product: Binder<Product> {
+        Binder(base) { base, product in
+            base.priceNode.attributedText = "\(product.price)원".toAttributed(color: .black, ofSize: 16)
+            base.buyNode.setAttributedTitle((product.isSold ? "판매완료" : "구매하기").toAttributed(color: .systemBackground, ofSize: 16), for: .normal)
+            base.buyNode.backgroundColor = product.isSold ? UIColor.lightGray : UIColor.primaryColor()
+        }
+    }
+}
+
+extension ProductBottomNode {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         priceNode.style.flexGrow = 1
