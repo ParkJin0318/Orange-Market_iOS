@@ -24,7 +24,7 @@ class ProfileNode: ASDisplayNode {
     
     lazy var viewNode = ASDisplayNode().then {
         $0.style.preferredSize = CGSize(width: width, height: 1)
-        $0.backgroundColor = .lightGray
+        $0.backgroundColor = .lightGray()
     }
     
     override init() {

@@ -10,7 +10,6 @@ import Foundation
 struct LocalCommentRequest: Encodable {
     let postIdx: Int
     let comment: String
-    let location: String
     let userIdx: Int
 }
 

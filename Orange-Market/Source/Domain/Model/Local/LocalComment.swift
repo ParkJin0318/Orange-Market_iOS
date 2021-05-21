@@ -17,3 +17,10 @@ struct LocalComment: Codable {
     let location: String
     let profileImage: String?
 }
+
+extension LocalComment {
+    
+    func toString() -> String {
+        return "\(idx)\(comment)"
+    }
+}

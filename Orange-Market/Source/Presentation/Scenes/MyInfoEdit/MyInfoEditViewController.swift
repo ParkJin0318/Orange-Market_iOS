@@ -38,7 +38,6 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        self.addKeyboardNotifications()
         reactor = MyInfoEditViewReactor()
         
         if let reactor = self.reactor {
@@ -163,41 +162,5 @@ extension MyInfoEditViewController: UINavigationControllerDelegate & UIImagePick
                 .disposed(by: disposeBag)
         }
         dismiss(animated: true, completion: nil)
-    }
-}
-
-extension MyInfoEditViewController {
-    
-    func addKeyboardNotifications(){
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.keyboardWillShow(_:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.keyboardWillHide(_:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-        
-    @objc func keyboardWillShow(_ noti: NSNotification){
-        if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.node.nameField.frame.origin.y -= keyboardHeight
-        }
-    }
-
-    // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
-    @objc func keyboardWillHide(_ noti: NSNotification){
-        if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.node.nameField.frame.origin.y += keyboardHeight
-        }
     }
 }
