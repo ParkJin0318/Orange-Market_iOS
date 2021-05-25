@@ -40,6 +40,7 @@ class TabBarController: ASTabBarController {
             $0.tintColor = .label
         }
         self.setNavigationController()
+        tabBarHeight = tabBar.frame.size.height + 41.0
     }
     
     private func setNavigationController() {

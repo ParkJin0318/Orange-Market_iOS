@@ -13,22 +13,26 @@ class LocalPostListViewReactor: Reactor {
     
     var initialState: State = State(
         localPosts: [],
+        localTopics: [],
         isLoading: false,
         errorMessage: nil
     )
     
     enum Action {
         case fetchLocalPost
+        case fetchLocalTopic
     }
     
     enum Mutation {
         case setLocalPost([LocalPost])
+        case setLocalTopic([LocalTopic])
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
         var localPosts: [LocalPost]
+        var localTopics: [LocalTopic]
         var isLoading: Bool
         var errorMessage: String?
     }
@@ -43,6 +47,15 @@ class LocalPostListViewReactor: Reactor {
                         .map { Mutation.setLocalPost($0) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
+                
+            case .fetchLocalTopic:
+                return Observable.concat([
+                    .just(Mutation.setLoading(true)),
+                    localRepository.getAllTopic()
+                        .asObservable()
+                        .map { Mutation.setLocalTopic($0) },
+                    .just(Mutation.setLoading(false))
+                ]).catch { .just(Mutation.setError($0)) }
         }
     }
     
@@ -53,6 +66,12 @@ class LocalPostListViewReactor: Reactor {
         switch mutation {
             case let .setLocalPost(posts):
                 state.localPosts = posts
+                
+            case let .setLocalTopic(topics):
+                var localTopics: [LocalTopic] = []
+                localTopics.append(LocalTopic(idx: -1, name: "", isSelected: false))
+                localTopics.append(contentsOf: topics)
+                state.localTopics = localTopics
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

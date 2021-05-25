@@ -54,7 +54,7 @@ extension ProductBottomNode {
         )
         
         return ASInsetLayoutSpec(
-            insets: .init(top: 0, left: 20, bottom: 30, right: 20),
+            insets: .init(top: 10, left: 20, bottom: tabBarHeight - 50, right: 20),
             child: productBottomLayout
         )
     }

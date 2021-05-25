@@ -40,7 +40,9 @@ class NameViewController: ASDKViewController<InputViewContainer> {
     
     private func presentRegisterView() {
         guard !node.inputField.text!.isEmpty else {
-            MBProgressHUD.errorShow("빈칸 없이 입력해주세요", from: self.view)
+            Observable.just("빈칸 없이 입력해주세요")
+                .bind(to: view.rx.error)
+                .disposed(by: disposeBag)
             return
         }
         self.registerRequest.name = node.inputField.text

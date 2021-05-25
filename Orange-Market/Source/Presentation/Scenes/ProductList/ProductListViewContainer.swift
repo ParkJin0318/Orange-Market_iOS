@@ -19,6 +19,6 @@ class ProductListViewContainer: ASDisplayNode {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASWrapperLayoutSpec(layoutElement: tableNode)
+        return ASInsetLayoutSpec(insets: .zero, child: tableNode)
     }
 }

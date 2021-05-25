@@ -19,3 +19,17 @@ struct LocalPost: Codable {
     let profileImage: String?
     let city: String
 }
+
+extension LocalPost {
+    
+    func toString() -> String {
+        return "\(idx) \(topicIdx) \(topic) \(contents) \(createAt) \(userIdx) \(name) \(location) \(profileImage ?? "") \(city)"
+    }
+}
+
+extension Array where Element == LocalPost {
+    
+    func contains(_ array: [LocalPost]) -> Bool {
+        return self.map { $0.toString() }.elementsEqual(array.map { $0.toString() })
+    }
+}

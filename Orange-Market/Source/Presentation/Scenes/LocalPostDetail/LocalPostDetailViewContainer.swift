@@ -2,7 +2,7 @@
 //  LocalPostDetailViewContainer.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/05/20.
+//  Created by 박진동 on 2021/05/20.
 //
 
 import AsyncDisplayKit
@@ -10,7 +10,12 @@ import RxSwift
 
 class LocalPostDetailViewContainer: ASDisplayNode {
     
-    lazy var localPostContentNode = LocalPostContentNode()
+    var keyboardVisibleHeight: CGFloat = 0.0
+    
+    lazy var tableNode = ASTableNode().then {
+        $0.style.flexGrow = 1
+        $0.allowsSelectionDuringEditing = false
+    }
     
     lazy var localPostCommentNode = LocalPostCommentNode().then {
         $0.backgroundColor = .lightGray()
@@ -20,18 +25,24 @@ class LocalPostDetailViewContainer: ASDisplayNode {
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
-        self.automaticallyRelayoutOnSafeAreaChanges = true
     }
 }
 
 extension LocalPostDetailViewContainer {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        localPostCommentNode.style.layoutPosition = CGPoint(x: 0, y: height / 1.3)
         
-        return ASAbsoluteLayoutSpec(
-            sizing: .default,
-            children: [localPostContentNode, localPostCommentNode]
+        let commentLayout = ASInsetLayoutSpec(
+            insets: .init(top: 0.0, left: 0.0, bottom: self.keyboardVisibleHeight, right: 0.0),
+            child: localPostCommentNode
+        )
+        
+        return ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 0,
+            justifyContent: .start,
+            alignItems: .start,
+            children: [tableNode, commentLayout]
         )
     }
 }

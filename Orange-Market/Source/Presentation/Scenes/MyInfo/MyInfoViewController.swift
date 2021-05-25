@@ -125,20 +125,13 @@ extension MyInfoViewController: ViewControllerType {
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }

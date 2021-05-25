@@ -17,7 +17,7 @@ class LocalPostDetailViewReactor: Reactor {
         localPost: nil,
         localComments: [],
         isSuccessComment: false,
-        comment: nil,
+        comment: "",
         isLoading: false,
         errorMessage: nil
     )
@@ -49,7 +49,7 @@ class LocalPostDetailViewReactor: Reactor {
         var localComments: [LocalComment]
         
         var isSuccessComment: Bool
-        var comment: String?
+        var comment: String
         
         var isLoading: Bool
         var errorMessage: String?
@@ -90,16 +90,24 @@ class LocalPostDetailViewReactor: Reactor {
             case let .sendComment(idx):
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    localRepository.saveComment(
-                        request: LocalCommentRequest(
-                            postIdx: idx,
-                            comment: currentState.comment ?? "",
-                            userIdx: currentState.user?.idx ?? -1
-                        )).asObservable()
-                        .map { Mutation.setSuccessComment(true) },
+                    validateComment(idx),
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
         }
+    }
+    
+    private func validateComment(_ idx: Int) -> Observable<Mutation> {
+        if (currentState.comment.isEmpty) {
+            return .error(OrangeError.error(message: "댓글을 입력해주세요."))
+        }
+        
+        return localRepository.saveComment(
+            request: LocalCommentRequest(
+                postIdx: idx,
+                comment: currentState.comment,
+                userIdx: currentState.user?.idx ?? -1
+            )).asObservable()
+            .map { Mutation.setSuccessComment(true) }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -122,6 +130,7 @@ class LocalPostDetailViewReactor: Reactor {
                     
             case let .setSuccessComment(isSuccess):
                 state.isSuccessComment = isSuccess
+                state.comment = ""
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

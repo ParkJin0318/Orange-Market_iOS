@@ -40,11 +40,9 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
         self.loadNode()
         reactor = MyInfoEditViewReactor()
         
-        if let reactor = self.reactor {
-            Observable.just(.fetchUserInfo)
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-        }
+        Observable.just(.fetchUserInfo)
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,9 +58,8 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
 extension MyInfoEditViewController: ViewControllerType {
     
     func initNode() {
-        self.node.do { container in
-            container.automaticallyManagesSubnodes = true
-            container.backgroundColor = .systemBackground
+        self.node.do {
+            $0.backgroundColor = .systemBackground
         }
     }
     
@@ -124,21 +121,14 @@ extension MyInfoEditViewController: ViewControllerType {
             
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }
 

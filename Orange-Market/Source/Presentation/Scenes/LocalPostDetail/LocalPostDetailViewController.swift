@@ -12,6 +12,8 @@ import MBProgressHUD
 class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
+    
+    var localPost: LocalPost? = nil
     lazy var localComments: [LocalComment] = []
     
     var idx: Int = -1
@@ -28,7 +30,6 @@ class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewConta
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        self.addKeyboardNotifications()
         reactor = LocalPostDetailViewReactor()
         
         Observable.concat([
@@ -42,6 +43,12 @@ class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewConta
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
+        self.addKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeKeyboardNotifications()
     }
 }
 
@@ -52,20 +59,18 @@ extension LocalPostDetailViewController: ViewControllerType {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
             
-            $0.localPostContentNode.tableNode.delegate = self
-            $0.localPostContentNode.tableNode.dataSource = self
+            $0.tableNode.delegate = self
+            $0.tableNode.dataSource = self
+            
+            $0.localPostCommentNode.commentInputNode.commentField.placeholder = "따뜻한 댓글을 입력해주세요 :)"
         }
     }
     
     func loadNode() {
-        self.node.localPostContentNode.do {
-            $0.tableNode.view.bounces = false
-            $0.tableNode.view.alwaysBounceVertical = false
+        self.node.localPostCommentNode.commentInputNode.commentField.delegate = self
+        
+        self.node.do {
             $0.tableNode.view.showsVerticalScrollIndicator = false
-            $0.view.showsVerticalScrollIndicator = false
-            
-            $0.tableNode.view.isScrollEnabled = false
-            $0.tableNode.view.tableFooterView = UIView(frame: CGRect.zero)
             $0.tableNode.view.separatorStyle = .none
         }
     }
@@ -90,18 +95,31 @@ extension LocalPostDetailViewController: ViewControllerType {
         }
         
         // State
-        reactor.state.map { $0.localPost }
-            .filter { $0 != nil }
-            .map { $0! }
-            .bind(to: node.localPostContentNode.rx.post)
+        let comment = reactor.state
+            .map { $0.comment }
+            .share()
+        
+        comment
+            .bind(to: node.localPostCommentNode.commentInputNode.commentField.rx.text.orEmpty)
             .disposed(by: disposeBag)
+        
+        comment
+            .map { $0.count <= 0 }
+            .bind(to: node.localPostCommentNode.commentInputNode.sendNode.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.localPost }
+            .withUnretained(self)
+            .bind { owner, value in
+                owner.localPost = value
+            }.disposed(by: disposeBag)
         
         reactor.state.map { $0.localComments }
             .withUnretained(self)
-            .filter { !$0.0.localComments.map { $0.toString() }.elementsEqual($0.1.map { $0.toString() }) }
+            .filter { !$0.0.localComments.contains($0.1) }
             .bind { owner, value in
                 owner.localComments = value
-                owner.node.localPostContentNode.tableNode.reloadData()
+                owner.node.tableNode.reloadData()
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.isSuccessComment }
@@ -114,21 +132,14 @@ extension LocalPostDetailViewController: ViewControllerType {
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -145,44 +156,60 @@ extension LocalPostDetailViewController: ASTableDelegate {
 extension LocalPostDetailViewController: ASTableDataSource {
     
     func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return 1
+        return 2
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        let count = localComments.count
-        
-        return count
+        if (section == 0) {
+            return 1
+        } else {
+            return localComments.count
+        }
     }
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
             guard let self = self else { return ASCellNode() }
             
-            let item = self.localComments[indexPath.row]
-            
-            let cell = LocalCommentCell().then {
-                $0.selectionStyle = .none
+            if (indexPath.section == 0) {
+                let cell = LocalContentCell().then {
+                    $0.selectionStyle = .none
+                }
+                
+                Observable.just(self.localPost)
+                    .filter { $0 != nil }
+                    .map { $0! }
+                    .bind(to: cell.rx.content)
+                    .disposed(by: self.disposeBag)
+                
+                return cell
+                
+            } else {
+                let item = self.localComments[indexPath.row]
+                
+                let cell = LocalCommentCell().then {
+                    $0.selectionStyle = .none
+                }
+                
+                Observable.just(item)
+                    .bind(to: cell.rx.comment)
+                    .disposed(by: self.disposeBag)
+                
+                return cell
             }
-            
-            Observable.just(item)
-                .bind(to: cell.rx.comment)
-                .disposed(by: self.disposeBag)
-            
-            return cell
         }
     }
 }
 
-extension LocalPostDetailViewController {
+extension LocalPostDetailViewController: UITextFieldDelegate {
     
-    func addKeyboardNotifications(){
+    func addKeyboardNotifications() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.keyboardWillShow(_:)),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.keyboardWillHide(_:)),
@@ -190,21 +217,30 @@ extension LocalPostDetailViewController {
             object: nil
         )
     }
+    
+    func removeKeyboardNotifications(){
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
         
-    @objc func keyboardWillShow(_ noti: NSNotification){
+    @objc func keyboardWillShow(_ noti: NSNotification) {
         if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.node.localPostCommentNode.frame.origin.y -= keyboardHeight - 40
+            self.node.keyboardVisibleHeight = keyboardRectangle.height - (tabBarHeight - 60)
+            self.node.setNeedsLayout()
         }
     }
 
-    // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
-    @objc func keyboardWillHide(_ noti: NSNotification){
-        if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.node.localPostCommentNode.frame.origin.y += keyboardHeight - 40
-        }
+    @objc func keyboardWillHide(_ noti: NSNotification) {
+        self.node.keyboardVisibleHeight = 0.0
+        self.node.setNeedsLayout()
     }
 }

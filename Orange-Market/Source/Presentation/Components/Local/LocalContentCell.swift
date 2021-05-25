@@ -1,14 +1,14 @@
 //
-//  LocalPostContentNode.swift
+//  LocalContentCell.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/05/21.
+//  Created by 박진 on 2021/05/24.
 //
 
 import AsyncDisplayKit
 import RxSwift
 
-class LocalPostContentNode: ASScrollNode {
+class LocalContentCell: ASCellNode {
     
     lazy var topicNode = ASTextNode().then {
         $0.backgroundColor = UIColor.lightGray()
@@ -24,23 +24,15 @@ class LocalPostContentNode: ASScrollNode {
         $0.backgroundColor = .lightGray()
     }
     
-    lazy var tableNode = ASTableNode().then {
-        $0.style.preferredSize = .init(width: width, height: height)
-        $0.allowsSelectionDuringEditing = false
-    }
-    
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
-        self.automaticallyManagesContentSize = true
-        
-        self.scrollableDirections = [.up, .down]
     }
 }
 
-extension Reactive where Base: LocalPostContentNode {
+extension Reactive where Base: LocalContentCell {
     
-    var post: Binder<LocalPost> {
+    var content: Binder<LocalPost> {
         Binder(base) { base, post in
             base.profileNode.nameNode.attributedText = post.name.toAttributed(color: .label, ofSize: 14)
             base.profileNode.profileImageNode.url = post.profileImage?.toUrl()
@@ -52,7 +44,7 @@ extension Reactive where Base: LocalPostContentNode {
     }
 }
 
-extension LocalPostContentNode {
+extension LocalContentCell {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let contentLayout = self.contentLayoutSpec()
@@ -62,7 +54,7 @@ extension LocalPostContentNode {
             spacing: 10,
             justifyContent: .start,
             alignItems: .stretch,
-            children: [contentLayout, separatorNode, tableNode]
+            children: [contentLayout, separatorNode]
         )
     }
     

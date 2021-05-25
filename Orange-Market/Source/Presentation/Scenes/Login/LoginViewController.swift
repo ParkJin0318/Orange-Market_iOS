@@ -52,7 +52,9 @@ class LoginViewController: ASDKViewController<LoginViewContainer> & View {
             case .restricted, .notDetermined:
                 locationManager.requestWhenInUseAuthorization()
             case .denied:
-                MBProgressHUD.errorShow("설정에서 위치 권한을 허용해주세요", from: self.view)
+                Observable.just("설정에서 위치 권한을 허용해주세요")
+                    .bind(to: view.rx.error)
+                    .disposed(by: disposeBag)
             default:
                 locationManager.requestWhenInUseAuthorization()
         }
@@ -140,22 +142,19 @@ extension LoginViewController: ViewControllerType {
             .bind { $0.0.presentHomeView() }
             .disposed(by: disposeBag)
         
+        let progressHUD = MBProgressHUD()
+        progressHUD.mode = .indeterminate
+        progressHUD.label.text = "로딩중"
+        
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }

@@ -22,4 +22,15 @@ extension ProductCategory {
             isSelected: self.isSelected
         )
     }
+    
+    func toString() -> String {
+        return "\(idx) \(name) \(isSelected)"
+    }
+}
+
+extension Array where Element == ProductCategory {
+    
+    func contains(_ array: [ProductCategory]) -> Bool {
+        return self.map { $0.toString() }.elementsEqual(array.map { $0.toString() })
+    }
 }

@@ -39,11 +39,11 @@ extension LocalCommentCell {
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         
         let commentLayout = ASInsetLayoutSpec(
-            insets: .init(top: 0, left: 40, bottom: 0, right: 0),
+            insets: .init(top: -10, left: 40, bottom: 0, right: 0),
             child: commentNode
         )
         
-        let postLayout = ASStackLayoutSpec(
+        let layout = ASStackLayoutSpec(
             direction: .vertical,
             spacing: 0,
             justifyContent: .start,
@@ -53,7 +53,7 @@ extension LocalCommentCell {
         
         return ASInsetLayoutSpec(
             insets: .init(top: 10, left: 10, bottom: 10, right: 10),
-            child: postLayout
+            child: layout
         )
     }
 }

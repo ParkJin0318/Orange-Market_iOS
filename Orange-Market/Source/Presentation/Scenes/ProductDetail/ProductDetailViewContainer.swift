@@ -10,24 +10,34 @@ import AsyncDisplayKit
 class ProductDetailViewContainer: ASDisplayNode {
     
     lazy var productScrollNode = ProductScrollNode().then {
-        $0.style.preferredSize = CGSize(width: width, height: height - 80)
+        $0.style.flexGrow = 1
     }
     
-    lazy var productBottomNode = ProductBottomNode().then {
-        $0.style.layoutPosition = CGPoint(x: 0, y: height / 1.3)
-        $0.style.preferredSize = CGSize(width: width, height: 80)
-    }
+    lazy var productBottomNode = ProductBottomNode()
     
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
-        self.automaticallyRelayoutOnSafeAreaChanges = true
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASAbsoluteLayoutSpec(
-            sizing: .default,
-            children: [productScrollNode, productBottomNode]
+        let bottomInset: UIEdgeInsets = .init(
+            top: .infinity,
+            left: 0.0,
+            bottom: 0.0,
+            right: 0.0
         )
+        
+        let bottomLayout = ASInsetLayoutSpec(
+            insets: bottomInset,
+            child: productBottomNode
+        )
+        
+        let overLayout = ASOverlayLayoutSpec(
+            child: productScrollNode,
+            overlay: bottomLayout
+        )
+        
+        return ASInsetLayoutSpec(insets: .zero, child: overLayout)
     }
 }

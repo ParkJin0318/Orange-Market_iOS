@@ -22,4 +22,15 @@ extension LocalTopic {
             isSelected: self.isSelected
         )
     }
+    
+    func toString() -> String {
+        return "\(idx) \(name) \(isSelected)"
+    }
+}
+
+extension Array where Element == LocalTopic {
+    
+    func contains(_ array: [LocalTopic]) -> Bool {
+        return self.map { $0.toString() }.elementsEqual(array.map { $0.toString() })
+    }
 }

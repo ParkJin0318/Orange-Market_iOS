@@ -21,6 +21,13 @@ struct LocalComment: Codable {
 extension LocalComment {
     
     func toString() -> String {
-        return "\(idx)\(comment)"
+        return "\(idx) \(postIdx) \(comment) \(createAt) \(userIdx) \(name) \(location) \(profileImage ?? "")"
+    }
+}
+
+extension Array where Element == LocalComment {
+    
+    func contains(_ array: [LocalComment]) -> Bool {
+        return self.map { $0.toString() }.elementsEqual(array.map { $0.toString() })
     }
 }

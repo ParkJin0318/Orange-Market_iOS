@@ -41,6 +41,8 @@
 		8D487E34265268D200869F1F /* ProductDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D487E33265268D200869F1F /* ProductDataSource.swift */; };
 		8D487E36265268DD00869F1F /* UploadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D487E35265268DD00869F1F /* UploadDataSource.swift */; };
 		8D4FABEE2601FFEB00D8701A /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */; };
+		8D51AD51265B52F00063ADCB /* LocalContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D51AD50265B52F00063ADCB /* LocalContentCell.swift */; };
+		8D51AD53265B83460063ADCB /* LocalTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D51AD52265B83460063ADCB /* LocalTopicCell.swift */; };
 		8D59EB77263A723F001AB8C4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D59EB76263A723F001AB8C4 /* CategoryCell.swift */; };
 		8D631508260D690300EB3540 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D631507260D690300EB3540 /* RegisterViewController.swift */; };
 		8D63150C260D6AB800EB3540 /* RegisterViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D63150B260D6AB800EB3540 /* RegisterViewContainer.swift */; };
@@ -74,7 +76,6 @@
 		8D8BC7632609AFF400D4C454 /* Reactive+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */; };
 		8D8F371026366786008196D0 /* ProductCategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F370F26366786008196D0 /* ProductCategoryData.swift */; };
 		8D8F3713263669A2008196D0 /* ProductCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F3712263669A2008196D0 /* ProductCategory.swift */; };
-		8D8FE37C265755B6006DB389 /* LocalPostContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE37B265755B6006DB389 /* LocalPostContentNode.swift */; };
 		8D8FE37E26575617006DB389 /* LocalPostCommentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE37D26575617006DB389 /* LocalPostCommentNode.swift */; };
 		8D8FE380265758D5006DB389 /* LocalCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8FE37F265758D5006DB389 /* LocalCommentCell.swift */; };
 		8D94440C2650148D00582B6F /* RegisterViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D94440B2650148D00582B6F /* RegisterViewReactor.swift */; };
@@ -101,7 +102,6 @@
 		8DC8648A25FEE6D20081F52C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8648925FEE6D20081F52C /* Response.swift */; };
 		8DC8649325FEEA440081F52C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649225FEEA440081F52C /* AuthRepository.swift */; };
 		8DC8649925FEEAD70081F52C /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */; };
-		8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */; };
 		8DC864A225FEF2CE0081F52C /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A125FEF2CE0081F52C /* ProductListViewController.swift */; };
 		8DC864A625FEF4E80081F52C /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A525FEF4E80081F52C /* AuthController.swift */; };
 		8DC864AA25FEF6390081F52C /* SplashViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC864A925FEF6390081F52C /* SplashViewContoller.swift */; };
@@ -166,6 +166,8 @@
 		8D487E33265268D200869F1F /* ProductDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataSource.swift; sourceTree = "<group>"; };
 		8D487E35265268DD00869F1F /* UploadDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataSource.swift; sourceTree = "<group>"; };
 		8D4FABED2601FFEB00D8701A /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
+		8D51AD50265B52F00063ADCB /* LocalContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalContentCell.swift; sourceTree = "<group>"; };
+		8D51AD52265B83460063ADCB /* LocalTopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTopicCell.swift; sourceTree = "<group>"; };
 		8D59EB76263A723F001AB8C4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		8D631507260D690300EB3540 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		8D63150B260D6AB800EB3540 /* RegisterViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewContainer.swift; sourceTree = "<group>"; };
@@ -199,7 +201,6 @@
 		8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Ex.swift"; sourceTree = "<group>"; };
 		8D8F370F26366786008196D0 /* ProductCategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryData.swift; sourceTree = "<group>"; };
 		8D8F3712263669A2008196D0 /* ProductCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategory.swift; sourceTree = "<group>"; };
-		8D8FE37B265755B6006DB389 /* LocalPostContentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostContentNode.swift; sourceTree = "<group>"; };
 		8D8FE37D26575617006DB389 /* LocalPostCommentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPostCommentNode.swift; sourceTree = "<group>"; };
 		8D8FE37F265758D5006DB389 /* LocalCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCommentCell.swift; sourceTree = "<group>"; };
 		8D94440B2650148D00582B6F /* RegisterViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewReactor.swift; sourceTree = "<group>"; };
@@ -228,7 +229,6 @@
 		8DC8648925FEE6D20081F52C /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		8DC8649225FEEA440081F52C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		8DC8649825FEEAD70081F52C /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
-		8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MBProgressHUD+Ex.swift"; sourceTree = "<group>"; };
 		8DC864A125FEF2CE0081F52C /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
 		8DC864A525FEF4E80081F52C /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		8DC864A925FEF6390081F52C /* SplashViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewContoller.swift; sourceTree = "<group>"; };
@@ -554,7 +554,6 @@
 				8DC1E11525FAE87100A1CA7E /* String+Ex.swift */,
 				8DC1E11925FAE89B00A1CA7E /* Color+Ex.swift */,
 				8DC1E11D25FAE8B200A1CA7E /* UIView+Ex.swift */,
-				8DC8649C25FEEFC10081F52C /* MBProgressHUD+Ex.swift */,
 				8D8BC7622609AFF400D4C454 /* Reactive+Ex.swift */,
 				8DD077B7262E68EA00089F71 /* UIAlertController+Ex.swift */,
 			);
@@ -779,8 +778,9 @@
 			isa = PBXGroup;
 			children = (
 				8DE4BF7E2656467700F60F63 /* LocalPostCell.swift */,
+				8D51AD50265B52F00063ADCB /* LocalContentCell.swift */,
 				8D8FE37F265758D5006DB389 /* LocalCommentCell.swift */,
-				8D8FE37B265755B6006DB389 /* LocalPostContentNode.swift */,
+				8D51AD52265B83460063ADCB /* LocalTopicCell.swift */,
 				8D8FE37D26575617006DB389 /* LocalPostCommentNode.swift */,
 				8DC245F52657FE88004E8908 /* CommentInputNode.swift */,
 			);
@@ -953,7 +953,6 @@
 				8DA0BC6F264BB517006C8CE7 /* UserInfoRequest.swift in Sources */,
 				8DE4BF7C2656460D00F60F63 /* LocalPostListViewReactor.swift in Sources */,
 				8D041E7B2627FAFC00AF9E7F /* OrangeError.swift in Sources */,
-				8D8FE37C265755B6006DB389 /* LocalPostContentNode.swift in Sources */,
 				8DC864E625FF1C3D0081F52C /* ProductRepositoryImpl.swift in Sources */,
 				8D89DB2A2650FB3B0006345E /* CategoryListViewReactor.swift in Sources */,
 				8D3D16762652443B005B8B02 /* ProductAddViewReactor.swift in Sources */,
@@ -1011,6 +1010,7 @@
 				8D8641CA26550D87000D8B10 /* LocalCommentRequest.swift in Sources */,
 				8DC1E0EB25FAE56A00A1CA7E /* AppDelegate.swift in Sources */,
 				8D19EFC826392FAE00DB654E /* CategoryListViewController.swift in Sources */,
+				8D51AD51265B52F00063ADCB /* LocalContentCell.swift in Sources */,
 				8DC1E0ED25FAE56A00A1CA7E /* SceneDelegate.swift in Sources */,
 				8DC8648525FEE6010081F52C /* AuthRemote.swift in Sources */,
 				8D19EFCA2639322300DB654E /* ArrowButtonNode.swift in Sources */,
@@ -1026,10 +1026,10 @@
 				8DCA2961264B6E6B0031D20F /* ProductType.swift in Sources */,
 				8D148FBF26367D0000406E86 /* CategorySelectViewController.swift in Sources */,
 				8DE4BF822656758000F60F63 /* LocalPostDetailViewController.swift in Sources */,
-				8DC8649D25FEEFC10081F52C /* MBProgressHUD+Ex.swift in Sources */,
 				8D6D8AF7264FB2250079098A /* LoginViewReactor.swift in Sources */,
 				8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */,
 				8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */,
+				8D51AD53265B83460063ADCB /* LocalTopicCell.swift in Sources */,
 				8DC864DA25FF18EB0081F52C /* ProductAPI.swift in Sources */,
 				8D475FA72602F84700F2911F /* UserRemote.swift in Sources */,
 				8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */,

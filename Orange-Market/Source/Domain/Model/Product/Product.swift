@@ -30,4 +30,15 @@ extension Product {
     func getIsSold() -> Int {
         return isSold ? 1 : 0
     }
+    
+    func toString() -> String {
+        return "\(idx) \(categoryIdx) \(category) \(title) \(contents) \(price) \(createAt) \(isSold) \(userIdx) \(city) \(images) \(likeUsers) \(name) \(location) \(profileImage ?? "")"
+    }
+}
+
+extension Array where Element == Product {
+    
+    func contains(_ array: [Product]) -> Bool {
+        return self.map { $0.toString() }.elementsEqual(array.map { $0.toString() })
+    }
 }

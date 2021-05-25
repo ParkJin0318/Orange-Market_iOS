@@ -70,7 +70,7 @@ extension CategorySelectViewController: ViewControllerType {
     func bind(reactor: CategorySelectViewReactor) {
         reactor.state.map { $0.categories }
             .withUnretained(self)
-            .filter { !$0.1.map { $0.idx}.elementsEqual($0.0.categories.map { $0.idx }) }
+            .filter { !$0.0.categories.contains($0.1) }
             .bind { owner, value in
                 owner.categories = value
                 owner.node.collectionNode.reloadData()
@@ -78,21 +78,14 @@ extension CategorySelectViewController: ViewControllerType {
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }
 

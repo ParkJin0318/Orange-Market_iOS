@@ -12,7 +12,9 @@ import MBProgressHUD
 class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
+    
     lazy var localPosts: [LocalPost] = []
+    lazy var localTopics: [LocalTopic] = []
     
     override init() {
         super.init(node: LocalPostListViewContainer())
@@ -27,17 +29,19 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
         super.viewDidLoad()
         self.loadNode()
         reactor = LocalPostListViewReactor()
+        
+        Observable.just(.fetchLocalTopic)
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
         
-        if let reactor = self.reactor {
-            Observable.just(.fetchLocalPost)
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-        }
+        Observable.just(.fetchLocalPost)
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -50,14 +54,17 @@ extension LocalPostListViewContoller: ViewControllerType {
             
             $0.tableNode.delegate = self
             $0.tableNode.dataSource = self
+            
+            $0.collectionNode.delegate = self
+            $0.collectionNode.dataSource = self
         }
     }
     
     func loadNode() {
         self.node.do {
+            $0.collectionNode.view.showsHorizontalScrollIndicator = false
             $0.tableNode.view.showsVerticalScrollIndicator = false
             $0.tableNode.view.separatorStyle = .none
-            $0.tableNode.view.tableFooterView = UIView(frame: CGRect.zero)
         }
     }
     
@@ -69,29 +76,31 @@ extension LocalPostListViewContoller: ViewControllerType {
         // State
         reactor.state.map { $0.localPosts }
             .withUnretained(self)
+            .filter { !$0.0.localPosts.contains($0.1) }
             .bind { owner, value in
                 owner.localPosts = value
                 owner.navigationItem.title = value.first?.city
                 owner.node.tableNode.reloadData()
             }.disposed(by: disposeBag)
         
+        reactor.state.map { $0.localTopics }
+            .withUnretained(self)
+            .filter { !$0.0.localTopics.contains($0.1) }
+            .bind { owner, value in
+                owner.localTopics = value
+                owner.node.collectionNode.reloadData()
+            }.disposed(by: disposeBag)
+        
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -143,3 +152,55 @@ extension LocalPostListViewContoller: ASTableDataSource {
         }
     }
 }
+
+extension LocalPostListViewContoller: ASCollectionDelegate {
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+        return ASSizeRange(
+            min: CGSize(width: 0, height: 0),
+            max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        )
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let item = localTopics[indexPath.row]
+        print(item.name)
+    }
+}
+
+extension LocalPostListViewContoller: ASCollectionDataSource {
+    
+    func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+        return 1
+    }
+        
+    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+        return localTopics.count
+    }
+
+    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return { [weak self] in
+            guard let self = self else { return ASCellNode() }
+            
+            let item = self.localTopics[indexPath.row]
+            
+            let cell = LocalTopicCell().then {
+                $0.cornerRadius = 4
+            }
+            
+            if (item.name.isEmpty) {
+                Observable.just(UIImage(systemName: "slider.horizontal.3"))
+                    .bind(to: cell.topicNode.imageNode.rx.image)
+                    .disposed(by: self.disposeBag)
+            } else {
+                Observable.just(item)
+                    .map { $0.name.toAttributed(color: .label, ofSize: 12) }
+                    .bind(to: cell.topicNode.titleNode.rx.attributedText)
+                    .disposed(by: self.disposeBag)
+            }
+            
+            return cell
+        }
+    }
+}
+

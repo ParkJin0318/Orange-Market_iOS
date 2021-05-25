@@ -11,14 +11,13 @@ import RxSwift
 class ProductScrollNode: ASScrollNode {
     
     private lazy var flowLayout = UICollectionViewFlowLayout().then {
-        $0.itemSize = CGSize(width: 60, height: 60)
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 10
     }
     
     lazy var collectionNode = ASCollectionNode(collectionViewLayout: flowLayout).then {
         $0.registerSupplementaryNode(ofKind: UICollectionView.elementKindSectionHeader)
-        $0.style.preferredSize = CGSize(width: width, height: 300)
+        $0.style.preferredSize = CGSize(width: width, height: height / 3)
         $0.alwaysBounceHorizontal = true
         $0.backgroundColor = .systemBackground
     }

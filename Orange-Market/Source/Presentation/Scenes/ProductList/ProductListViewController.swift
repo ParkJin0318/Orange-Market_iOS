@@ -9,6 +9,7 @@ import AsyncDisplayKit
 import ReactorKit
 import RxSwift
 import MBProgressHUD
+import Floaty
 
 class ProductListViewController: ASDKViewController<ProductListViewContainer> & View {
     
@@ -17,9 +18,27 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
     lazy var products: [Product] = []
     var type: ProductType = .none
     
-    private lazy var writeButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
-        $0.tintColor = .label
+    lazy var floating = Floaty().then {
+        $0.buttonColor = .primaryColor()
+        $0.plusColor = .white
+        $0.selectedColor = .white
+        
+        $0.addItem(item: productButton)
+        $0.addItem(item: localPostButton)
+    }
+    
+    lazy var productButton = FloatyItem().then {
+        $0.title = "중고거래"
+        $0.icon = UIImage(systemName: "pencil")
+        $0.iconTintColor = .white
+        $0.buttonColor = .primaryColor()
+    }
+    
+    lazy var localPostButton = FloatyItem().then {
+        $0.title = "동네생활"
+        $0.icon = UIImage(systemName: "doc.plaintext")
+        $0.iconTintColor = .white
+        $0.buttonColor = .primaryColor()
     }
     
     private lazy var categoryButton = UIButton().then {
@@ -38,6 +57,7 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(floating)
         self.loadNode()
         reactor = ProductListViewReactor()
     }
@@ -63,7 +83,7 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
             }
         
             Observable.just(type != .none)
-                .bind(to: writeButton.rx.isHidden, categoryButton.rx.isHidden)
+                .bind(to: floating.rx.isHidden, categoryButton.rx.isHidden)
                 .disposed(by: disposeBag)
             
             data.bind(to: reactor.action)
@@ -117,16 +137,15 @@ extension ProductListViewController: ViewControllerType {
     func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .label
         self.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(customView: writeButton),
             UIBarButtonItem(customView: categoryButton)
         ]
     }
     
     func bind(reactor: ProductListViewReactor) {
         // Action
-        writeButton.rx.tap
-            .bind(onNext: presentProductAddView)
-            .disposed(by: disposeBag)
+        productButton.handler = { _ in
+            self.presentProductAddView()
+        }
         
         categoryButton.rx.tap
             .bind(onNext: presentCategoryView)
@@ -135,6 +154,7 @@ extension ProductListViewController: ViewControllerType {
         // State
         reactor.state.map { $0.products }
             .withUnretained(self)
+            .filter { !$0.0.products.contains($0.1) }
             .bind { owner, products in
                 owner.products = products
                 owner.node.tableNode.reloadData()
@@ -148,22 +168,22 @@ extension ProductListViewController: ViewControllerType {
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
-        reactor.state.map { $0.errorMessage }
-            .filter { $0 != nil }
+        let error = reactor.state
+            .filter { $0.errorMessage != nil }
+            .map { $0.errorMessage! }
+            .share()
+            
+        error
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
+        
+        error
             .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-                owner.moveToStart()
-            }.disposed(by: disposeBag)
+            .bind { $0.0.moveToStart() }
+            .disposed(by: disposeBag)
     }
 }
 
