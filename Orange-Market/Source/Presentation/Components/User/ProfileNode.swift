@@ -22,11 +22,6 @@ class ProfileNode: ASDisplayNode {
         $0.style.flexShrink = 1
     }
     
-    lazy var viewNode = ASDisplayNode().then {
-        $0.style.preferredSize = CGSize(width: width, height: 1)
-        $0.backgroundColor = .lightGray()
-    }
-    
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
@@ -35,13 +30,7 @@ class ProfileNode: ASDisplayNode {
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let profileLayout = self.profileLayoutSpec()
         
-        return ASStackLayoutSpec(
-            direction: .vertical,
-            spacing: 20,
-            justifyContent: .start,
-            alignItems: .start,
-            children: [profileLayout, viewNode]
-        )
+        return profileLayout
     }
     
     private func profileLayoutSpec() -> ASLayoutSpec {

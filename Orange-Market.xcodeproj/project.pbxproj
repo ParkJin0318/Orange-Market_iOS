@@ -95,6 +95,7 @@
 		8DC1E13125FAECF600A1CA7E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC1E13025FAECF600A1CA7E /* Constants.swift */; };
 		8DC1E13525FAED3000A1CA7E /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8DC1E13425FAED3000A1CA7E /* Jua-Regular.ttf */; };
 		8DC245F62657FE88004E8908 /* CommentInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC245F52657FE88004E8908 /* CommentInputNode.swift */; };
+		8DC7D8A7265D0947000DA484 /* LocalCommentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7D8A6265D0947000DA484 /* LocalCommentData.swift */; };
 		8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8647525FEDDB30081F52C /* AuthAPI.swift */; };
 		8DC8647B25FEDE0D0081F52C /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8647A25FEDE0D0081F52C /* LoginRequest.swift */; };
 		8DC8647F25FEDFB40081F52C /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */; };
@@ -222,6 +223,7 @@
 		8DC1E13025FAECF600A1CA7E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8DC1E13425FAED3000A1CA7E /* Jua-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jua-Regular.ttf"; sourceTree = "<group>"; };
 		8DC245F52657FE88004E8908 /* CommentInputNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputNode.swift; sourceTree = "<group>"; };
+		8DC7D8A6265D0947000DA484 /* LocalCommentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCommentData.swift; sourceTree = "<group>"; };
 		8DC8647525FEDDB30081F52C /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		8DC8647A25FEDE0D0081F52C /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		8DC8647E25FEDFB40081F52C /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
@@ -419,6 +421,36 @@
 			path = Register;
 			sourceTree = "<group>";
 		};
+		8D8421A5265DD1870050E1DF /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				8DC864A025FEF2C60081F52C /* ProductList */,
+				8D4FABEC2601FFC400D8701A /* ProductDetail */,
+				8D2F98912600282400C8BE0C /* ProductAdd */,
+				8D8F371526366A73008196D0 /* CategorySelect */,
+				8D19EFC626392FA000DB654E /* CategoryList */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		8D8421A6265DD1DB0050E1DF /* LocalPost */ = {
+			isa = PBXGroup;
+			children = (
+				8DC864B125FEFA190081F52C /* LocalPostList */,
+				8DE4BF802656756700F60F63 /* LocalPostDetail */,
+			);
+			path = LocalPost;
+			sourceTree = "<group>";
+		};
+		8D8421A7265DD1FD0050E1DF /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA9CF25FAF8E600514930 /* Login */,
+				8D6E3126260B08B8004FCB1A /* Register */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		8D8641C426550D24000D8B10 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -566,15 +598,9 @@
 				8DC864AE25FEF9F60081F52C /* TabBarController.swift */,
 				8DC864A825FEF61C0081F52C /* Splash */,
 				8DC1E12D25FAEA9600A1CA7E /* Start */,
-				8D0EA9CF25FAF8E600514930 /* Login */,
-				8D6E3126260B08B8004FCB1A /* Register */,
-				8DC864A025FEF2C60081F52C /* ProductList */,
-				8D4FABEC2601FFC400D8701A /* ProductDetail */,
-				8D2F98912600282400C8BE0C /* ProductAdd */,
-				8D8F371526366A73008196D0 /* CategorySelect */,
-				8D19EFC626392FA000DB654E /* CategoryList */,
-				8DC864B125FEFA190081F52C /* LocalPostList */,
-				8DE4BF802656756700F60F63 /* LocalPostDetail */,
+				8D8421A7265DD1FD0050E1DF /* Auth */,
+				8D8421A5265DD1870050E1DF /* Product */,
+				8D8421A6265DD1DB0050E1DF /* LocalPost */,
 				8D64380C2609786E00F7C5FE /* MyInfo */,
 				8D6438072609778F00F7C5FE /* MyInfoEdit */,
 			);
@@ -676,6 +702,7 @@
 				8DC8648925FEE6D20081F52C /* Response.swift */,
 				8D8F370F26366786008196D0 /* ProductCategoryData.swift */,
 				8D8641E0265542C9000D8B10 /* LocalTopicData.swift */,
+				8DC7D8A6265D0947000DA484 /* LocalCommentData.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1026,6 +1053,7 @@
 				8DCA2961264B6E6B0031D20F /* ProductType.swift in Sources */,
 				8D148FBF26367D0000406E86 /* CategorySelectViewController.swift in Sources */,
 				8DE4BF822656758000F60F63 /* LocalPostDetailViewController.swift in Sources */,
+				8DC7D8A7265D0947000DA484 /* LocalCommentData.swift in Sources */,
 				8D6D8AF7264FB2250079098A /* LoginViewReactor.swift in Sources */,
 				8D2F98932600285400C8BE0C /* ProductAddViewController.swift in Sources */,
 				8D0EA9E125FB023E00514930 /* ViewModelType.swift in Sources */,

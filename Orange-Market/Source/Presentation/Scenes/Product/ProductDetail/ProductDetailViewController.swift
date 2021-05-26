@@ -124,8 +124,7 @@ extension ProductDetailViewController: ViewControllerType {
     func bind(reactor: ProductDetailViewReactor) {
         // Action
         moreButton.rx.tap
-            .withUnretained(self)
-            .bind { $0.0.moreAlret() }
+            .bind(onNext: moreAlret)
             .disposed(by: disposeBag)
         
         node.productBottomNode.likeNode.rx.tap
@@ -176,9 +175,9 @@ extension ProductDetailViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.isSuccessDelete }
+            .distinctUntilChanged()
             .filter { $0 }
-            .withUnretained(self)
-            .bind { $0.0.popViewController() }
+            .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.isLoading }

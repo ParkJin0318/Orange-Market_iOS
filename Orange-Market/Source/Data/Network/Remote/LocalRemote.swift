@@ -28,10 +28,10 @@ class LocalRemote {
             }
     }
     
-    func getAllComment(idx: Int) -> Single<Array<LocalComment>> {
+    func getAllComment(idx: Int) -> Single<Array<LocalCommentData>> {
         return provider.rx.request(.getAllComment(idx: idx))
-            .map(Response<Array<LocalComment>>.self, using: JSONDecoder())
-            .map { response -> Array<LocalComment> in
+            .map(Response<Array<LocalCommentData>>.self, using: JSONDecoder())
+            .map { response -> Array<LocalCommentData> in
                 return response.data
             }
     }

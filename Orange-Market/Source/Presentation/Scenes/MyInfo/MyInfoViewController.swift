@@ -71,7 +71,6 @@ extension MyInfoViewController: ViewControllerType {
             container.profileEditNode.setAttributedTitle("프로필 수정".toAttributed(color: .label, ofSize: 12), for: .normal)
             container.profileNode.profileImageNode.style.preferredSize = CGSize(width: 70, height: 70)
             container.profileNode.profileImageNode.cornerRadius = 70 / 2
-            container.profileNode.viewNode.isHidden = true
             
             container.salesNode.iconNode.image = UIImage(named: "receipt")
             container.salesNode.textNode.attributedText = "판매 내역".toAttributed(color: .label, ofSize: 12)

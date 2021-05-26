@@ -11,6 +11,8 @@ import RxSwift
 protocol LocalRepository {
     func getAllLocalPost() -> Single<Array<LocalPost>>
     
+    func getAllLocalPost(topicIdx: Int) -> Single<Array<LocalPost>>
+    
     func getLocalPost(idx: Int) -> Single<LocalPost>
     
     func getAllComment(idx: Int) -> Single<Array<LocalComment>>

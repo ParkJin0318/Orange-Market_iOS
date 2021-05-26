@@ -46,7 +46,7 @@ class MyInfoViewContainer: ASScrollNode {
             direction: .vertical,
             spacing: 10,
             justifyContent: .start,
-            alignItems: .center,
+            alignItems: .start,
             children: [profileNode, profileEditNode, salesLayout]
         )
     }

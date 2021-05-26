@@ -32,12 +32,30 @@ class LocalDataSource {
             }
     }
     
+    func getAllLocalPost(topicIdx: Int) -> Single<Array<LocalPost>> {
+        return userRemote.getUserProfile()
+            .flatMap {
+                self.localRemote.getAllLocalPost(city: $0.city)
+                    .map {
+                        $0.filter { $0.topicIdx == topicIdx }
+                    }
+            }
+    }
+    
     func getLocalPost(idx: Int) -> Single<LocalPost> {
         return localRemote.getLocalPost(idx: idx)
     }
     
     func getAllComment(idx: Int) -> Single<Array<LocalComment>> {
-        return localRemote.getAllComment(idx: idx)
+        return Single.zip(
+            localRemote.getAllComment(idx: idx),
+            userRemote.getUserProfile()
+        ) { comments, profile in
+            
+            return comments.map {
+                $0.toModel(isMyComment: $0.userIdx == profile.idx)
+            }
+        }
     }
     
     func getAllTopic() -> Single<Array<LocalTopic>> {

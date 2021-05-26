@@ -6,8 +6,11 @@
 //
 
 import AsyncDisplayKit
+import RxSwift
 
 class LocalPostListViewContainer: ASDisplayNode {
+    
+    var isTopicHidden: Bool = false
     
     private lazy var flowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -31,14 +34,31 @@ class LocalPostListViewContainer: ASDisplayNode {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
+}
+
+extension Reactive where Base: LocalPostListViewContainer {
+    
+    var isTopicHidden: Binder<Bool> {
+        Binder(base) { base, isHidden in
+            base.isTopicHidden = isHidden
+            base.setNeedsLayout()
+        }
+    }
+}
+
+extension LocalPostListViewContainer {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASStackLayoutSpec(
-            direction: .vertical,
-            spacing: 0,
-            justifyContent: .start,
-            alignItems: .start,
-            children: [collectionNode, tableNode]
-        )
+        if (isTopicHidden) {
+            return ASWrapperLayoutSpec(layoutElement: tableNode)
+        } else {
+            return ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 0,
+                justifyContent: .start,
+                alignItems: .start,
+                children: [collectionNode, tableNode]
+            )
+        }
     }
 }

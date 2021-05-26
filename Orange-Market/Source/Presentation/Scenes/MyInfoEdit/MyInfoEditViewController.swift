@@ -115,8 +115,7 @@ extension MyInfoEditViewController: ViewControllerType {
         reactor.state.map { $0.isSuccessUserInfo }
             .distinctUntilChanged()
             .filter { $0 }
-            .withUnretained(self)
-            .bind { $0.0.popViewController() }
+            .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
             
         reactor.state.map { $0.isLoading }

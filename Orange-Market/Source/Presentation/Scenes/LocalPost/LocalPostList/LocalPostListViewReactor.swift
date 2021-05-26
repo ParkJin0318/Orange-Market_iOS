@@ -14,12 +14,14 @@ class LocalPostListViewReactor: Reactor {
     var initialState: State = State(
         localPosts: [],
         localTopics: [],
+        currentCity: nil,
         isLoading: false,
         errorMessage: nil
     )
     
     enum Action {
         case fetchLocalPost
+        case filterLocalPost(Int)
         case fetchLocalTopic
     }
     
@@ -33,6 +35,7 @@ class LocalPostListViewReactor: Reactor {
     struct State {
         var localPosts: [LocalPost]
         var localTopics: [LocalTopic]
+        var currentCity: String?
         var isLoading: Bool
         var errorMessage: String?
     }
@@ -43,6 +46,15 @@ class LocalPostListViewReactor: Reactor {
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
                     localRepository.getAllLocalPost()
+                        .asObservable()
+                        .map { Mutation.setLocalPost($0) },
+                    .just(Mutation.setLoading(false))
+                ]).catch { .just(Mutation.setError($0)) }
+                
+            case let .filterLocalPost(idx):
+                return Observable.concat([
+                    .just(Mutation.setLoading(true)),
+                    localRepository.getAllLocalPost(topicIdx: idx)
                         .asObservable()
                         .map { Mutation.setLocalPost($0) },
                     .just(Mutation.setLoading(false))
@@ -66,10 +78,11 @@ class LocalPostListViewReactor: Reactor {
         switch mutation {
             case let .setLocalPost(posts):
                 state.localPosts = posts
+                state.currentCity = posts.first?.city
                 
             case let .setLocalTopic(topics):
                 var localTopics: [LocalTopic] = []
-                localTopics.append(LocalTopic(idx: -1, name: "", isSelected: false))
+                localTopics.append(LocalTopic(idx: 0, name: "카테고리", isSelected: false))
                 localTopics.append(contentsOf: topics)
                 state.localTopics = localTopics
                 

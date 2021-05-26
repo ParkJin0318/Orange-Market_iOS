@@ -16,7 +16,9 @@ class LocalPostDetailViewReactor: Reactor {
         user: nil,
         localPost: nil,
         localComments: [],
-        isSuccessComment: false,
+        isSuccessDeleteLocalPost: false,
+        isSuccessDeleteLocalComment: false,
+        isSuccessSendComment: false,
         comment: "",
         isLoading: false,
         errorMessage: nil
@@ -27,6 +29,9 @@ class LocalPostDetailViewReactor: Reactor {
         case fetchLocalPost(Int)
         case fetchLocalComments(Int)
         
+        case deleteLocalComment(Int)
+        case deleteLocalPost(Int)
+    
         case sendComment(Int)
         case comment(String)
     }
@@ -36,7 +41,10 @@ class LocalPostDetailViewReactor: Reactor {
         case setLocalPost(LocalPost)
         case setLocalComments([LocalComment])
         
-        case setSuccessComment(Bool)
+        case setSuccessDeleteLocalPost(Bool)
+        case setSuccessDeleteLocalComment(Bool)
+        
+        case setSuccessSendComment(Bool)
         case setComment(String)
         
         case setLoading(Bool)
@@ -48,7 +56,10 @@ class LocalPostDetailViewReactor: Reactor {
         var localPost: LocalPost?
         var localComments: [LocalComment]
         
-        var isSuccessComment: Bool
+        var isSuccessDeleteLocalPost: Bool
+        var isSuccessDeleteLocalComment: Bool
+        
+        var isSuccessSendComment: Bool
         var comment: String
         
         var isLoading: Bool
@@ -84,6 +95,24 @@ class LocalPostDetailViewReactor: Reactor {
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
+            case let .deleteLocalPost(idx):
+                return Observable.concat([
+                    .just(Mutation.setLoading(true)),
+                    localRepository.deletePost(idx: idx)
+                        .asObservable()
+                        .map { Mutation.setSuccessDeleteLocalPost(true) },
+                    .just(Mutation.setLoading(false))
+                ]).catch { .just(Mutation.setError($0)) }
+                
+            case let .deleteLocalComment(idx):
+                return Observable.concat([
+                    .just(Mutation.setLoading(true)),
+                    localRepository.deleteComment(idx: idx)
+                        .asObservable()
+                        .map { Mutation.setSuccessDeleteLocalComment(true) },
+                    .just(Mutation.setLoading(false))
+                ]).catch { .just(Mutation.setError($0)) }
+                
             case let .comment(comment):
                 return .just(Mutation.setComment(comment))
                 
@@ -107,7 +136,7 @@ class LocalPostDetailViewReactor: Reactor {
                 comment: currentState.comment,
                 userIdx: currentState.user?.idx ?? -1
             )).asObservable()
-            .map { Mutation.setSuccessComment(true) }
+            .map { Mutation.setSuccessSendComment(true) }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -122,14 +151,21 @@ class LocalPostDetailViewReactor: Reactor {
                 state.localPost = post
                 
             case let .setLocalComments(comments):
-                state.isSuccessComment = false
+                state.isSuccessSendComment = false
+                state.isSuccessDeleteLocalComment = false
                 state.localComments = comments
+                
+            case let .setSuccessDeleteLocalPost(isSuccess):
+                state.isSuccessDeleteLocalPost = isSuccess
+                
+            case let .setSuccessDeleteLocalComment(isSuccess):
+                state.isSuccessDeleteLocalComment = isSuccess
                 
             case let .setComment(comment):
                 state.comment = comment
                     
-            case let .setSuccessComment(isSuccess):
-                state.isSuccessComment = isSuccess
+            case let .setSuccessSendComment(isSuccess):
+                state.isSuccessSendComment = isSuccess
                 state.comment = ""
                 
             case let .setLoading(isLoading):
@@ -139,7 +175,6 @@ class LocalPostDetailViewReactor: Reactor {
                 state.errorMessage = error.toMessage()
                 state.isLoading = false
         }
-        
         return state
     }
 }

@@ -16,6 +16,8 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
     lazy var localPosts: [LocalPost] = []
     lazy var localTopics: [LocalTopic] = []
     
+    var topic: LocalTopic? = nil
+    
     override init() {
         super.init(node: LocalPostListViewContainer())
         self.initNode()
@@ -39,8 +41,20 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
         super.viewWillAppear(animated)
         self.setupNavigationBar()
         
-        Observable.just(.fetchLocalPost)
+        let topic = Observable.just(self.topic)
+            .share()
+        
+        topic.map { $0 == nil ? .fetchLocalPost : .filterLocalPost($0!.idx)}
             .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
+        
+        topic.map { $0 != nil }
+            .bind(to: node.rx.isTopicHidden)
+            .disposed(by: disposeBag)
+        
+        topic.filter { $0 != nil }
+            .map { $0!.name }
+            .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
     }
 }
@@ -79,10 +93,16 @@ extension LocalPostListViewContoller: ViewControllerType {
             .filter { !$0.0.localPosts.contains($0.1) }
             .bind { owner, value in
                 owner.localPosts = value
-                owner.navigationItem.title = value.first?.city
                 owner.node.tableNode.reloadData()
             }.disposed(by: disposeBag)
         
+        reactor.state.map { $0.currentCity }
+            .withUnretained(self)
+            .filter { $0.0.topic == nil }
+            .map { $0.1 }
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
+            
         reactor.state.map { $0.localTopics }
             .withUnretained(self)
             .filter { !$0.0.localTopics.contains($0.1) }
@@ -164,7 +184,11 @@ extension LocalPostListViewContoller: ASCollectionDelegate {
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let item = localTopics[indexPath.row]
-        print(item.name)
+        
+        let vc = LocalPostListViewContoller().then {
+            $0.topic = item
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -188,7 +212,7 @@ extension LocalPostListViewContoller: ASCollectionDataSource {
                 $0.cornerRadius = 4
             }
             
-            if (item.name.isEmpty) {
+            if (item.idx == 0) {
                 Observable.just(UIImage(systemName: "slider.horizontal.3"))
                     .bind(to: cell.topicNode.imageNode.rx.image)
                     .disposed(by: self.disposeBag)

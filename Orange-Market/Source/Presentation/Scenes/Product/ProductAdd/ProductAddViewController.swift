@@ -123,8 +123,7 @@ extension ProductAddViewController: ViewControllerType {
     
     func bind(reactor: ProductAddViewReactor) {
         // Action
-        closeButton
-            .rx.tap
+        closeButton.rx.tap
             .bind(onNext: popViewController)
             .disposed(by: disposeBag)
         
@@ -184,8 +183,7 @@ extension ProductAddViewController: ViewControllerType {
         reactor.state.map { $0.isSuccess }
             .distinctUntilChanged()
             .filter { $0 }
-            .withUnretained(self)
-            .bind { $0.0.popViewController() }
+            .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.isLoading }

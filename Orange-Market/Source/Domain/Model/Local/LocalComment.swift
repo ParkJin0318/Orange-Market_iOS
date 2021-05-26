@@ -16,12 +16,13 @@ struct LocalComment: Codable {
     let name: String
     let location: String
     let profileImage: String?
+    var isMyComment: Bool
 }
 
 extension LocalComment {
     
     func toString() -> String {
-        return "\(idx) \(postIdx) \(comment) \(createAt) \(userIdx) \(name) \(location) \(profileImage ?? "")"
+        return "\(idx) \(postIdx) \(comment) \(createAt) \(userIdx) \(name) \(location) \(profileImage ?? "") \(isMyComment)"
     }
 }
 

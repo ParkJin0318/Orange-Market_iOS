@@ -5,7 +5,7 @@
 //  Created by 박진 on 2021/03/23.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import Alamofire
 import Moya
@@ -95,5 +95,16 @@ public extension PrimitiveSequence where Trait == SingleTrait, Element == Moya.R
     /// Maps received data at key path into a Decodable object. If the conversion fails, the signal errors.
     func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> Single<D> {
         return flatMap { .just(try $0.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)) }
+    }
+}
+
+extension Reactive where Base: UIViewController {
+    
+    var pop: Binder<Bool> {
+        Binder(base) { base, isPop in
+            if (isPop) {
+                base.navigationController?.popViewController(animated: true)
+            }
+        }
     }
 }

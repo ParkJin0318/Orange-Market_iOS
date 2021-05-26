@@ -16,6 +16,10 @@ class LocalRepositoryImpl: LocalRepository {
         return dataSource.getAllLocalPost()
     }
     
+    func getAllLocalPost(topicIdx: Int) -> Single<Array<LocalPost>> {
+        return dataSource.getAllLocalPost(topicIdx: topicIdx)
+    }
+    
     func getLocalPost(idx: Int) -> Single<LocalPost> {
         return dataSource.getLocalPost(idx: idx)
     }

@@ -18,6 +18,11 @@ class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewConta
     
     var idx: Int = -1
     
+    private lazy var moreButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        $0.tintColor = .label
+    }
+    
     override init() {
         super.init(node: LocalPostDetailViewContainer())
         self.initNode()
@@ -50,6 +55,48 @@ class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewConta
         super.viewWillDisappear(animated)
         self.removeKeyboardNotifications()
     }
+    
+    func commentAlret(idx: Int) {
+        let actions: [UIAlertController.AlertAction] = [
+            .action(title: "삭제", style: .destructive),
+            .action(title: "취소", style: .cancel)
+        ]
+        
+        UIAlertController
+            .present(in: self, title: "댓글", message: "댓글 상태 변경", style: .actionSheet, actions: actions)
+            .withUnretained(self)
+            .subscribe { owner, value in
+                switch (value) {
+                    case 0:
+                        Observable.just(.deleteLocalComment(idx))
+                            .bind(to: owner.reactor!.action)
+                            .disposed(by: owner.disposeBag)
+                    default:
+                        break
+                }
+            }.disposed(by: disposeBag)
+    }
+    
+    func postAlret() {
+        let actions: [UIAlertController.AlertAction] = [
+            .action(title: "삭제", style: .destructive),
+            .action(title: "취소", style: .cancel)
+        ]
+        
+        UIAlertController
+            .present(in: self, title: "게시물", message: "게시물 상태 변경", style: .actionSheet, actions: actions)
+            .withUnretained(self)
+            .subscribe { owner, value in
+                switch (value) {
+                    case 0:
+                        Observable.just(.deleteLocalPost(owner.idx))
+                            .bind(to: owner.reactor!.action)
+                            .disposed(by: owner.disposeBag)
+                    default:
+                        break
+                }
+            }.disposed(by: disposeBag)
+    }
 }
 
 extension LocalPostDetailViewController: ViewControllerType {
@@ -77,10 +124,17 @@ extension LocalPostDetailViewController: ViewControllerType {
     
     func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .label
+        self.navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(customView: moreButton)
+        ]
     }
     
     func bind(reactor: LocalPostDetailViewReactor) {
         //Action
+        moreButton.rx.tap
+            .bind(onNext: postAlret)
+            .disposed(by: disposeBag)
+        
         node.localPostCommentNode.commentInputNode.do {
             $0.sendNode.rx.tap
                 .withUnretained(self)
@@ -108,21 +162,32 @@ extension LocalPostDetailViewController: ViewControllerType {
             .bind(to: node.localPostCommentNode.commentInputNode.sendNode.rx.isHidden)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.localPost }
-            .withUnretained(self)
-            .bind { owner, value in
-                owner.localPost = value
-            }.disposed(by: disposeBag)
+        Observable.combineLatest(
+            reactor.state.map { $0.localPost },
+            reactor.state.map { $0.localComments }
+        ).withUnretained(self)
+        .filter { !$0.0.localComments.contains($0.1.1) }
+        .bind { owner, value in
+            owner.localPost = value.0
+            owner.localComments = value.1
+            owner.node.tableNode.reloadData()
+        }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.localComments }
-            .withUnretained(self)
-            .filter { !$0.0.localComments.contains($0.1) }
-            .bind { owner, value in
-                owner.localComments = value
-                owner.node.tableNode.reloadData()
-            }.disposed(by: disposeBag)
+        reactor.state.map { $0.isSuccessDeleteLocalPost }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .bind(to: self.rx.pop)
+            .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isSuccessComment }
+        reactor.state.map { $0.isSuccessDeleteLocalComment }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .withUnretained(self)
+            .map { .fetchLocalComments($0.0.idx) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isSuccessSendComment }
             .distinctUntilChanged()
             .filter { $0 }
             .withUnretained(self)
@@ -185,16 +250,26 @@ extension LocalPostDetailViewController: ASTableDataSource {
                 return cell
                 
             } else {
-                let item = self.localComments[indexPath.row]
-                
                 let cell = LocalCommentCell().then {
                     $0.selectionStyle = .none
                 }
                 
-                Observable.just(item)
-                    .bind(to: cell.rx.comment)
+                let item = self.localComments[indexPath.row]
+                    
+                let comment = Observable.just(item)
+                    .share()
+                
+                comment.bind(to: cell.rx.comment)
                     .disposed(by: self.disposeBag)
                 
+                comment.map { !$0.isMyComment }
+                    .bind(to: cell.moreNode.rx.isHidden)
+                    .disposed(by: self.disposeBag)
+                    
+                cell.moreNode.rx.tap
+                    .bind { self.commentAlret(idx: item.idx) }
+                    .disposed(by: self.disposeBag)
+                    
                 return cell
             }
         }
