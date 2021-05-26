@@ -11,35 +11,33 @@ import RxSwift
 class UserRemote {
     private lazy var provider: MoyaProvider<UserAPI> = MoyaProvider()
     
-    func getUserInfo(idx: Int) -> Single<UserData> {
+    func getUserInfo(idx: Int) -> Single<User> {
         return provider.rx.request(.getUserInfo(idx: idx))
-            .map(Response<UserData>.self, using: JSONDecoder())
-            .map { response -> UserData in
+            .map(Response<User>.self, using: JSONDecoder())
+            .map { response -> User in
                 return response.data
             }
     }
     
-    func getUserProfile() -> Single<UserData> {
+    func getUserProfile() -> Single<User> {
         return provider.rx.request(.getUserProfile)
-            .map(Response<UserData>.self, using: JSONDecoder())
-            .map { response -> UserData in
+            .map(Response<User>.self, using: JSONDecoder())
+            .map { response -> User in
                 return response.data
             }
     }
     
-    func updateLocation(locationRequest: LocationRequest) -> Single<String> {
+    func updateLocation(locationRequest: LocationInfoRequest) -> Single<Void> {
         return provider.rx.request(.updateLocation(locationRequest: locationRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
     
-    func updateUser(userRequest: UserRequest) -> Single<String> {
+    func updateUser(userRequest: UserInfoRequest) -> Single<Void> {
         return provider.rx.request(.updateUserProfile(userRequest: userRequest))
-            .map(MessageResponse.self, using: JSONDecoder())
-            .map { response in
-                return response.message
+            .map { response -> Void in
+                return Void()
             }
     }
 }

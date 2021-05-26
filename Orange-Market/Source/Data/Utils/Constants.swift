@@ -7,9 +7,10 @@
 
 import AsyncDisplayKit
 
-let HOST = "http://192.168.219.180:8080/"
+let HOST = "http://10.80.161.163:8080/"
 
 let JuaRegular: String = "Jua-Regular"
 
-let width = UIScreen.main.bounds.width
-let height = UIScreen.main.bounds.height
+let width: CGFloat = UIScreen.main.bounds.width
+let height: CGFloat = UIScreen.main.bounds.height
+var tabBarHeight: CGFloat = 0.0

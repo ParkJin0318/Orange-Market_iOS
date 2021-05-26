@@ -81,7 +81,7 @@ class MyInfoEditViewReactor: Reactor {
         case .updateUerInfo:
             return Observable.concat([
                 .just(Mutation.setLoading(true)),
-                userRepository.updateUser(userRequest: UserRequest(name: currentState.userName, profileImage: currentState.imageUrl))
+                userRepository.updateUser(userRequest: UserInfoRequest(name: currentState.userName, profileImage: currentState.imageUrl))
                     .asObservable()
                     .map { Mutation.setSuccessUpdateUserInfo(true) },
                 .just(Mutation.setLoading(false))

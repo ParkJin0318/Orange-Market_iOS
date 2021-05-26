@@ -71,7 +71,6 @@ extension MyInfoViewController: ViewControllerType {
             container.profileEditNode.setAttributedTitle("프로필 수정".toAttributed(color: .label, ofSize: 12), for: .normal)
             container.profileNode.profileImageNode.style.preferredSize = CGSize(width: 70, height: 70)
             container.profileNode.profileImageNode.cornerRadius = 70 / 2
-            container.profileNode.viewNode.isHidden = true
             
             container.salesNode.iconNode.image = UIImage(named: "receipt")
             container.salesNode.textNode.attributedText = "판매 내역".toAttributed(color: .label, ofSize: 12)
@@ -125,20 +124,13 @@ extension MyInfoViewController: ViewControllerType {
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }

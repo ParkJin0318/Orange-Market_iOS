@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  MyInfoEditViewController.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/03/23.
@@ -40,29 +40,22 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
         self.loadNode()
         reactor = MyInfoEditViewReactor()
         
-        if let reactor = self.reactor {
-            Observable.just(.fetchUserInfo)
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-        }
+        Observable.just(.fetchUserInfo)
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
     }
-    
-    private func popViewController() {
-        self.navigationController?.popViewController(animated: true)
-    }
 }
 
 extension MyInfoEditViewController: ViewControllerType {
     
     func initNode() {
-        self.node.do { container in
-            container.automaticallyManagesSubnodes = true
-            container.backgroundColor = .systemBackground
+        self.node.do {
+            $0.backgroundColor = .systemBackground
         }
     }
     
@@ -84,7 +77,8 @@ extension MyInfoEditViewController: ViewControllerType {
     func bind(reactor: MyInfoEditViewReactor) {
         // Action
         closeButton.rx.tap
-            .bind(onNext: popViewController)
+            .map { true }
+            .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
 
         completeButton.rx.tap
@@ -118,27 +112,19 @@ extension MyInfoEditViewController: ViewControllerType {
         reactor.state.map { $0.isSuccessUserInfo }
             .distinctUntilChanged()
             .filter { $0 }
-            .withUnretained(self)
-            .bind { $0.0.popViewController() }
+            .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
             
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind { owner, value in
-                if (value) {
-                    MBProgressHUD.loading(from: owner.view)
-                } else {
-                    MBProgressHUD.hide(for: owner.view, animated: true)
-                }
-            }.disposed(by: disposeBag)
+            .bind(to: view.rx.loading)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .bind { owner, value in
-                MBProgressHUD.errorShow(value!, from: owner.view)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .bind(to: view.rx.error)
+            .disposed(by: disposeBag)
     }
 }
 

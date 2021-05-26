@@ -17,7 +17,7 @@ class TabBarController: ASTabBarController {
         )
     }
     
-    private lazy var cityViewController = CityViewContoller().then {
+    private lazy var localViewController = LocalPostListViewContoller().then {
         $0.tabBarItem = UITabBarItem(
             title: "지역생활",
             image: UIImage(systemName: "doc.plaintext"),
@@ -40,13 +40,14 @@ class TabBarController: ASTabBarController {
             $0.tintColor = .label
         }
         self.setNavigationController()
+        tabBarHeight = tabBar.frame.size.height + 41.0
     }
     
     private func setNavigationController() {
         let navigationController1 = ASNavigationController(rootViewController: homeViewController).then {
             $0.navigationBar.isTranslucent = false
         }
-        let navigationController2 = ASNavigationController(rootViewController: cityViewController).then {
+        let navigationController2 = ASNavigationController(rootViewController: localViewController).then {
             $0.navigationBar.isTranslucent = false
         }
         

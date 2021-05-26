@@ -10,8 +10,8 @@ import Moya
 enum UserAPI {
     case getUserInfo(idx: Int)
     case getUserProfile
-    case updateLocation(locationRequest: LocationRequest)
-    case updateUserProfile(userRequest: UserRequest)
+    case updateLocation(locationRequest: LocationInfoRequest)
+    case updateUserProfile(userRequest: UserInfoRequest)
 }
 
 extension UserAPI: TargetType {

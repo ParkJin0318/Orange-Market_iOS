@@ -13,6 +13,8 @@ target 'Orange-Market' do
   pod 'RxTexture2', '~> 1.3.0'
   pod 'MBProgressHUD', '~> 1.2.0'
   pod 'RealmSwift'
+  pod "Floaty"
+
 
   # Pods for Orange-Market
 

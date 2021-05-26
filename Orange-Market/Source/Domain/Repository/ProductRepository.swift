@@ -12,8 +12,8 @@ protocol ProductRepository {
     func getAllProduct() -> Single<Array<Product>>
     func getAllLikeProduct() -> Single<Array<Product>>
     func getAllMyProduct() -> Single<Array<Product>>
-    func getProduct(idx: Int) -> Single<ProductDetail>
-    func getAllCategory() -> Single<Array<Category>>
+    func getProduct(idx: Int) -> Single<Product>
+    func getAllCategory() -> Single<Array<ProductCategory>>
     func updateCategory(idx: Int) -> Single<Void>
     func saveProduct(productRequest: ProductRequest) -> Single<Void>
     func likeProduct(idx: Int) -> Single<Void>

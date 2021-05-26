@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.4.3)
   - BEMCheckBox (1.4.1)
+  - Floaty (4.2.0)
   - MBProgressHUD (1.2.0)
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
@@ -65,6 +66,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.4.1)
   - BEMCheckBox
+  - Floaty
   - MBProgressHUD (~> 1.2.0)
   - Moya (~> 14.0)
   - ReactorKit
@@ -76,6 +78,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - BEMCheckBox
+    - Floaty
     - MBProgressHUD
     - Moya
     - PINCache
@@ -95,6 +98,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
+  Floaty: e2bd5a0f6f7f70899e26ff2da31081c8bee8d1b0
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
@@ -111,6 +115,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 1fdd1194730cd855cc040862e6032c0f84fc218d
+PODFILE CHECKSUM: 58114dddcb3e7280b7400957f7e95609232174c8
 
 COCOAPODS: 1.10.1

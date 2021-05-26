@@ -1,5 +1,5 @@
 //
-//  MyInfoContainer.swift
+//  MyInfoViewContainer.swift
 //  Orange-Market
 //
 //  Created by 박진 on 2021/03/23.
@@ -46,7 +46,7 @@ class MyInfoViewContainer: ASScrollNode {
             direction: .vertical,
             spacing: 10,
             justifyContent: .start,
-            alignItems: .center,
+            alignItems: .start,
             children: [profileNode, profileEditNode, salesLayout]
         )
     }
