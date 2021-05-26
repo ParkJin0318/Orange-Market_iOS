@@ -21,7 +21,6 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
     lazy var floating = Floaty().then {
         $0.buttonColor = .primaryColor()
         $0.plusColor = .white
-        $0.selectedColor = .white
         
         $0.addItem(item: productButton)
         $0.addItem(item: localPostButton)

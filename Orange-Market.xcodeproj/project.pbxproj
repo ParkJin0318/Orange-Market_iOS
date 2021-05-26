@@ -63,6 +63,10 @@
 		8D8421B2265DDB990050E1DF /* TopicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8421B1265DDB990050E1DF /* TopicListView.swift */; };
 		8D8421B4265DDC1C0050E1DF /* TopicListViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8421B3265DDC1C0050E1DF /* TopicListViewContainer.swift */; };
 		8D8421B6265DDD790050E1DF /* TopicListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8421B5265DDD790050E1DF /* TopicListViewReactor.swift */; };
+		8D8421BA265DF64C0050E1DF /* TopicSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8421B9265DF64C0050E1DF /* TopicSelectViewController.swift */; };
+		8D8421BC265DF7220050E1DF /* TopicSelectViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8421BB265DF7220050E1DF /* TopicSelectViewContainer.swift */; };
+		8D8421BE265DF7300050E1DF /* TopicSelectViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8421BD265DF7300050E1DF /* TopicSelectViewReactor.swift */; };
+		8D8421C0265E0A5A0050E1DF /* LocalTopicCheckBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8421BF265E0A5A0050E1DF /* LocalTopicCheckBoxCell.swift */; };
 		8D8641CA26550D87000D8B10 /* LocalCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8641C926550D87000D8B10 /* LocalCommentRequest.swift */; };
 		8D8641D22655200E000D8B10 /* LocalTopicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8641D12655200E000D8B10 /* LocalTopicEntity.swift */; };
 		8D8641D42655203A000D8B10 /* LocalTopicCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8641D32655203A000D8B10 /* LocalTopicCache.swift */; };
@@ -195,6 +199,10 @@
 		8D8421B1265DDB990050E1DF /* TopicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListView.swift; sourceTree = "<group>"; };
 		8D8421B3265DDC1C0050E1DF /* TopicListViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListViewContainer.swift; sourceTree = "<group>"; };
 		8D8421B5265DDD790050E1DF /* TopicListViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListViewReactor.swift; sourceTree = "<group>"; };
+		8D8421B9265DF64C0050E1DF /* TopicSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSelectViewController.swift; sourceTree = "<group>"; };
+		8D8421BB265DF7220050E1DF /* TopicSelectViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSelectViewContainer.swift; sourceTree = "<group>"; };
+		8D8421BD265DF7300050E1DF /* TopicSelectViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSelectViewReactor.swift; sourceTree = "<group>"; };
+		8D8421BF265E0A5A0050E1DF /* LocalTopicCheckBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTopicCheckBoxCell.swift; sourceTree = "<group>"; };
 		8D8641C926550D87000D8B10 /* LocalCommentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCommentRequest.swift; sourceTree = "<group>"; };
 		8D8641D12655200E000D8B10 /* LocalTopicEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTopicEntity.swift; sourceTree = "<group>"; };
 		8D8641D32655203A000D8B10 /* LocalTopicCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTopicCache.swift; sourceTree = "<group>"; };
@@ -451,6 +459,7 @@
 				8DC864B125FEFA190081F52C /* LocalPostList */,
 				8DE4BF802656756700F60F63 /* LocalPostDetail */,
 				8D8421A9265DD4290050E1DF /* LocalPostAdd */,
+				8D8421B8265DF63C0050E1DF /* TopicSelect */,
 				8D8421B0265DDB640050E1DF /* TopicList */,
 			);
 			path = LocalPost;
@@ -483,6 +492,16 @@
 				8D8421B5265DDD790050E1DF /* TopicListViewReactor.swift */,
 			);
 			path = TopicList;
+			sourceTree = "<group>";
+		};
+		8D8421B8265DF63C0050E1DF /* TopicSelect */ = {
+			isa = PBXGroup;
+			children = (
+				8D8421B9265DF64C0050E1DF /* TopicSelectViewController.swift */,
+				8D8421BB265DF7220050E1DF /* TopicSelectViewContainer.swift */,
+				8D8421BD265DF7300050E1DF /* TopicSelectViewReactor.swift */,
+			);
+			path = TopicSelect;
 			sourceTree = "<group>";
 		};
 		8D8641C426550D24000D8B10 /* Auth */ = {
@@ -842,6 +861,7 @@
 				8D51AD50265B52F00063ADCB /* LocalContentCell.swift */,
 				8D8FE37F265758D5006DB389 /* LocalCommentCell.swift */,
 				8D51AD52265B83460063ADCB /* LocalTopicCell.swift */,
+				8D8421BF265E0A5A0050E1DF /* LocalTopicCheckBoxCell.swift */,
 				8D8FE37D26575617006DB389 /* LocalPostCommentNode.swift */,
 				8DC245F52657FE88004E8908 /* CommentInputNode.swift */,
 			);
@@ -1044,6 +1064,7 @@
 				8D19EFCE2639390E00DB654E /* CategoryListViewContainer.swift in Sources */,
 				8DC864A225FEF2CE0081F52C /* ProductListViewController.swift in Sources */,
 				8D487E30265268BB00869F1F /* AuthDataSource.swift in Sources */,
+				8D8421BE265DF7300050E1DF /* TopicSelectViewReactor.swift in Sources */,
 				8DC8647625FEDDB30081F52C /* AuthAPI.swift in Sources */,
 				8D89DB302651119D0006345E /* MyInfoEditViewReactor.swift in Sources */,
 				8D2F98A526004C5000C8BE0C /* UploadRepository.swift in Sources */,
@@ -1053,6 +1074,7 @@
 				8D96E5B426006FA000A1292D /* ProductRequest.swift in Sources */,
 				8DE4BF75265643A900F60F63 /* LocalPostListViewContainer.swift in Sources */,
 				8D487E34265268D200869F1F /* ProductDataSource.swift in Sources */,
+				8D8421BA265DF64C0050E1DF /* TopicSelectViewController.swift in Sources */,
 				8D6E3135260B1627004FCB1A /* InputViewContainer.swift in Sources */,
 				8D63150C260D6AB800EB3540 /* RegisterViewContainer.swift in Sources */,
 				8D8FE380265758D5006DB389 /* LocalCommentCell.swift in Sources */,
@@ -1106,6 +1128,8 @@
 				8D6E3131260B14B0004FCB1A /* IdViewController.swift in Sources */,
 				8D94440C2650148D00582B6F /* RegisterViewReactor.swift in Sources */,
 				8DB670182612CC17006A3FD0 /* LocationInfoRequest.swift in Sources */,
+				8D8421BC265DF7220050E1DF /* TopicSelectViewContainer.swift in Sources */,
+				8D8421C0265E0A5A0050E1DF /* LocalTopicCheckBoxCell.swift in Sources */,
 				8D64381326097A0900F7C5FE /* MyInfoViewContainer.swift in Sources */,
 				8D0EA9D825FAF95000514930 /* LoginViewContainer.swift in Sources */,
 				8D337BDE260846330042B1A0 /* ProfileNode.swift in Sources */,

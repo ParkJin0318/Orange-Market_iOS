@@ -25,6 +25,8 @@ protocol LocalRepository {
     
     func updatePost(idx: Int, request: LocalPostRequest) -> Single<Void>
     
+    func updateTopic(idx: Int) -> Single<Void>
+    
     func deletePost(idx: Int) -> Single<Void>
     
     func deleteComment(idx: Int) -> Single<Void>

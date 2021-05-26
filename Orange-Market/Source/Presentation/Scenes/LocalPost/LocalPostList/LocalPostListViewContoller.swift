@@ -22,7 +22,6 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
     lazy var floating = Floaty().then {
         $0.buttonColor = .primaryColor()
         $0.plusColor = .white
-        $0.selectedColor = .white
         
         $0.addItem(item: productButton)
         $0.addItem(item: localPostButton)
@@ -236,7 +235,7 @@ extension LocalPostListViewContoller: ASCollectionDelegate {
         let item = localTopics[indexPath.row]
         
         if (item.idx == 0) {
-            
+            self.navigationController?.pushViewController(TopicSelectViewController(), animated: true)
         } else {
             let vc = LocalPostListViewContoller().then {
                 $0.topic = item

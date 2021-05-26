@@ -85,6 +85,10 @@ class LocalDataSource {
         return localRemote.updatePost(idx: idx, request: request)
     }
     
+    func updateTopic(idx: Int) -> Single<Void> {
+        return topicCache.updateTopic(idx: idx)
+    }
+    
     func deletePost(idx: Int) -> Single<Void> {
         return localRemote.deletePost(idx: idx)
     }

@@ -44,6 +44,10 @@ class LocalRepositoryImpl: LocalRepository {
         return dataSource.updatePost(idx: idx, request: request)
     }
     
+    func updateTopic(idx: Int) -> Single<Void> {
+        return dataSource.updateTopic(idx: idx)
+    }
+    
     func deletePost(idx: Int) -> Single<Void> {
         return dataSource.deletePost(idx: idx)
     }

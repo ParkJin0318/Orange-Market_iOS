@@ -8,13 +8,13 @@
 import AsyncDisplayKit
 import BEMCheckBox
 
-protocol CategoryCheckBoxCellDelegate {
-    func setCheckedCategory(idx: Int)
+protocol CheckBoxCellDelegate {
+    func setCheckedItem(idx: Int)
 }
 
 class CategoryCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
     
-    var delegate: CategoryCheckBoxCellDelegate?
+    var delegate: CheckBoxCellDelegate?
     var category: ProductCategory!
     
     lazy var checkBoxNode = ASCheckBoxNode().then {
@@ -40,7 +40,7 @@ extension CategoryCheckBoxCell {
     }
     
     func didTap(_ checkBox: BEMCheckBox) {
-        delegate?.setCheckedCategory(idx: category.idx)
+        delegate?.setCheckedItem(idx: category.idx)
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

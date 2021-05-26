@@ -1,20 +1,15 @@
 //
-//  CategorySelectViewContainer.swift
+//  TopicSelectViewContainer.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/04/26.
+//  Created by 박진 on 2021/05/26.
 //
 
 import AsyncDisplayKit
-import BEMCheckBox
 
-class CategorySelectViewContainer: ASDisplayNode {
+class TopicSelectViewContainer: ASDisplayNode {
     
     lazy var titleNode = ASTextNode().then {
-        $0.style.flexShrink = 1
-    }
-    
-    lazy var descriptionNode = ASTextNode().then {
         $0.style.flexShrink = 1
     }
     
@@ -36,35 +31,26 @@ class CategorySelectViewContainer: ASDisplayNode {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let categoryLayout = self.categoryLayoutSpec()
+        let containerLayout = self.containerLayoutSpec()
         
         return ASInsetLayoutSpec(
             insets: .init(top: 0, left: 20, bottom: 0, right: 20),
-            child: categoryLayout
+            child: containerLayout
         )
     }
     
-    private func categoryLayoutSpec() -> ASLayoutSpec {
-        
-        let descriptionLayout = ASStackLayoutSpec(
-            direction: .vertical,
-            spacing: 20,
-            justifyContent: .start,
-            alignItems: .center,
-            children: [titleNode, descriptionNode]
-        )
-        
-        let descriptionInsetLayout = ASInsetLayoutSpec(
-            insets: .init(top: 30, left: 0, bottom: 30, right: 20),
-            child: descriptionLayout
+    private func containerLayoutSpec() -> ASLayoutSpec {
+        let titleLayout = ASInsetLayoutSpec(
+            insets: .init(top: 20, left: 10, bottom: 20, right: 10),
+            child: titleNode
         )
         
         return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 10,
             justifyContent: .start,
-            alignItems: .center,
-            children: [descriptionInsetLayout, collectionNode]
+            alignItems: .start,
+            children: [titleLayout, collectionNode]
         )
     }
 }
