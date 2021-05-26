@@ -8,7 +8,7 @@
 import Foundation
 
 struct LocalPostRequest: Encodable {
-    let topic: String
+    let topicIdx: Int
     let contents: String
     let userIdx: Int
     let city: String

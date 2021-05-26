@@ -32,7 +32,7 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("init(œcoder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -48,10 +48,6 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
         Observable.just(.fetchProduct(idx))
             .bind(to: reactor!.action)
             .disposed(by: disposeBag)
-    }
-    
-    private func popViewController() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     private func moveToEdit() {

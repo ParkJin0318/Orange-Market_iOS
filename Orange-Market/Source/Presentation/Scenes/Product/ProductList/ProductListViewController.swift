@@ -35,7 +35,7 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
     }
     
     lazy var localPostButton = FloatyItem().then {
-        $0.title = "동네생활"
+        $0.title = "지역생활"
         $0.icon = UIImage(systemName: "doc.plaintext")
         $0.iconTintColor = .white
         $0.buttonColor = .primaryColor()
@@ -60,39 +60,43 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
         self.view.addSubview(floating)
         self.loadNode()
         reactor = ProductListViewReactor()
+        
+        Observable.just(type != .none)
+            .bind(to: floating.rx.isHidden, categoryButton.rx.isHidden)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
         
-        if let reactor = self.reactor {
-            var data: Observable<ProductListViewReactor.Action> = .empty()
-            
-            switch (self.type) {
-                case .none:
-                    data = Observable.just(Reactor.Action.fetchProduct)
-                case .sales:
-                    data = Observable.just(Reactor.Action.fetchMyProduct)
-                    self.navigationItem.title = "판매내역"
-                case .like:
-                    data = Observable.just(Reactor.Action.fetchLikeProduct)
-                    self.navigationItem.title = "관심목록"
-                default:
-                    break
-            }
+        var data: Observable<ProductListViewReactor.Action> = .empty()
         
-            Observable.just(type != .none)
-                .bind(to: floating.rx.isHidden, categoryButton.rx.isHidden)
-                .disposed(by: disposeBag)
-            
-            data.bind(to: reactor.action)
-                .disposed(by: disposeBag)
+        switch (self.type) {
+            case .none:
+                data = Observable.just(Reactor.Action.fetchProduct)
+            case .sales:
+                data = Observable.just(Reactor.Action.fetchMyProduct)
+                self.navigationItem.title = "판매내역"
+            case .like:
+                data = Observable.just(Reactor.Action.fetchLikeProduct)
+                self.navigationItem.title = "관심목록"
+            default:
+                break
         }
+    
+        data.bind(to: reactor!.action)
+            .disposed(by: disposeBag)
     }
     
     private func presentProductAddView() {
         self.navigationController?.pushViewController(ProductAddViewController().then {
+            $0.hidesBottomBarWhenPushed = true
+        }, animated: true)
+    }
+    
+    private func presentLocalPostAddView() {
+        self.navigationController?.pushViewController(LocalPostAddViewController().then {
             $0.hidesBottomBarWhenPushed = true
         }, animated: true)
     }
@@ -145,6 +149,10 @@ extension ProductListViewController: ViewControllerType {
         // Action
         productButton.handler = { _ in
             self.presentProductAddView()
+        }
+        
+        localPostButton.handler = { _ in
+            self.presentLocalPostAddView()
         }
         
         categoryButton.rx.tap

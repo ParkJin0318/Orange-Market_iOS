@@ -1,24 +1,22 @@
 //
-//  CategoryListViewController.swift
+//  TopicListView.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/04/28.
+//  Created by 박진 on 2021/05/26.
 //
 
 import AsyncDisplayKit
 import ReactorKit
-import RxSwift
-import MBProgressHUD
 
-class CategoryListViewController: ASDKViewController<CategoryListViewContainer> & View {
+class TopicListViewController: ASDKViewController<TopicListViewContainer> & View {
     
-    lazy var disposeBag = DisposeBag()
-    lazy var categories: [ProductCategory] = []
+    var disposeBag = DisposeBag()
     
-    var selectCategory: ProductCategory!
+    lazy var topics: [LocalTopic] = []
+    var selectTopic: LocalTopic? = nil
     
     override init() {
-        super.init(node: CategoryListViewContainer())
+        super.init(node: TopicListViewContainer())
         self.initNode()
     }
     
@@ -29,13 +27,11 @@ class CategoryListViewController: ASDKViewController<CategoryListViewContainer> 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        reactor = CategoryListViewReactor()
+        reactor = TopicListViewReactor()
         
-        if let reactor = self.reactor {
-            Observable.just(.fetchCategory)
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-        }
+        Observable.just(.fetchTopic)
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,11 +40,10 @@ class CategoryListViewController: ASDKViewController<CategoryListViewContainer> 
     }
 }
 
-extension CategoryListViewController: ViewControllerType {
+extension TopicListViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
-            $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
             
             $0.tableNode.delegate = self
@@ -57,37 +52,27 @@ extension CategoryListViewController: ViewControllerType {
     }
     
     func loadNode() {
-        self.node.tableNode.view.tableFooterView = UIView(frame: CGRect.zero)
+        self.node.tableNode.view.separatorStyle = .none
     }
     
     func setupNavigationBar() {
-        self.navigationItem.title = "카테고리 선택"
+        self.navigationItem.title = "주제 선택"
         self.navigationController?.navigationBar.tintColor = .label
     }
     
-    func bind(reactor: CategoryListViewReactor) {
-        reactor.state.map { $0.categories }
+    func bind(reactor: TopicListViewReactor) {
+        // State
+        reactor.state.map { $0.topics }
             .withUnretained(self)
-            .filter { !$0.0.categories.contains($0.1) }
+            .filter { !$0.0.topics.contains($0.1) }
             .bind { owner, value in
-                owner.categories = value
+                owner.topics = value
                 owner.node.tableNode.reloadData()
             }.disposed(by: disposeBag)
-        
-        reactor.state.map { $0.isLoading }
-            .distinctUntilChanged()
-            .bind(to: view.rx.loading)
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.errorMessage }
-            .filter { $0 != nil }
-            .map { $0! }
-            .bind(to: view.rx.error)
-            .disposed(by: disposeBag)
     }
 }
 
-extension CategoryListViewController: ASTableDelegate {
+extension TopicListViewController: ASTableDelegate {
     
     func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
         return ASSizeRange(
@@ -97,8 +82,8 @@ extension CategoryListViewController: ASTableDelegate {
     }
     
     func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        let item = categories[indexPath.row]
-        selectCategory = item
+        let item = topics[indexPath.row]
+        selectTopic = item
         
         Observable.just(true)
             .bind(to: self.rx.pop)
@@ -106,21 +91,21 @@ extension CategoryListViewController: ASTableDelegate {
     }
 }
 
-extension CategoryListViewController: ASTableDataSource {
+extension TopicListViewController: ASTableDataSource {
     
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return topics.count
     }
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
             guard let self = self else { return ASCellNode() }
             
-            let item = self.categories[indexPath.row]
+            let item = self.topics[indexPath.row]
             
             let cell = CategoryCell()
             
@@ -133,3 +118,4 @@ extension CategoryListViewController: ASTableDataSource {
         }
     }
 }
+

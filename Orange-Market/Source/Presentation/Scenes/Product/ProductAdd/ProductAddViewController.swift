@@ -19,7 +19,6 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
     lazy var images: [String] = []
     
     var product: Product? = nil
-    var category: Category? = nil
     
     lazy var closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
@@ -47,11 +46,9 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
         self.loadNode()
         reactor = ProductAddViewReactor()
         
-        if let reactor = self.reactor {
-            Observable.just(.fetchProduct(product))
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-        }
+        Observable.just(.fetchProduct(product))
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,10 +72,6 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
             .map { .categoryIdx($0) }
             .bind(to: reactor!.action)
             .disposed(by: disposeBag)
-    }
-    
-    private func popViewController() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     private func presentCategoryListView() {
@@ -124,7 +117,8 @@ extension ProductAddViewController: ViewControllerType {
     func bind(reactor: ProductAddViewReactor) {
         // Action
         closeButton.rx.tap
-            .bind(onNext: popViewController)
+            .map { true }
+            .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
         
         completeButton.rx.tap

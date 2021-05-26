@@ -8,6 +8,7 @@
 import AsyncDisplayKit
 import ReactorKit
 import MBProgressHUD
+import Floaty
 
 class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer> & View {
     
@@ -17,6 +18,29 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
     lazy var localTopics: [LocalTopic] = []
     
     var topic: LocalTopic? = nil
+    
+    lazy var floating = Floaty().then {
+        $0.buttonColor = .primaryColor()
+        $0.plusColor = .white
+        $0.selectedColor = .white
+        
+        $0.addItem(item: productButton)
+        $0.addItem(item: localPostButton)
+    }
+    
+    lazy var productButton = FloatyItem().then {
+        $0.title = "중고거래"
+        $0.icon = UIImage(systemName: "pencil")
+        $0.iconTintColor = .white
+        $0.buttonColor = .primaryColor()
+    }
+    
+    lazy var localPostButton = FloatyItem().then {
+        $0.title = "지역생활"
+        $0.icon = UIImage(systemName: "doc.plaintext")
+        $0.iconTintColor = .white
+        $0.buttonColor = .primaryColor()
+    }
     
     override init() {
         super.init(node: LocalPostListViewContainer())
@@ -29,8 +53,13 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(floating)
         self.loadNode()
         reactor = LocalPostListViewReactor()
+        
+        Observable.just(topic != nil)
+            .bind(to: floating.rx.isHidden)
+            .disposed(by: disposeBag)
         
         Observable.just(.fetchLocalTopic)
             .bind(to: reactor!.action)
@@ -56,6 +85,18 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
             .map { $0!.name }
             .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
+    }
+    
+    private func presentProductAddView() {
+        self.navigationController?.pushViewController(ProductAddViewController().then {
+            $0.hidesBottomBarWhenPushed = true
+        }, animated: true)
+    }
+    
+    private func presentLocalPostAddView() {
+        self.navigationController?.pushViewController(LocalPostAddViewController().then {
+            $0.hidesBottomBarWhenPushed = true
+        }, animated: true)
     }
 }
 
@@ -87,6 +128,15 @@ extension LocalPostListViewContoller: ViewControllerType {
     }
     
     func bind(reactor: LocalPostListViewReactor) {
+        // Action
+        productButton.handler = { _ in
+            self.presentProductAddView()
+        }
+        
+        localPostButton.handler = { _ in
+            self.presentLocalPostAddView()
+        }
+        
         // State
         reactor.state.map { $0.localPosts }
             .withUnretained(self)
@@ -185,10 +235,14 @@ extension LocalPostListViewContoller: ASCollectionDelegate {
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let item = localTopics[indexPath.row]
         
-        let vc = LocalPostListViewContoller().then {
-            $0.topic = item
+        if (item.idx == 0) {
+            
+        } else {
+            let vc = LocalPostListViewContoller().then {
+                $0.topic = item
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

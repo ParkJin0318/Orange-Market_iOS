@@ -1,13 +1,13 @@
 //
-//  CategoryListViewContainer.swift
+//  TopicListViewContainer.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/04/28.
+//  Created by 박진 on 2021/05/26.
 //
 
 import AsyncDisplayKit
 
-class CategoryListViewContainer: ASDisplayNode {
+class TopicListViewContainer: ASDisplayNode {
     
     lazy var tableNode = ASTableNode().then {
         $0.allowsSelectionDuringEditing = false

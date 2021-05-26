@@ -1,18 +1,20 @@
 //
-//  MyInfoEditViewController.swift
+//  LocalPostAddViewController.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/03/23.
+//  Created by 박진 on 2021/05/26.
 //
 
 import AsyncDisplayKit
 import ReactorKit
-import RxSwift
-import MBProgressHUD
 
-class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & View {
+class LocalPostAddViewController: ASDKViewController<LocalPostAddViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
+    
+    lazy var topicListViewController = TopicListViewController()
+    
+    var localPost: LocalPost? = nil
     
     lazy var closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
@@ -27,7 +29,7 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
     }
     
     override init() {
-        super.init(node: MyInfoEditViewContainer())
+        super.init(node: LocalPostAddViewContainer())
         self.initNode()
     }
     
@@ -38,9 +40,9 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
-        reactor = MyInfoEditViewReactor()
+        reactor = LocalPostAddViewReactor()
         
-        Observable.just(.fetchUserInfo)
+        Observable.just(.fetchLocalPost(localPost))
             .bind(to: reactor!.action)
             .disposed(by: disposeBag)
     }
@@ -48,14 +50,38 @@ class MyInfoEditViewController: ASDKViewController<MyInfoEditViewContainer> & Vi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
+        self.setupTopic()
+    }
+    
+    private func setupTopic() {
+        let topic = Observable.just(topicListViewController.selectTopic)
+            .filter { $0 != nil }
+            .map { $0! }
+            .share()
+        
+        topic.map { $0.idx }
+            .map { .topicIdx($0) }
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
+        
+        topic.map { $0.name }
+            .map { .topic($0) }
+            .bind(to: reactor!.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func presentTopicListView() {
+        self.navigationController?.pushViewController(topicListViewController, animated: true)
     }
 }
 
-extension MyInfoEditViewController: ViewControllerType {
+extension LocalPostAddViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
             $0.backgroundColor = .systemBackground
+            
+            $0.contentField.placeholder = "우리 지역 관련된 질문이나 이야기를 해보세요."
         }
     }
     
@@ -63,8 +89,12 @@ extension MyInfoEditViewController: ViewControllerType {
     
     func setupNavigationBar() {
         self.navigationItem.do {
-            $0.title = "프로필 수정"
-            
+            if (localPost == nil) {
+                $0.title = "지역생활 글쓰기"
+            } else {
+                $0.title = "지역생활 글 수정하기"
+            }
+           
             $0.leftBarButtonItems = [
                 UIBarButtonItem(customView: closeButton)
             ]
@@ -74,47 +104,42 @@ extension MyInfoEditViewController: ViewControllerType {
         }
     }
     
-    func bind(reactor: MyInfoEditViewReactor) {
+    func bind(reactor: LocalPostAddViewReactor) {
         // Action
         closeButton.rx.tap
             .map { true }
             .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
-
+        
         completeButton.rx.tap
-            .map { .updateUerInfo }
+            .map { self.localPost == nil ? .savePost : .updatePost }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
-        node.nameField.rx.text.orEmpty
-            .map { .name($0) }
+        
+        node.contentField.rx.text.orEmpty
+            .map { .content($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
-        node.addButton.rx.tap
-            .bind(onNext: presentImagePicker)
+        
+        node.topicSelectNode.rx.tap
+            .bind(onNext: presentTopicListView)
             .disposed(by: disposeBag)
         
         // State
-        reactor.state.map { $0.userName }
-            .filter { !$0.isEmpty }
-            .distinctUntilChanged()
-            .bind(to: node.nameField.rx.text.orEmpty)
+        reactor.state.map { $0.topic.toAttributed(color: .label, ofSize: 16) }
+            .bind(to: node.topicSelectNode.nameNode.rx.attributedText)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.imageUrl ?? "" }
-            .filter { !$0.isEmpty }
-            .distinctUntilChanged()
-            .map { $0.toUrl() }
-            .bind(to: node.profileImageNode.rx.url)
+        reactor.state.map { $0.content }
+            .bind(to: node.contentField.rx.text.orEmpty)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isSuccessUserInfo }
+        reactor.state.map { $0.isSuccess }
             .distinctUntilChanged()
             .filter { $0 }
             .bind(to: self.rx.pop)
             .disposed(by: disposeBag)
-            
+        
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
             .bind(to: view.rx.loading)
@@ -125,28 +150,5 @@ extension MyInfoEditViewController: ViewControllerType {
             .map { $0! }
             .bind(to: view.rx.error)
             .disposed(by: disposeBag)
-    }
-}
-
-extension MyInfoEditViewController: UINavigationControllerDelegate & UIImagePickerControllerDelegate {
-    
-    private func presentImagePicker() {
-        let imagePickerController = UIImagePickerController().then {
-            $0.delegate = self
-            $0.allowsEditing = true
-            $0.sourceType = .photoLibrary
-        }
-        
-        self.present(imagePickerController, animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let reactor = self.reactor, let image = info[.originalImage] as? UIImage {
-            Observable.just(.uploadImage(image))
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-        }
-        dismiss(animated: true, completion: nil)
     }
 }
