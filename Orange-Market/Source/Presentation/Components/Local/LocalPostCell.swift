@@ -6,7 +6,6 @@
 //
 
 import AsyncDisplayKit
-import RxSwift
 
 class LocalPostCell: ASCellNode {
     
@@ -26,24 +25,17 @@ class LocalPostCell: ASCellNode {
         $0.backgroundColor = .lightGray()
     }
     
-    override init() {
+    init(post: LocalPost) {
         super.init()
         self.automaticallyManagesSubnodes = true
+        self.selectionStyle = .none
+        
+        self.topicNode.attributedText = post.topic.toAttributed(color: .label, ofSize: 12)
+        self.contentNode.attributedText = post.contents.toAttributed(color: .label, ofSize: 16)
+        self.userInfoNode.attributedText = "\(post.name) · \(post.location)".toAttributed(color: .gray, ofSize: 12)
+        self.dateNode.attributedText = post.createAt.toAttributed(color: .gray, ofSize: 12)
     }
 }
-
-extension Reactive where Base: LocalPostCell {
-    
-    var post: Binder<LocalPost> {
-        Binder(base) { base, post in
-            base.topicNode.attributedText = post.topic.toAttributed(color: .label, ofSize: 12)
-            base.contentNode.attributedText = post.contents.toAttributed(color: .label, ofSize: 16)
-            base.userInfoNode.attributedText = "\(post.name) · \(post.location)".toAttributed(color: .gray, ofSize: 12)
-            base.dateNode.attributedText = post.createAt.toAttributed(color: .gray, ofSize: 12)
-        }
-    }
-}
-
 
 extension LocalPostCell {
     

@@ -229,8 +229,7 @@ extension ProductDetailViewController: ASCollectionDataSource {
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return { [weak self] in
             let item = self?.images[indexPath.row]
-            let cell = ProductImageCell().then {
-                $0.setupNode(url: item!)
+            let cell = ProductImageCell(image: item!).then {
                 $0.imageNode.style.preferredSize = CGSize(width: width, height: 300)
             }
             return cell

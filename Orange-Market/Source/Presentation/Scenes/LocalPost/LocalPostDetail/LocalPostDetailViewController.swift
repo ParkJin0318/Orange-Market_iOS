@@ -6,16 +6,16 @@
 //
 
 import AsyncDisplayKit
+import RxDataSources_Texture
 import ReactorKit
 import MBProgressHUD
 
 class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
+    var commentDataSource: RxASTableSectionedAnimatedDataSource<LocalCommentListSection>!
     
     var localPost: LocalPost? = nil
-    lazy var localComments: [LocalComment] = []
-    
     var idx: Int = -1
     
     private lazy var moreButton = UIButton().then {
@@ -32,9 +32,33 @@ class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewConta
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupDataSource() {
+        commentDataSource = RxASTableSectionedAnimatedDataSource<LocalCommentListSection>(
+            configureCellBlock: { _, _, _, item in
+                switch item {
+                    case .localPost(let post):
+                        return { LocalContentCell(post: post) }
+                        
+                    case .localComment(let comment):
+                        return {
+                            let cell = LocalCommentCell(comment: comment)
+                            
+                            cell.moreNode.rx.tap
+                                .withUnretained(self)
+                                .bind { owner, _ in
+                                    owner.commentAlret(idx: comment.idx)
+                                }.disposed(by: cell.disposeBag)
+                            
+                            return cell
+                        }
+                }
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadNode()
+        self.setupDataSource()
         reactor = LocalPostDetailViewReactor()
         
         Observable.concat([
@@ -116,19 +140,12 @@ extension LocalPostDetailViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
-            $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
-            
-            $0.tableNode.delegate = self
-            $0.tableNode.dataSource = self
-            
             $0.localPostCommentNode.commentInputNode.commentField.placeholder = "따뜻한 댓글을 입력해주세요 :)"
         }
     }
     
     func loadNode() {
-        self.node.localPostCommentNode.commentInputNode.commentField.delegate = self
-        
         self.node.do {
             $0.tableNode.view.showsVerticalScrollIndicator = false
             $0.tableNode.view.separatorStyle = .none
@@ -148,19 +165,22 @@ extension LocalPostDetailViewController: ViewControllerType {
             .bind(onNext: postAlret)
             .disposed(by: disposeBag)
         
-        node.localPostCommentNode.commentInputNode.do {
-            $0.sendNode.rx.tap
-                .withUnretained(self)
-                .map { .sendComment($0.0.idx) }
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-            
-            $0.commentField.rx.text.orEmpty
-                .map { .comment($0) }
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
-        }
+        node.localPostCommentNode.commentInputNode.sendNode.rx.tap
+            .withUnretained(self)
+            .map { .sendComment($0.0.idx) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
+        node.localPostCommentNode.commentInputNode.commentField.rx.text.orEmpty
+            .map { .comment($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        node.tableNode.rx.itemSelected
+            .bind { indexPath in
+                
+            }.disposed(by: disposeBag)
+                
         // State
         let comment = reactor.state
             .map { $0.comment }
@@ -175,22 +195,26 @@ extension LocalPostDetailViewController: ViewControllerType {
             .bind(to: node.localPostCommentNode.commentInputNode.sendNode.rx.isHidden)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.localPost }
+        let post = reactor.state.map { $0.localPost }
             .filter { $0 != nil }
-            .withUnretained(self)
-            .filter { $0.0.localPost?.toString() != $0.1?.toString() }
-            .bind { owner, value in
-                owner.localPost = value
-                owner.node.tableNode.reloadRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
-            }.disposed(by: disposeBag)
+            .map { $0! }
+            .share()
         
-        reactor.state.map { $0.localComments }
-            .withUnretained(self)
-            .filter { !$0.0.localComments.contains($0.1) }
-            .bind { owner, value in
-                owner.localComments = value
-                owner.node.tableNode.reloadData()
-            }.disposed(by: disposeBag)
+        post.withUnretained(self)
+            .bind { $0.0.localPost = $0.1 }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+            post, reactor.state.map { $0.localComments }
+        ) { post, comments -> [LocalCommentListSection] in
+            
+            var sections: [LocalCommentListSectionItem] = []
+            sections.append(LocalCommentListSectionItem.localPost(post))
+            sections.append(contentsOf: comments.map { LocalCommentListSectionItem.localComment($0) })
+            
+            return [LocalCommentListSection.localComment(localComments: sections)]
+        }.bind(to: node.tableNode.rx.items(dataSource: commentDataSource))
+        .disposed(by: disposeBag)
         
         reactor.state.map { $0.isSuccessDeleteLocalPost }
             .distinctUntilChanged()
@@ -224,74 +248,6 @@ extension LocalPostDetailViewController: ViewControllerType {
             .map { $0! }
             .bind(to: view.rx.error)
             .disposed(by: disposeBag)
-    }
-}
-
-extension LocalPostDetailViewController: ASTableDelegate {
-    
-    func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
-        return ASSizeRange(
-            min: CGSize(width: width, height: 0),
-            max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        )
-    }
-}
-
-extension LocalPostDetailViewController: ASTableDataSource {
-    
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return 2
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0) {
-            return 1
-        } else {
-            return localComments.count
-        }
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return { [weak self] in
-            guard let self = self else { return ASCellNode() }
-            
-            if (indexPath.section == 0) {
-                let cell = LocalContentCell().then {
-                    $0.selectionStyle = .none
-                }
-                
-                Observable.just(self.localPost)
-                    .filter { $0 != nil }
-                    .map { $0! }
-                    .bind(to: cell.rx.content)
-                    .disposed(by: self.disposeBag)
-                
-                return cell
-                
-            } else {
-                let cell = LocalCommentCell().then {
-                    $0.selectionStyle = .none
-                }
-                
-                let item = self.localComments[indexPath.row]
-                    
-                let comment = Observable.just(item)
-                    .share()
-                
-                comment.bind(to: cell.rx.comment)
-                    .disposed(by: self.disposeBag)
-                
-                comment.map { !$0.isMyComment }
-                    .bind(to: cell.moreNode.rx.isHidden)
-                    .disposed(by: self.disposeBag)
-                    
-                cell.moreNode.rx.tap
-                    .bind { self.commentAlret(idx: item.idx) }
-                    .disposed(by: self.disposeBag)
-                    
-                return cell
-            }
-        }
     }
 }
 

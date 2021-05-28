@@ -24,23 +24,17 @@ class LocalContentCell: ASCellNode {
         $0.backgroundColor = .lightGray()
     }
     
-    override init() {
+    init(post: LocalPost) {
         super.init()
         self.automaticallyManagesSubnodes = true
-    }
-}
-
-extension Reactive where Base: LocalContentCell {
-    
-    var content: Binder<LocalPost> {
-        Binder(base) { base, post in
-            base.profileNode.nameNode.attributedText = post.name.toAttributed(color: .label, ofSize: 14)
-            base.profileNode.profileImageNode.url = post.profileImage?.toUrl()
-            base.profileNode.locationNode.attributedText = "\(post.location) · \(post.createAt)".toAttributed(color: .gray, ofSize: 12)
-            
-            base.topicNode.attributedText = post.topic.toAttributed(color: .label, ofSize: 12)
-            base.contentNode.attributedText = post.contents.toAttributed(color: .label, ofSize: 16)
-        }
+        self.selectionStyle = .none
+        
+        self.profileNode.nameNode.attributedText = post.name.toAttributed(color: .label, ofSize: 14)
+        self.profileNode.profileImageNode.url = post.profileImage?.toUrl()
+        self.profileNode.locationNode.attributedText = "\(post.location) · \(post.createAt)".toAttributed(color: .gray, ofSize: 12)
+        
+        self.topicNode.attributedText = post.topic.toAttributed(color: .label, ofSize: 12)
+        self.contentNode.attributedText = post.contents.toAttributed(color: .label, ofSize: 16)
     }
 }
 

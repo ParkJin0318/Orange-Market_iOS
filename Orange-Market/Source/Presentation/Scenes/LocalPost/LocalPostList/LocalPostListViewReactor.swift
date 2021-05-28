@@ -13,7 +13,9 @@ class LocalPostListViewReactor: Reactor {
     
     var initialState: State = State(
         localPosts: [],
+        tapPostItem: nil,
         localTopics: [],
+        tapTopicItem: nil,
         currentCity: nil,
         isLoading: false,
         errorMessage: nil
@@ -23,18 +25,24 @@ class LocalPostListViewReactor: Reactor {
         case fetchLocalPost
         case filterLocalPost(Int)
         case fetchLocalTopic
+        case tapPostItem(Int)
+        case tapTopicItem(Int)
     }
     
     enum Mutation {
         case setLocalPost([LocalPost])
+        case setTapPostItem(Int)
         case setLocalTopic([LocalTopic])
+        case setTapTopicItem(Int)
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
         var localPosts: [LocalPost]
+        var tapPostItem: Int?
         var localTopics: [LocalTopic]
+        var tapTopicItem: LocalTopic?
         var currentCity: String?
         var isLoading: Bool
         var errorMessage: String?
@@ -68,23 +76,37 @@ class LocalPostListViewReactor: Reactor {
                         .map { Mutation.setLocalTopic($0) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
+                
+            case let .tapPostItem(index):
+                return Observable.just(Mutation.setTapPostItem(index))
+                
+            case let .tapTopicItem(index):
+                return Observable.just(Mutation.setTapTopicItem(index))
         }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
         state.errorMessage = nil
+        state.tapPostItem = nil
+        state.tapTopicItem = nil
         
         switch mutation {
             case let .setLocalPost(posts):
                 state.localPosts = posts
                 state.currentCity = posts.first?.city
                 
+            case let .setTapPostItem(index):
+                state.tapPostItem = state.localPosts[index].idx
+                
             case let .setLocalTopic(topics):
                 var localTopics: [LocalTopic] = []
                 localTopics.append(LocalTopic(idx: 0, name: "카테고리", isSelected: false))
                 localTopics.append(contentsOf: topics)
                 state.localTopics = localTopics
+                
+            case let .setTapTopicItem(index):
+                state.tapTopicItem = state.localTopics[index]
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

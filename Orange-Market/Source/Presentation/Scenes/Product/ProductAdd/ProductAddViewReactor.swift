@@ -39,6 +39,7 @@ class ProductAddViewReactor: Reactor {
         case uploadImage(UIImage)
         case saveProduct
         case updateProduct
+        case removeImage(Int)
     }
     
     enum Mutation {
@@ -52,6 +53,7 @@ class ProductAddViewReactor: Reactor {
         case setProduct(Product)
         case setUser(User)
         case setSuccess(Bool)
+        case setRemoveImage(Int)
         
         case setLoading(Bool)
         case setError(Error)
@@ -75,7 +77,6 @@ class ProductAddViewReactor: Reactor {
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
-        
         switch action {
             case let .image(image):
                 return Observable.just(Mutation.setImage(image))
@@ -154,6 +155,9 @@ class ProductAddViewReactor: Reactor {
                     .map { Mutation.setSuccess(true) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
+                
+            case let .removeImage(index):
+                return Observable.just(Mutation.setRemoveImage(index))
         }
     }
     
@@ -197,6 +201,11 @@ class ProductAddViewReactor: Reactor {
                 
             case let .setSuccess(isSuccess):
                 state.isSuccess = isSuccess
+                
+            case let .setRemoveImage(index):
+                var images = state.images
+                images.remove(at: index)
+                state.images = images
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

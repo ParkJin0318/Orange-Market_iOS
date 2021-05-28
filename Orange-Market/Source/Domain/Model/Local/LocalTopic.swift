@@ -28,6 +28,15 @@ extension LocalTopic {
     }
 }
 
+
+extension LocalTopic: Equatable {
+    
+    static func == (lhs: LocalTopic, rhs: LocalTopic) -> Bool {
+        return lhs.toString() == rhs.toString()
+    }
+}
+
+
 extension Array where Element == LocalTopic {
     
     func contains(_ array: [LocalTopic]) -> Bool {

@@ -11,6 +11,7 @@ target 'Orange-Market' do
   pod 'Then'
   pod 'BEMCheckBox'
   pod 'RxTexture2', '~> 1.3.0'
+  pod 'RxDataSources-Texture'
   pod 'MBProgressHUD', '~> 1.2.0'
   pod 'RealmSwift'
   pod "Floaty"

@@ -17,9 +17,15 @@ class LocalTopicCell: ASCellNode {
         $0.backgroundColor = .systemBackground
     }
     
-    override init() {
+    init(topic: LocalTopic) {
         super.init()
         self.automaticallyManagesSubnodes = true
+        
+        if (topic.idx == 0) {
+            self.topicNode.imageNode.image = UIImage(systemName: "slider.horizontal.3")
+        } else {
+            self.topicNode.titleNode.attributedText = topic.name.toAttributed(color: .label, ofSize: 12)
+        }
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

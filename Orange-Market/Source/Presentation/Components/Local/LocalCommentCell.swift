@@ -10,6 +10,8 @@ import RxSwift
 
 class LocalCommentCell: ASCellNode {
     
+    lazy var disposeBag = DisposeBag()
+    
     lazy var profileNode = ProfileNode()
     
     lazy var moreNode = ASImageNode().then {
@@ -20,22 +22,17 @@ class LocalCommentCell: ASCellNode {
     
     lazy var commentNode = ASTextNode()
     
-    override init() {
+    init(comment: LocalComment) {
         super.init()
         self.automaticallyManagesSubnodes = true
-    }
-}
-
-extension Reactive where Base: LocalCommentCell {
-    
-    var comment: Binder<LocalComment> {
-        Binder(base) { base, comment in
-            base.profileNode.nameNode.attributedText = comment.name.toAttributed(color: .label, ofSize: 14)
-            base.profileNode.profileImageNode.url = comment.profileImage?.toUrl()
-            base.profileNode.locationNode.attributedText = "\(comment.location) · \(comment.createAt)".toAttributed(color: .gray, ofSize: 12)
-            
-            base.commentNode.attributedText = comment.comment.toAttributed(color: .label, ofSize: 14)
-        }
+        self.selectionStyle = .none
+        
+        self.profileNode.nameNode.attributedText = comment.name.toAttributed(color: .label, ofSize: 14)
+        self.profileNode.profileImageNode.url = comment.profileImage?.toUrl()
+        self.profileNode.locationNode.attributedText = "\(comment.location) · \(comment.createAt)".toAttributed(color: .gray, ofSize: 12)
+        
+        self.commentNode.attributedText = comment.comment.toAttributed(color: .label, ofSize: 14)
+        self.moreNode.isHidden = !comment.isMyComment
     }
 }
 

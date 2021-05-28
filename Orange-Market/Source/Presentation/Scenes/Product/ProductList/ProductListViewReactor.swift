@@ -13,6 +13,7 @@ class ProductListViewReactor: Reactor {
     
     var initialState: State = State(
         products: [],
+        tapItem: nil,
         currentCity: nil,
         isLoading: false,
         errorMessage: nil
@@ -22,16 +23,19 @@ class ProductListViewReactor: Reactor {
         case fetchProduct
         case fetchMyProduct
         case fetchLikeProduct
+        case tapItem(Int)
     }
     
     enum Mutation {
         case setAllProduct([Product])
+        case setTapItem(Int)
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
         var products: [Product]
+        var tapItem: Int?
         var currentCity: String?
         var isLoading: Bool
         var errorMessage: String?
@@ -65,17 +69,24 @@ class ProductListViewReactor: Reactor {
                         .map { Mutation.setAllProduct($0.sorted(by: { $0.idx > $1.idx })) },
                     .just(Mutation.setLoading(false))
                 ])
+                
+            case let .tapItem(index):
+                return Observable.just(Mutation.setTapItem(index))
         }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
         state.errorMessage = nil
+        state.tapItem = nil
         
         switch mutation {
             case let .setAllProduct(products):
                 state.products = products
                 state.currentCity = products.first?.city
+                
+            case let .setTapItem(index):
+                state.tapItem = state.products[index].idx
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

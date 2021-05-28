@@ -6,6 +6,7 @@
 //
 
 import AsyncDisplayKit
+import RxDataSources_Texture
 import ReactorKit
 import MBProgressHUD
 import Floaty
@@ -13,10 +14,6 @@ import Floaty
 class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    
-    lazy var localPosts: [LocalPost] = []
-    lazy var localTopics: [LocalTopic] = []
-    
     var topic: LocalTopic? = nil
     
     lazy var floating = Floaty().then {
@@ -40,6 +37,23 @@ class LocalPostListViewContoller: ASDKViewController<LocalPostListViewContainer>
         $0.iconTintColor = .white
         $0.buttonColor = .primaryColor()
     }
+    
+    let postDataSource = RxASTableSectionedAnimatedDataSource<LocalPostListSection>(
+        configureCellBlock: { _, _, _, item in
+            switch item {
+                case .localPost(let post):
+                    return { LocalPostCell(post: post) }
+            }
+    })
+    
+    let topicDataSource = RxASCollectionSectionedReloadDataSource<LocalTopicListSection>(
+        configureCellBlock: { _, _, _, item in
+            switch item {
+                case .localTopic(let topic):
+                    return { LocalTopicCell(topic: topic) }
+            }
+        }
+    )
     
     override init() {
         super.init(node: LocalPostListViewContainer())
@@ -105,12 +119,6 @@ extension LocalPostListViewContoller: ViewControllerType {
         self.node.do {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
-            
-            $0.tableNode.delegate = self
-            $0.tableNode.dataSource = self
-            
-            $0.collectionNode.delegate = self
-            $0.collectionNode.dataSource = self
         }
     }
     
@@ -136,13 +144,33 @@ extension LocalPostListViewContoller: ViewControllerType {
             self.presentLocalPostAddView()
         }
         
+        node.tableNode.rx.itemSelected
+            .map { .tapPostItem($0.row) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        node.collectionNode.rx.itemSelected
+            .map { .tapTopicItem($0.row) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         // State
         reactor.state.map { $0.localPosts }
+            .map { $0.map { LocalPostListSectionItem.localPost($0) } }
+            .map { [LocalPostListSection.localPost(localPosts: $0)] }
+            .bind(to: node.tableNode.rx.items(dataSource: postDataSource))
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.tapPostItem }
+            .distinctUntilChanged()
+            .filter { $0 != nil }
             .withUnretained(self)
-            .filter { !$0.0.localPosts.contains($0.1) }
             .bind { owner, value in
-                owner.localPosts = value
-                owner.node.tableNode.reloadData()
+                let vc = LocalPostDetailViewController().then {
+                    $0.idx = value!
+                    $0.hidesBottomBarWhenPushed = true
+                }
+                owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.currentCity }
@@ -153,11 +181,26 @@ extension LocalPostListViewContoller: ViewControllerType {
             .disposed(by: disposeBag)
             
         reactor.state.map { $0.localTopics }
+            .map { $0.map { LocalTopicListSectionItem.localTopic($0) } }
+            .map { [LocalTopicListSection.localTopic(localTopics: $0)] }
+            .bind(to: node.collectionNode.rx.items(dataSource: topicDataSource))
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.tapTopicItem }
+            .filter { $0 != nil }
+            .map { $0! }
+            .distinctUntilChanged()
             .withUnretained(self)
-            .filter { !$0.0.localTopics.contains($0.1) }
             .bind { owner, value in
-                owner.localTopics = value
-                owner.node.collectionNode.reloadData()
+                if (value.idx == 0) {
+                    self.navigationController?
+                        .pushViewController(TopicSelectViewController(), animated: true)
+                } else {
+                    let vc = LocalPostListViewContoller().then {
+                        $0.topic = value
+                    }
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.isLoading }
@@ -172,112 +215,3 @@ extension LocalPostListViewContoller: ViewControllerType {
             .disposed(by: disposeBag)
     }
 }
-
-extension LocalPostListViewContoller: ASTableDelegate {
-    
-    func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
-        return ASSizeRange(
-            min: CGSize(width: width, height: 0),
-            max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        )
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        let item = localPosts[indexPath.row]
-        
-        let vc = LocalPostDetailViewController().then {
-            $0.idx = item.idx
-            $0.hidesBottomBarWhenPushed = true
-        }
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-extension LocalPostListViewContoller: ASTableDataSource {
-    
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return 1
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return localPosts.count
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return { [weak self] in
-            guard let self = self else { return ASCellNode() }
-            
-            let item = self.localPosts[indexPath.row]
-            
-            let cell = LocalPostCell().then {
-                $0.selectionStyle = .none
-            }
-            
-            Observable.just(item)
-                .bind(to: cell.rx.post)
-                .disposed(by: self.disposeBag)
-            
-            return cell
-        }
-    }
-}
-
-extension LocalPostListViewContoller: ASCollectionDelegate {
-    
-    func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
-        return ASSizeRange(
-            min: CGSize(width: 0, height: 0),
-            max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        )
-    }
-    
-    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        let item = localTopics[indexPath.row]
-        
-        if (item.idx == 0) {
-            self.navigationController?.pushViewController(TopicSelectViewController(), animated: true)
-        } else {
-            let vc = LocalPostListViewContoller().then {
-                $0.topic = item
-            }
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-}
-
-extension LocalPostListViewContoller: ASCollectionDataSource {
-    
-    func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-        return 1
-    }
-        
-    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return localTopics.count
-    }
-
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return { [weak self] in
-            guard let self = self else { return ASCellNode() }
-            
-            let item = self.localTopics[indexPath.row]
-            
-            let cell = LocalTopicCell().then {
-                $0.cornerRadius = 4
-            }
-            
-            if (item.idx == 0) {
-                Observable.just(UIImage(systemName: "slider.horizontal.3"))
-                    .bind(to: cell.topicNode.imageNode.rx.image)
-                    .disposed(by: self.disposeBag)
-            } else {
-                Observable.just(item)
-                    .map { $0.name.toAttributed(color: .label, ofSize: 12) }
-                    .bind(to: cell.topicNode.titleNode.rx.attributedText)
-                    .disposed(by: self.disposeBag)
-            }
-            
-            return cell
-        }
-    }
-}
-

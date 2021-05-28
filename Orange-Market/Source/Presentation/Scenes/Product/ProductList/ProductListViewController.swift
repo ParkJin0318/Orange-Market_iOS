@@ -6,6 +6,7 @@
 //
 
 import AsyncDisplayKit
+import RxDataSources_Texture
 import ReactorKit
 import RxSwift
 import MBProgressHUD
@@ -14,8 +15,6 @@ import Floaty
 class ProductListViewController: ASDKViewController<ProductListViewContainer> & View {
     
     lazy var disposeBag = DisposeBag()
-    
-    lazy var products: [Product] = []
     var type: ProductType = .none
     
     lazy var floating = Floaty().then {
@@ -44,6 +43,14 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
         $0.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
         $0.tintColor = .label
     }
+    
+    let rxDataSource = RxASTableSectionedAnimatedDataSource<ProductListSection>(
+        configureCellBlock: { _, _, _, item in
+            switch item {
+                case .product(let product):
+                    return { ProductCell(product: product) }
+            }
+    })
     
     override init() {
         super.init(node: ProductListViewContainer())
@@ -124,9 +131,6 @@ extension ProductListViewController: ViewControllerType {
         self.node.do {
             $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
-            
-            $0.tableNode.delegate = self
-            $0.tableNode.dataSource = self
         }
     }
     
@@ -158,13 +162,28 @@ extension ProductListViewController: ViewControllerType {
             .bind(onNext: presentCategoryView)
             .disposed(by: disposeBag)
         
+        node.tableNode.rx.itemSelected
+            .map { .tapItem($0.row) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         // State
         reactor.state.map { $0.products }
+            .map { $0.map { ProductListSectionItem.product($0) } }
+            .map { [ProductListSection.product(products: $0)] }
+            .bind(to: node.tableNode.rx.items(dataSource: rxDataSource))
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.tapItem }
+            .distinctUntilChanged()
+            .filter { $0 != nil }
             .withUnretained(self)
-            .filter { !$0.0.products.contains($0.1) }
-            .bind { owner, products in
-                owner.products = products
-                owner.node.tableNode.reloadData()
+            .bind { owner, value in
+                let vc = ProductDetailViewController().then {
+                    $0.idx = value!
+                    $0.hidesBottomBarWhenPushed = true
+                }
+                owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.currentCity }
@@ -191,55 +210,5 @@ extension ProductListViewController: ViewControllerType {
             .withUnretained(self)
             .bind { $0.0.moveToStart() }
             .disposed(by: disposeBag)
-    }
-}
-
-extension ProductListViewController: ASTableDelegate {
-    
-    func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
-        return ASSizeRange(
-            min: CGSize(width: width, height: 0),
-            max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        )
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        let item = products[indexPath.row]
-        
-        let vc = ProductDetailViewController().then {
-            $0.idx = item.idx
-            $0.hidesBottomBarWhenPushed = true
-        }
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-extension ProductListViewController: ASTableDataSource {
-    
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return 1
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return products.count
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return { [weak self] in
-            guard let self = self else { return ASCellNode() }
-            
-            let item = self.products[indexPath.row]
-            
-            let cell = ProductCell().then {
-                $0.alpha = item.isSold ? 0.5 : 1
-                $0.selectionStyle = .none
-            }
-            
-            Observable.just(item)
-                .bind(to: cell.rx.product)
-                .disposed(by: self.disposeBag)
-            
-            return cell
-        }
     }
 }
