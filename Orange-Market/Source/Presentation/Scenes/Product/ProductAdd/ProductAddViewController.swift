@@ -35,7 +35,9 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
         configureCellBlock: { _, _, _, item in
             switch item {
                 case .image(let image):
-                    return { ProductImageCell(image: image) }
+                    return { ProductImageCell(image: image).then {
+                        $0.imageNode.cornerRadius = 5
+                    } }
             }
     })
     
@@ -109,12 +111,10 @@ extension ProductAddViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
-            $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
             
             $0.titleField.placeholder = "글 제목"
             $0.priceField.placeholder = "₩ 가격 입력"
-            $0.contentField.placeholder = "게시글 내용 입력"
         }
     }
     
@@ -167,7 +167,8 @@ extension ProductAddViewController: ViewControllerType {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        node.contentField.rx.text.orEmpty
+        node.contentNode.textView
+            .rx.text.orEmpty
             .map { .content($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -191,14 +192,18 @@ extension ProductAddViewController: ViewControllerType {
             .bind(to: node.priceField.rx.text.orEmpty)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.content }
-            .bind(to: node.contentField.rx.text.orEmpty)
+        reactor.state.map { $0.content.toAttributed(color: .label, ofSize: 16) }
+            .bind(to: node.contentNode.rx.attributedText)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.images }
             .map { $0.map { ProductImageListSectionItem.image($0) } }
             .map { [ProductImageListSection.image(images: $0)] }
             .bind(to: node.collectionNode.rx.items(dataSource: rxDataSource))
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { "\($0.user?.city ?? "내 지역")에 올릴 게시글 내용을 작성해주세요.".toAttributed(color: .lightGray, ofSize: 16) }
+            .bind(to: node.contentNode.rx.attributedPlaceholderText)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.isSuccess }

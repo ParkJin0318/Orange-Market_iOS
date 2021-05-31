@@ -13,20 +13,18 @@ class LocalPostAddViewContainer: ASDisplayNode {
         $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
-    lazy var contentField = UITextField().then {
-        $0.keyboardType = .namePhonePad
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
-        $0.leftViewMode = .always
-        $0.borderStyle = .none
-    }
-    
-    private lazy var contentNode = contentField.toNode().then {
-        $0.style.preferredSize = CGSize(width: width, height: 40)
-    }
-    
-    lazy var viewNode = ASDisplayNode().then {
+    lazy var separatorNode = ASDisplayNode().then {
         $0.style.preferredSize = CGSize(width: width, height: 1)
         $0.backgroundColor = .lightGray()
+    }
+    
+    lazy var contentNode = ASEditableTextNode().then {
+        $0.typingAttributes = [
+            NSAttributedString.Key.font.rawValue: UIFont.systemFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor.rawValue: UIColor.label
+        ]
+        $0.textContainerInset = .init(top: 5, left: 10, bottom: 5, right: 10)
+        $0.style.preferredSize = .init(width: width, height: 300)
     }
     
     override init() {
@@ -36,18 +34,18 @@ class LocalPostAddViewContainer: ASDisplayNode {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let topicSelectLayout = ASInsetLayoutSpec(
-            insets: .init(top: 10, left: 0, bottom: 10, right: 0),
+            insets: .init(top: 20, left: 0, bottom: 10, right: 0),
             child: topicSelectNode
         )
         
         return ASStackLayoutSpec(
             direction: .vertical,
-            spacing: 3,
+            spacing: 10,
             justifyContent: .start,
             alignItems: .start,
             children: [
                 topicSelectLayout,
-                viewNode,
+                separatorNode,
                 contentNode
             ]
         )

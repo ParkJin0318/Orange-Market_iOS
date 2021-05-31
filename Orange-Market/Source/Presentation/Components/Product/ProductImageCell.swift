@@ -11,7 +11,6 @@ class ProductImageCell: ASCellNode {
     
     lazy var imageNode = ASNetworkImageNode().then {
         $0.style.preferredSize = CGSize(width: 60, height: 60)
-        $0.cornerRadius = 5
     }
     
     init(image: String) {

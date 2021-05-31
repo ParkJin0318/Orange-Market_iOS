@@ -80,8 +80,6 @@ extension LocalPostAddViewController: ViewControllerType {
     func initNode() {
         self.node.do {
             $0.backgroundColor = .systemBackground
-            
-            $0.contentField.placeholder = "우리 지역 관련된 질문이나 이야기를 해보세요."
         }
     }
     
@@ -116,7 +114,7 @@ extension LocalPostAddViewController: ViewControllerType {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        node.contentField.rx.text.orEmpty
+        node.contentNode.textView.rx.text.orEmpty
             .map { .content($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -126,12 +124,17 @@ extension LocalPostAddViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         // State
+        reactor.state
+            .map { "\($0.user?.city ?? "") 우리 지역 관련된 질문이나 이야기를 해보세요.".toAttributed(color: .lightGray, ofSize: 16) }
+            .bind(to: node.contentNode.rx.attributedPlaceholderText)
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.topic.toAttributed(color: .label, ofSize: 16) }
             .bind(to: node.topicSelectNode.nameNode.rx.attributedText)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.content }
-            .bind(to: node.contentField.rx.text.orEmpty)
+        reactor.state.map { $0.content.toAttributed(color: .label, ofSize: 16) }
+            .bind(to: node.contentNode.rx.attributedText)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.isSuccess }

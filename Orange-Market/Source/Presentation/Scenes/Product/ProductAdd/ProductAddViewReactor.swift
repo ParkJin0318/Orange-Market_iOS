@@ -16,7 +16,7 @@ class ProductAddViewReactor: Reactor {
     var initialState: State = State(
         images: [],
         title: "",
-        categoryIdx: -1,
+        categoryIdx: nil,
         category: "카테고리 선택",
         price: "",
         content: "",
@@ -62,7 +62,7 @@ class ProductAddViewReactor: Reactor {
     struct State {
         var images: [String]
         var title: String
-        var categoryIdx: Int
+        var categoryIdx: Int?
         var category: String
         var price: String
         var content: String
@@ -120,45 +120,75 @@ class ProductAddViewReactor: Reactor {
             case .saveProduct:
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    productRepository.saveProduct(
-                        productRequest: ProductRequest(
-                            categoryIdx: currentState.categoryIdx,
-                            title: currentState.title,
-                            contents: currentState.content,
-                            price: currentState.price,
-                            isSold: 0,
-                            userIdx: currentState.user!.idx,
-                            city: currentState.user!.city,
-                            imageList: currentState.images
-                        )
-                    ).asObservable()
-                    .map { Mutation.setSuccess(true) },
+                    saveRequest(action: .saveProduct),
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
             case .updateProduct:
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    productRepository.updateProduct(
-                        idx: currentState.product!.idx,
-                        productRequest: ProductRequest(
-                            categoryIdx: currentState.categoryIdx,
-                            title: currentState.title,
-                            contents: currentState.content,
-                            price: currentState.price,
-                            isSold: currentState.product!.getIsSold(),
-                            userIdx: currentState.product!.userIdx,
-                            city: currentState.product!.city,
-                            imageList: currentState.images
-                        )
-                    ).asObservable()
-                    .map { Mutation.setSuccess(true) },
+                    saveRequest(action: .updateProduct),
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
             case let .removeImage(index):
                 return Observable.just(Mutation.setRemoveImage(index))
         }
+    }
+    
+    private func saveRequest(action: Action) -> Observable<Mutation> {
+        
+        if (currentState.images.isEmpty) {
+            return .error(OrangeError.error(message: "이미지를 선택해주세요"))
+        }
+        
+        if (currentState.categoryIdx == nil) {
+            return .error(OrangeError.error(message: "카테고리를 선택해주세요."))
+        }
+        
+        if (currentState.title.isEmpty ||
+            currentState.content.isEmpty ||
+            currentState.price.isEmpty) {
+            return .error(OrangeError.error(message: "빈 칸 없이 입력해주세요."))
+        }
+        
+        switch action {
+            case .saveProduct:
+                return productRepository.saveProduct(
+                    productRequest: ProductRequest(
+                        categoryIdx: currentState.categoryIdx ?? -1,
+                        title: currentState.title,
+                        contents: currentState.content,
+                        price: currentState.price,
+                        isSold: 0,
+                        userIdx: currentState.user!.idx,
+                        city: currentState.user!.city,
+                        imageList: currentState.images
+                    )
+                ).asObservable()
+                .map { Mutation.setSuccess(true) }
+                
+            case .updateProduct:
+                return productRepository.updateProduct(
+                    idx: currentState.product!.idx,
+                    productRequest: ProductRequest(
+                        categoryIdx: currentState.categoryIdx!,
+                        title: currentState.title,
+                        contents: currentState.content,
+                        price: currentState.price,
+                        isSold: currentState.product!.getIsSold(),
+                        userIdx: currentState.product!.userIdx,
+                        city: currentState.product!.city,
+                        imageList: currentState.images
+                    )
+                ).asObservable()
+                .map { Mutation.setSuccess(true) }
+                
+            default:
+                break
+        }
+        
+        return .empty()
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
