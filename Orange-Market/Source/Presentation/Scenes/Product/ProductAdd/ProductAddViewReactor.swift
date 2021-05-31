@@ -156,7 +156,7 @@ class ProductAddViewReactor: Reactor {
             case .saveProduct:
                 return productRepository.saveProduct(
                     productRequest: ProductRequest(
-                        categoryIdx: currentState.categoryIdx ?? -1,
+                        categoryIdx: currentState.categoryIdx!,
                         title: currentState.title,
                         contents: currentState.content,
                         price: currentState.price,

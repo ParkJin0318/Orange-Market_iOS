@@ -48,7 +48,11 @@ class ProductListViewController: ASDKViewController<ProductListViewContainer> & 
         configureCellBlock: { _, _, _, item in
             switch item {
                 case .product(let product):
-                    return { ProductCell(product: product) }
+                    return {
+                        let cell = ProductCell(product: product)
+                        cell.alpha = product.isSold ? 0.5 : 1.0
+                        return cell
+                    }
             }
     })
     

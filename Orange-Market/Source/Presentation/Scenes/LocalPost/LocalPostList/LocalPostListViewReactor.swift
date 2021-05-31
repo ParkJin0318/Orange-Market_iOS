@@ -55,7 +55,7 @@ class LocalPostListViewReactor: Reactor {
                     .just(Mutation.setLoading(true)),
                     localRepository.getAllLocalPost()
                         .asObservable()
-                        .map { Mutation.setLocalPost($0) },
+                        .map { Mutation.setLocalPost($0.reversed()) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
@@ -64,7 +64,7 @@ class LocalPostListViewReactor: Reactor {
                     .just(Mutation.setLoading(true)),
                     localRepository.getAllLocalPost(topicIdx: idx)
                         .asObservable()
-                        .map { Mutation.setLocalPost($0) },
+                        .map { Mutation.setLocalPost($0.reversed()) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 

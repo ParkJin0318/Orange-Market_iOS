@@ -48,7 +48,7 @@ class ProductListViewReactor: Reactor {
                     .just(Mutation.setLoading(true)),
                     productRepository.getAllProduct()
                         .asObservable()
-                        .map { Mutation.setAllProduct($0.sorted(by: { $0.idx > $1.idx })) },
+                        .map { Mutation.setAllProduct($0.reversed()) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
@@ -57,7 +57,7 @@ class ProductListViewReactor: Reactor {
                     .just(Mutation.setLoading(true)),
                     productRepository.getAllMyProduct()
                         .asObservable()
-                        .map { Mutation.setAllProduct($0.sorted(by: { $0.idx > $1.idx })) },
+                        .map { Mutation.setAllProduct($0.reversed()) },
                     .just(Mutation.setLoading(false))
                 ])
                 
@@ -66,7 +66,7 @@ class ProductListViewReactor: Reactor {
                     .just(Mutation.setLoading(true)),
                     productRepository.getAllLikeProduct()
                         .asObservable()
-                        .map { Mutation.setAllProduct($0.sorted(by: { $0.idx > $1.idx })) },
+                        .map { Mutation.setAllProduct($0.reversed()) },
                     .just(Mutation.setLoading(false))
                 ])
                 

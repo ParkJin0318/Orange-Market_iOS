@@ -32,7 +32,7 @@ class ProductCell: ASCellNode {
         self.selectionStyle = .none
         
         self.titleNode.attributedText = product.title.toAttributed(color: .label, ofSize: 17)
-        self.locationNode.attributedText = product.city.toAttributed(color: .gray, ofSize: 14)
+        self.locationNode.attributedText = "\(product.city) · \(product.createAt.distanceDate())".toAttributed(color: .gray, ofSize: 12)
         self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .label, ofSize: 15)
         self.likeNode.titleNode.attributedText = "\(product.likeUsers.count)".toAttributed(color: .label, ofSize: 13)
         
