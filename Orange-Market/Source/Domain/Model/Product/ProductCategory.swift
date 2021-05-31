@@ -28,6 +28,13 @@ extension ProductCategory {
     }
 }
 
+extension ProductCategory: Equatable {
+    
+    static func == (lhs: ProductCategory, rhs: ProductCategory) -> Bool {
+        return lhs.toString() == rhs.toString()
+    }
+}
+
 extension Array where Element == ProductCategory {
     
     func contains(_ array: [ProductCategory]) -> Bool {

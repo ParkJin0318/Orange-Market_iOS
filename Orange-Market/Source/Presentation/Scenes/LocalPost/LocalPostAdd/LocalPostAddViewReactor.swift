@@ -13,7 +13,7 @@ class LocalPostAddViewReactor: Reactor {
     private lazy var localRepository: LocalRepository = LocalRepositoryImpl()
     
     var initialState: State = State(
-        topicIdx: -1,
+        topicIdx: nil,
         topic: "게시글의 주제를 선택해주세요.",
         content: "",
         localPost: nil,
@@ -47,7 +47,7 @@ class LocalPostAddViewReactor: Reactor {
     }
     
     struct State {
-        var topicIdx: Int
+        var topicIdx: Int?
         var topic: String
         var content: String
         
@@ -85,34 +85,58 @@ class LocalPostAddViewReactor: Reactor {
             case .savePost:
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    localRepository.savePost(request:
-                        LocalPostRequest(
-                            topicIdx: currentState.topicIdx,
-                            contents: currentState.content,
-                            userIdx: currentState.user!.idx,
-                            city: currentState.user!.city
-                        )
-                    ).asObservable()
-                    .map { Mutation.setSuccess(true) },
+                    savePost(action: .savePost),
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
                 
             case .updatePost:
                 return Observable.concat([
                     .just(Mutation.setLoading(true)),
-                    localRepository.updatePost(
-                        idx: currentState.localPost!.idx,
-                        request: LocalPostRequest(
-                            topicIdx: currentState.topicIdx,
-                            contents: currentState.content,
-                            userIdx: currentState.localPost!.userIdx,
-                            city: currentState.localPost!.city
-                        )
-                    ).asObservable()
-                    .map { Mutation.setSuccess(true) },
+                    savePost(action: .updatePost),
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
         }
+    }
+    
+    private func savePost(action: Action) -> Observable<Mutation> {
+        
+        if (currentState.topicIdx == nil) {
+            return .error(OrangeError.error(message: "주제를 선택해주세요."))
+        }
+        
+        if (currentState.content.isEmpty) {
+            return .error(OrangeError.error(message: "내용을 입력해주세요."))
+        }
+        
+        switch action {
+            case .savePost:
+                return localRepository.savePost(
+                    request: LocalPostRequest(
+                        topicIdx: currentState.topicIdx!,
+                        contents: currentState.content,
+                        userIdx: currentState.user!.idx,
+                        city: currentState.user!.city
+                    )
+                ).asObservable()
+                .map { Mutation.setSuccess(true) }
+            
+            case .updatePost:
+                return localRepository.updatePost(
+                    idx: currentState.localPost!.idx,
+                    request: LocalPostRequest(
+                        topicIdx: currentState.topicIdx!,
+                        contents: currentState.content,
+                        userIdx: currentState.localPost!.userIdx,
+                        city: currentState.localPost!.city
+                    )
+                ).asObservable()
+                .map { Mutation.setSuccess(true) }
+                
+            default:
+                break
+        }
+        
+        return .empty()
     }
     
     func reduce(state: State, mutation: Mutation) -> State {

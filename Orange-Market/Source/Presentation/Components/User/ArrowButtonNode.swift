@@ -14,6 +14,18 @@ class ArrowButtonNode: ASButtonNode {
     lazy var iconNode = ASImageNode().then {
         $0.image = UIImage(systemName: "arrow.right")
     }
+}
+
+extension ArrowButtonNode {
+    
+    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        let arrowMenuLayout = self.arrowMenuLayoutSpec()
+        
+        return ASInsetLayoutSpec(
+            insets: .init(top: 0, left: 10, bottom: 0, right: 10),
+            child: arrowMenuLayout
+        )
+    }
     
     private func arrowMenuLayoutSpec() -> ASLayoutSpec {
         return ASStackLayoutSpec(
@@ -22,15 +34,6 @@ class ArrowButtonNode: ASButtonNode {
             justifyContent: .spaceBetween,
             alignItems: .center,
             children: [nameNode, iconNode]
-        )
-    }
-    
-    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let arrowMenuLayout = self.arrowMenuLayoutSpec()
-        
-        return ASInsetLayoutSpec(
-            insets: .init(top: 0, left: 10, bottom: 0, right: 10),
-            child: arrowMenuLayout
         )
     }
 }

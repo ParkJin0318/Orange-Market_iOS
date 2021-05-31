@@ -6,7 +6,6 @@
 //
 
 import AsyncDisplayKit
-import RxSwift
 
 class LocalPostCell: ASCellNode {
     
@@ -21,41 +20,61 @@ class LocalPostCell: ASCellNode {
     
     lazy var dateNode = ASTextNode()
     
-    lazy var separatorNode = ASDisplayNode().then {
+    lazy var postSeparatorNode = ASDisplayNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 1)
+        $0.backgroundColor = .lightGray()
+    }
+    
+    lazy var commentNode = ASButtonNode().then {
+        $0.imageNode.image = UIImage(systemName: "message")
+        $0.imageNode.style.preferredSize = .init(width: 15, height: 15)
+        $0.alpha = 0.7
+    }
+    
+    lazy var commentSeparatorNode = ASDisplayNode().then {
         $0.style.preferredSize = CGSize(width: width, height: 10)
         $0.backgroundColor = .lightGray()
     }
     
-    override init() {
+    init(post: LocalPost) {
         super.init()
         self.automaticallyManagesSubnodes = true
+        self.selectionStyle = .none
+        
+        self.topicNode.attributedText = post.topic.toAttributed(color: .label, ofSize: 12)
+        self.contentNode.attributedText = post.contents.toAttributed(color: .label, ofSize: 16)
+        self.userInfoNode.attributedText = "\(post.name) · \(post.location)".toAttributed(color: .gray, ofSize: 12)
+        self.dateNode.attributedText = post.createAt.distanceDate().toAttributed(color: .gray, ofSize: 12)
+        
+        let comment = post.commentCount == 0 ? "댓글 쓰기" : "댓글 \(post.commentCount)"
+        self.commentNode.titleNode.attributedText = comment.toAttributed(color: .label, ofSize: 12)
     }
 }
-
-extension Reactive where Base: LocalPostCell {
-    
-    var post: Binder<LocalPost> {
-        Binder(base) { base, post in
-            base.topicNode.attributedText = post.topic.toAttributed(color: .label, ofSize: 12)
-            base.contentNode.attributedText = post.contents.toAttributed(color: .label, ofSize: 16)
-            base.userInfoNode.attributedText = "\(post.name) · \(post.location)".toAttributed(color: .gray, ofSize: 12)
-            base.dateNode.attributedText = post.createAt.toAttributed(color: .gray, ofSize: 12)
-        }
-    }
-}
-
 
 extension LocalPostCell {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let postLayout = self.postLayoutSpec()
+        let commentLayout = self.commentLayoutSpec()
         
         return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 0,
-            justifyContent: .spaceAround,
+            justifyContent: .start,
             alignItems: .stretch,
-            children: [postLayout, separatorNode]
+            children: [
+                postLayout,
+                postSeparatorNode,
+                commentLayout,
+                commentSeparatorNode
+            ]
+        )
+    }
+    
+    func commentLayoutSpec() -> ASLayoutSpec {
+        return ASInsetLayoutSpec(
+            insets: .init(top: 10, left: 10, bottom: 10, right: .infinity),
+            child: commentNode
         )
     }
     
@@ -66,9 +85,12 @@ extension LocalPostCell {
         let postLayout = ASStackLayoutSpec(
             direction: .vertical,
             spacing: 20,
-            justifyContent: .spaceAround,
+            justifyContent: .start,
             alignItems: .stretch,
-            children: [topInfoLayout, bottomInfoLayout]
+            children: [
+                topInfoLayout,
+                bottomInfoLayout
+            ]
         )
         
         return ASInsetLayoutSpec(

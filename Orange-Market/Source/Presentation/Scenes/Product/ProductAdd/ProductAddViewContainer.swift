@@ -27,6 +27,11 @@ class ProductAddViewContainer: ASDisplayNode {
         $0.backgroundColor = .systemBackground
     }
     
+    lazy var imageSeparator = ASDisplayNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 1)
+        $0.backgroundColor = .lightGray()
+    }
+    
     lazy var titleField = UITextField().then {
         $0.keyboardType = .namePhonePad
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
@@ -38,8 +43,18 @@ class ProductAddViewContainer: ASDisplayNode {
         $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
+    lazy var titleSeparator = ASDisplayNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 1)
+        $0.backgroundColor = .lightGray()
+    }
+    
     lazy var categorySelectNode = ArrowButtonNode().then {
         $0.style.preferredSize = CGSize(width: width, height: 40)
+    }
+    
+    lazy var categorySeparator = ASDisplayNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 1)
+        $0.backgroundColor = .lightGray()
     }
     
     lazy var priceField = UITextField().then {
@@ -53,15 +68,18 @@ class ProductAddViewContainer: ASDisplayNode {
         $0.style.preferredSize = CGSize(width: width, height: 40)
     }
     
-    lazy var contentField = UITextField().then {
-        $0.keyboardType = .namePhonePad
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
-        $0.leftViewMode = .always
-        $0.borderStyle = .none
+    lazy var priceSeparator = ASDisplayNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 1)
+        $0.backgroundColor = .lightGray()
     }
     
-    private lazy var contentNode = contentField.toNode().then {
-        $0.style.preferredSize = CGSize(width: width, height: 40)
+    lazy var contentNode = ASEditableTextNode().then {
+        $0.typingAttributes = [
+            NSAttributedString.Key.font.rawValue: UIFont.systemFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor.rawValue: UIColor.label
+        ]
+        $0.textContainerInset = .init(top: 5, left: 10, bottom: 5, right: 10)
+        $0.style.preferredSize = .init(width: width, height: 300)
     }
     
     override init() {
@@ -72,17 +90,26 @@ class ProductAddViewContainer: ASDisplayNode {
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let imagePickerLayout = self.imagePickerLayoutSpec()
         
-        return ASStackLayoutSpec(
+        let containerLayout = ASStackLayoutSpec(
             direction: .vertical,
-            spacing: 3,
+            spacing: 10,
             justifyContent: .start,
             alignItems: .start,
             children: [
                 imagePickerLayout,
+                imageSeparator,
                 titleNode,
+                titleSeparator,
                 categorySelectNode,
+                categorySeparator,
                 priceNode,
+                priceSeparator,
                 contentNode]
+        )
+        
+        return ASInsetLayoutSpec(
+            insets: .init(top: 0, left: 10, bottom: 0, right: 10),
+            child: containerLayout
         )
     }
     

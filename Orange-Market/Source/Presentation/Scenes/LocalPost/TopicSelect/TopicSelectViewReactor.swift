@@ -75,6 +75,7 @@ class TopicSelectViewReactor: Reactor {
                 
             case let .setError(error):
                 state.errorMessage = error.toMessage()
+                state.isLoading = false
         }
         return state
     }

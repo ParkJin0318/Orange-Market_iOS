@@ -18,6 +18,7 @@ struct LocalPost: Codable {
     let location: String
     let profileImage: String?
     let city: String
+    let commentCount: Int
 }
 
 extension LocalPost {

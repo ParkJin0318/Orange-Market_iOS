@@ -27,7 +27,6 @@ class LocalPostListViewContainer: ASDisplayNode {
     
     lazy var tableNode = ASTableNode().then {
         $0.style.flexGrow = 1
-        $0.allowsSelectionDuringEditing = false
     }
     
     override init() {

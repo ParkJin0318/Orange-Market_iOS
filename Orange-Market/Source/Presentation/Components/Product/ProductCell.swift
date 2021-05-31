@@ -6,7 +6,6 @@
 //
 
 import AsyncDisplayKit
-import RxSwift
 
 class ProductCell: ASCellNode {
     
@@ -27,27 +26,21 @@ class ProductCell: ASCellNode {
         $0.alpha = 0.7
     }
     
-    override init() {
+    init(product: Product) {
         super.init()
         self.automaticallyManagesSubnodes = true
-    }
-}
-
-extension Reactive where Base: ProductCell {
-    
-    var product: Binder<Product> {
-        Binder(base) { base, product in
-            base.titleNode.attributedText = product.title.toAttributed(color: .label, ofSize: 17)
-            base.locationNode.attributedText = product.city.toAttributed(color: .gray, ofSize: 14)
-            base.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .label, ofSize: 15)
-            base.likeNode.titleNode.attributedText = "\(product.likeUsers.count)".toAttributed(color: .label, ofSize: 13)
-            
-            if (product.likeUsers.count < 1) {
-                base.likeNode.isHidden = true
-            }
-            if (!product.images.isEmpty) {
-                base.imageNode.url = product.images.first?.toUrl()
-            }
+        self.selectionStyle = .none
+        
+        self.titleNode.attributedText = product.title.toAttributed(color: .label, ofSize: 17)
+        self.locationNode.attributedText = "\(product.city) · \(product.createAt.distanceDate())".toAttributed(color: .gray, ofSize: 12)
+        self.priceNode.attributedText = "\(product.price)원".toBoldAttributed(color: .label, ofSize: 15)
+        self.likeNode.titleNode.attributedText = "\(product.likeUsers.count)".toAttributed(color: .label, ofSize: 13)
+        
+        if (product.likeUsers.count < 1) {
+            self.likeNode.isHidden = true
+        }
+        if (!product.images.isEmpty) {
+            self.imageNode.url = product.images.first?.toUrl()
         }
     }
 }

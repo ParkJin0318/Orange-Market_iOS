@@ -9,9 +9,7 @@ import AsyncDisplayKit
 
 class ProductListViewContainer: ASDisplayNode {
     
-    lazy var tableNode = ASTableNode().then {
-        $0.allowsSelectionDuringEditing = false
-    }
+    lazy var tableNode = ASTableNode()
     
     override init() {
         super.init()

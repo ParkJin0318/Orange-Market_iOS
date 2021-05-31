@@ -26,9 +26,13 @@ class LocalTopicCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
         $0.cornerRadius = 40 / 2
     }
     
-    override init() {
+    init(topic: LocalTopic) {
         super.init()
         self.automaticallyManagesSubnodes = true
+        
+        self.topic = topic
+        self.nameNode.attributedText = topic.name.toCenterAttributed(color: .label, ofSize: 12)
+        self.imageNode.backgroundColor = .lightGray()
     }
 }
 

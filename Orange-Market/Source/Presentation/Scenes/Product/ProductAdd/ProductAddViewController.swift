@@ -6,6 +6,7 @@
 //
 
 import AsyncDisplayKit
+import RxDataSources_Texture
 import ReactorKit
 import RxSwift
 import RxCocoa
@@ -16,8 +17,6 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
     lazy var disposeBag = DisposeBag()
     
     lazy var categoryListViewController = CategoryListViewController()
-    lazy var images: [String] = []
-    
     var product: Product? = nil
     
     lazy var closeButton = UIButton().then {
@@ -31,6 +30,16 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
         $0.setTitleColor(.label, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
     }
+    
+    let rxDataSource = RxASCollectionSectionedAnimatedDataSource<ProductImageListSection>(
+        configureCellBlock: { _, _, _, item in
+            switch item {
+                case .image(let image):
+                    return { ProductImageCell(image: image).then {
+                        $0.imageNode.cornerRadius = 5
+                    } }
+            }
+    })
     
     override init() {
         super.init(node: ProductAddViewContainer())
@@ -77,21 +86,35 @@ class ProductAddViewController: ASDKViewController<ProductAddViewContainer> & Vi
     private func presentCategoryListView() {
         self.navigationController?.pushViewController(categoryListViewController, animated: true)
     }
+    
+    func removeImage(index: Int) {
+        let actions: [UIAlertController.AlertAction] = [
+            .action(title: "삭제", style: .destructive),
+            .action(title: "아니요")
+        ]
+        
+        UIAlertController
+            .present(in: self, title: "사진 삭제", message: "사진을 삭제하시겠습니까?", style: .alert, actions: actions)
+            .withUnretained(self)
+            .subscribe { owner, value in
+                if (value == 0) {
+                    Observable.just(index)
+                        .map { .removeImage($0) }
+                        .bind(to: owner.reactor!.action)
+                        .disposed(by: owner.disposeBag)
+                }
+            }.disposed(by: disposeBag)
+    }
 }
 
 extension ProductAddViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
-            $0.automaticallyManagesSubnodes = true
             $0.backgroundColor = .systemBackground
-            
-            $0.collectionNode.delegate = self
-            $0.collectionNode.dataSource = self
             
             $0.titleField.placeholder = "글 제목"
             $0.priceField.placeholder = "₩ 가격 입력"
-            $0.contentField.placeholder = "게시글 내용 입력"
         }
     }
     
@@ -144,10 +167,17 @@ extension ProductAddViewController: ViewControllerType {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        node.contentField.rx.text.orEmpty
+        node.contentNode.textView
+            .rx.text.orEmpty
             .map { .content($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        node.collectionNode.rx.itemSelected
+            .withUnretained(self)
+            .bind { owner, index in
+                owner.removeImage(index: index.row)
+            }.disposed(by: disposeBag)
         
         // State
         reactor.state.map { $0.category.toAttributed(color: .label, ofSize: 16) }
@@ -162,17 +192,19 @@ extension ProductAddViewController: ViewControllerType {
             .bind(to: node.priceField.rx.text.orEmpty)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.content }
-            .bind(to: node.contentField.rx.text.orEmpty)
+        reactor.state.map { $0.content.toAttributed(color: .label, ofSize: 16) }
+            .bind(to: node.contentNode.rx.attributedText)
             .disposed(by: disposeBag)
-            
+        
         reactor.state.map { $0.images }
-            .withUnretained(self)
-            .filter { !$0.1.elementsEqual($0.0.images) }
-            .bind { owner, value in
-                owner.images = value
-                owner.node.collectionNode.reloadData()
-            }.disposed(by: disposeBag)
+            .map { $0.map { ProductImageListSectionItem.image($0) } }
+            .map { [ProductImageListSection.image(images: $0)] }
+            .bind(to: node.collectionNode.rx.items(dataSource: rxDataSource))
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { "\($0.user?.city ?? "내 지역")에 올릴 게시글 내용을 작성해주세요.".toAttributed(color: .lightGray, ofSize: 16) }
+            .bind(to: node.contentNode.rx.attributedPlaceholderText)
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.isSuccess }
             .distinctUntilChanged()
@@ -201,7 +233,6 @@ extension ProductAddViewController: UINavigationControllerDelegate & UIImagePick
             $0.allowsEditing = true
             $0.sourceType = .photoLibrary
         }
-        
         self.present(imagePickerController, animated: true)
     }
     
@@ -213,59 +244,6 @@ extension ProductAddViewController: UINavigationControllerDelegate & UIImagePick
                 .disposed(by: disposeBag)
         }
         dismiss(animated: true, completion: nil)
-    }
-}
-
-extension ProductAddViewController: ASCollectionDelegate {
-    
-    func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
-        return ASSizeRange(
-            min: CGSize(width: 0, height: 0),
-            max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        )
-    }
-    
-    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        removeImage(index: indexPath.row)
-    }
-    
-    func removeImage(index: Int) {
-        let actions: [UIAlertController.AlertAction] = [
-            .action(title: "삭제", style: .destructive),
-            .action(title: "아니요")
-        ]
-        
-        UIAlertController
-            .present(in: self, title: "사진 삭제", message: "사진을 삭제하시겠습니까?", style: .alert, actions: actions)
-            .withUnretained(self)
-            .subscribe { owner, value in
-                if (value == 0) {
-                    owner.images.remove(at: index)
-                    owner.node.collectionNode.reloadData()
-                }
-            }.disposed(by: disposeBag)
-    }
-}
-
-extension ProductAddViewController: ASCollectionDataSource {
-    func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-        return 1
-    }
-        
-    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return images.count
-    }
-        
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return { [weak self] in
-            let item = self?.images[indexPath.row]
-            let cell = ProductImageCell().then {
-                $0.setupNode(url: item!)
-                $0.imageNode.style.preferredSize = CGSize(width: 60, height: 60)
-                $0.imageNode.cornerRadius = 5
-            }
-            return cell
-        }
     }
 }
 

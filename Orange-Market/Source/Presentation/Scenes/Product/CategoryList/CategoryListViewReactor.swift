@@ -13,22 +13,28 @@ class CategoryListViewReactor: Reactor {
     
     var initialState: State = State(
         categories: [],
+        tapItem: nil,
         isLoading: false,
         errorMessage: nil
     )
     
     enum Action {
         case fetchCategory
+        case tapItem(Int)
     }
     
     enum Mutation {
         case setAllCategory([ProductCategory])
+        case setTapItem(Int)
+        
         case setLoading(Bool)
         case setError(Error)
     }
     
     struct State {
         var categories: [ProductCategory]
+        var tapItem: ProductCategory?
+        
         var isLoading: Bool
         var errorMessage: String?
     }
@@ -43,6 +49,9 @@ class CategoryListViewReactor: Reactor {
                         .map { Mutation.setAllCategory($0) },
                     .just(Mutation.setLoading(false))
                 ]).catch { .just(Mutation.setError($0)) }
+                
+            case let .tapItem(index):
+                return Observable.just(Mutation.setTapItem(index))
         }
     }
     
@@ -53,6 +62,9 @@ class CategoryListViewReactor: Reactor {
         switch mutation {
             case let .setAllCategory(categories):
                 state.categories = categories
+                
+            case let .setTapItem(index):
+                state.tapItem = state.categories[index]
                 
             case let .setLoading(isLoading):
                 state.isLoading = isLoading

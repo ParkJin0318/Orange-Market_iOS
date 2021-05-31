@@ -9,18 +9,21 @@ import AsyncDisplayKit
 
 class ProductImageCell: ASCellNode {
     
-    lazy var imageNode = ASNetworkImageNode()
+    lazy var imageNode = ASNetworkImageNode().then {
+        $0.style.preferredSize = CGSize(width: 60, height: 60)
+    }
     
-    override init() {
+    init(image: String) {
         super.init()
         self.automaticallyManagesSubnodes = true
-    }
-    
-    func setupNode(url: String) {
-        if (!url.isEmpty) {
-            self.imageNode.url = url.toUrl()
+        
+        if (!image.isEmpty) {
+            self.imageNode.url = image.toUrl()
         }
     }
+}
+
+extension ProductImageCell {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASInsetLayoutSpec(insets: .zero, child: imageNode)

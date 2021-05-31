@@ -5,7 +5,7 @@
 //  Created by 박진 on 2021/03/23.
 //
 
-import UIKit
+import AsyncDisplayKit
 import RxSwift
 import Alamofire
 import Moya

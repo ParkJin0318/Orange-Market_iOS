@@ -24,6 +24,11 @@ class ProductScrollNode: ASScrollNode {
     
     lazy var profileNode = ProfileNode()
     
+    lazy var separatorNode = ASDisplayNode().then {
+        $0.style.preferredSize = CGSize(width: width, height: 1)
+        $0.backgroundColor = .lightGray()
+    }
+    
     lazy var titleNode = ASTextNode().then {
         $0.style.flexShrink = 1
     }
@@ -54,7 +59,7 @@ extension Reactive where Base: ProductScrollNode {
             base.profileNode.locationNode.attributedText = product.location.toAttributed(color: .black, ofSize: 12)
             
             base.titleNode.attributedText = product.title.toBoldAttributed(color: .black, ofSize: 18)
-            base.dateNode.attributedText = product.createAt.toAttributed(color: .gray, ofSize: 14)
+            base.dateNode.attributedText = "\(product.category) · \(product.createAt.distanceDate())".toAttributed(color: .gray, ofSize: 12)
             base.contentsNode.attributedText = product.contents.toAttributed(color: .black, ofSize: 14)
         }
     }
@@ -74,6 +79,7 @@ extension ProductScrollNode {
             children: [
                 collectionNode,
                 profileLayout,
+                separatorNode,
                 contentLayout
             ]
         )
