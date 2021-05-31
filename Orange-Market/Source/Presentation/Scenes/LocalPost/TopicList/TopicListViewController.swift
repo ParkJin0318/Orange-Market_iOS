@@ -1,26 +1,24 @@
 //
-//  CategoryListViewController.swift
+//  TopicListViewController.swift
 //  Orange-Market
 //
-//  Created by 박진 on 2021/04/28.
+//  Created by 박진 on 2021/05/26.
 //
 
 import AsyncDisplayKit
 import RxDataSources_Texture
 import ReactorKit
-import RxSwift
-import MBProgressHUD
 
-class CategoryListViewController: ASDKViewController<CategoryListViewContainer> & View {
+class TopicListViewController: ASDKViewController<TopicListViewContainer> & View {
     
-    lazy var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
-    var selectCategory: ProductCategory!
+    var selectTopic: LocalTopic? = nil
     
-    var rxDataSource: RxASTableSectionedAnimatedDataSource<CategoryListSection>!
+    var topicDataSource: RxASTableSectionedAnimatedDataSource<LocalTopicListSection>!
     
     override init() {
-        super.init(node: CategoryListViewContainer())
+        super.init(node: TopicListViewContainer())
         self.initNode()
     }
     
@@ -32,21 +30,22 @@ class CategoryListViewController: ASDKViewController<CategoryListViewContainer> 
         super.viewDidLoad()
         self.loadNode()
         self.setupDataSource()
-        reactor = CategoryListViewReactor()
+        reactor = TopicListViewReactor()
         
-        Observable.just(.fetchCategory)
+        Observable.just(.fetchTopic)
             .bind(to: reactor!.action)
             .disposed(by: disposeBag)
     }
     
     private func setupDataSource() {
-        rxDataSource = RxASTableSectionedAnimatedDataSource<CategoryListSection>(
+        topicDataSource = RxASTableSectionedAnimatedDataSource<LocalTopicListSection>(
             configureCellBlock: { _, _, _, item in
                 switch item {
-                    case .category(let category):
-                        return { CategoryCell(category: category) }
+                    case .localTopic(let topic):
+                        return { CategoryCell(topic: topic) }
                 }
-        })
+            }
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +54,7 @@ class CategoryListViewController: ASDKViewController<CategoryListViewContainer> 
     }
 }
 
-extension CategoryListViewController: ViewControllerType {
+extension TopicListViewController: ViewControllerType {
     
     func initNode() {
         self.node.do {
@@ -64,15 +63,15 @@ extension CategoryListViewController: ViewControllerType {
     }
     
     func loadNode() {
-        self.node.tableNode.view.tableFooterView = UIView(frame: CGRect.zero)
+        self.node.tableNode.view.separatorStyle = .none
     }
     
     func setupNavigationBar() {
-        self.navigationItem.title = "카테고리 선택"
+        self.navigationItem.title = "주제 선택"
         self.navigationController?.navigationBar.tintColor = .label
     }
     
-    func bind(reactor: CategoryListViewReactor) {
+    func bind(reactor: TopicListViewReactor) {
         // Action
         node.tableNode.rx.itemSelected
             .map { .tapItem($0.row) }
@@ -80,10 +79,10 @@ extension CategoryListViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         // State
-        reactor.state.map { $0.categories }
-            .map { $0.map { CategoryListSectionItem.category($0) } }
-            .map { [CategoryListSection.category(categories: $0)] }
-            .bind(to: node.tableNode.rx.items(dataSource: rxDataSource))
+        reactor.state.map { $0.topics }
+            .map { $0.map { LocalTopicListSectionItem.localTopic($0) } }
+            .map { [LocalTopicListSection.localTopic(localTopics: $0)] }
+            .bind(to: node.tableNode.rx.items(dataSource: topicDataSource))
             .disposed(by: disposeBag)
         
         let tapItem = reactor.state
@@ -94,7 +93,7 @@ extension CategoryListViewController: ViewControllerType {
         tapItem.filter { $0 != nil }
             .withUnretained(self)
             .bind { owner, value in
-                owner.selectCategory = value
+                owner.selectTopic = value
             }.disposed(by: disposeBag)
         
         tapItem.map { $0 != nil }

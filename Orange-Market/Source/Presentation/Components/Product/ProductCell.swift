@@ -6,7 +6,6 @@
 //
 
 import AsyncDisplayKit
-import RxSwift
 
 class ProductCell: ASCellNode {
     

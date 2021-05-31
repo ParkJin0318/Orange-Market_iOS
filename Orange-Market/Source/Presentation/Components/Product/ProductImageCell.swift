@@ -22,6 +22,9 @@ class ProductImageCell: ASCellNode {
             self.imageNode.url = image.toUrl()
         }
     }
+}
+
+extension ProductImageCell {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASInsetLayoutSpec(insets: .zero, child: imageNode)

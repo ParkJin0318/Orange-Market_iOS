@@ -32,6 +32,15 @@ class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewConta
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.loadNode()
+        self.setupDataSource()
+        reactor = LocalPostDetailViewReactor()
+        
+        self.setupData()
+    }
+    
     private func setupDataSource() {
         commentDataSource = RxASTableSectionedAnimatedDataSource<LocalCommentListSection>(
             configureCellBlock: { _, _, _, item in
@@ -55,12 +64,7 @@ class LocalPostDetailViewController: ASDKViewController<LocalPostDetailViewConta
         })
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.loadNode()
-        self.setupDataSource()
-        reactor = LocalPostDetailViewReactor()
-        
+    private func setupData() {
         Observable.concat([
             .just(.fetchUserInfo),
             .just(.fetchLocalComments(idx))
@@ -175,11 +179,6 @@ extension LocalPostDetailViewController: ViewControllerType {
             .map { .comment($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        node.tableNode.rx.itemSelected
-            .bind { indexPath in
-                
-            }.disposed(by: disposeBag)
                 
         // State
         let comment = reactor.state

@@ -25,9 +25,12 @@ class CategoryCheckBoxCell: ASCellNode, BEMCheckBoxDelegate {
         $0.style.flexShrink = 1
     }
     
-    override init() {
+    init(category: ProductCategory) {
         super.init()
         self.automaticallyManagesSubnodes = true
+        
+        self.category = category
+        self.nameNode.attributedText = category.name.toAttributed(color: .label, ofSize: 16)
     }
 }
 

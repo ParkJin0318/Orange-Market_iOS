@@ -187,17 +187,16 @@ extension LocalPostListViewContoller: ViewControllerType {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.tapTopicItem }
-            .filter { $0 != nil }
-            .map { $0! }
             .distinctUntilChanged()
+            .filter { $0 != nil }
             .withUnretained(self)
             .bind { owner, value in
-                if (value.idx == 0) {
+                if (value!.idx == 0) {
                     self.navigationController?
                         .pushViewController(TopicSelectViewController(), animated: true)
                 } else {
                     let vc = LocalPostListViewContoller().then {
-                        $0.topic = value
+                        $0.topic = value!
                     }
                     self.navigationController?.pushViewController(vc, animated: true)
                 }

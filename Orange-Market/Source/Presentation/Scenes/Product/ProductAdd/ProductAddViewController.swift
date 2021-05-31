@@ -228,7 +228,6 @@ extension ProductAddViewController: UINavigationControllerDelegate & UIImagePick
             $0.allowsEditing = true
             $0.sourceType = .photoLibrary
         }
-        
         self.present(imagePickerController, animated: true)
     }
     

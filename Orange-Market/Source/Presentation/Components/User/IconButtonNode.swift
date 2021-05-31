@@ -14,6 +14,9 @@ class IconButtonNode: ASButtonNode {
     }
     
     lazy var textNode = ASTextNode()
+}
+
+extension IconButtonNode {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASStackLayoutSpec(

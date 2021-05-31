@@ -16,6 +16,9 @@ class ASCheckBoxNode: ASDisplayNode {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
+}
+
+extension ASCheckBoxNode {
     
     override func didLoad() {
         super.didLoad()

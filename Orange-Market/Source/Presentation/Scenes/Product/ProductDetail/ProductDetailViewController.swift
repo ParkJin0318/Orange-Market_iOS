@@ -6,6 +6,7 @@
 //
 
 import AsyncDisplayKit
+import RxDataSources_Texture
 import ReactorKit
 import RxSwift
 import RxCocoa
@@ -15,16 +16,22 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
     
     lazy var disposeBag = DisposeBag()
     
-    lazy var images: [String] = []
-    var soldMessage: String? = nil
-    
     var idx: Int = -1
     var product: Product? = nil
+    var soldMessage: String? = nil
     
     private lazy var moreButton = UIButton().then {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         $0.tintColor = .label
     }
+    
+    let rxDataSource = RxASCollectionSectionedAnimatedDataSource<ProductImageListSection>(
+        configureCellBlock: { _, _, _, item in
+            switch item {
+                case .image(let image):
+                    return { ProductImageCell(image: image) }
+            }
+    })
     
     override init() {
         super.init(node: ProductDetailViewContainer())
@@ -39,6 +46,10 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
         super.viewDidLoad()
         self.loadNode()
         reactor = ProductDetailViewReactor()
+        
+        node.productScrollNode.collectionNode
+            .rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,13 +72,8 @@ class ProductDetailViewController: ASDKViewController<ProductDetailViewContainer
 extension ProductDetailViewController: ViewControllerType {
     
     func initNode() {
-        self.node.do { container in
-            container.backgroundColor = .systemBackground
-            
-            container.productScrollNode.do {
-                $0.collectionNode.delegate = self
-                $0.collectionNode.dataSource = self
-            }
+        self.node.do {
+            $0.backgroundColor = .systemBackground
         }
     }
     
@@ -154,12 +160,10 @@ extension ProductDetailViewController: ViewControllerType {
             .disposed(by: disposeBag)
         
         productData.map { $0.images }
-            .withUnretained(self)
-            .filter { !$0.1.elementsEqual($0.0.images) }
-            .bind { owner, value in
-                owner.images = value
-                owner.node.productScrollNode.collectionNode.reloadData()
-            }.disposed(by: disposeBag)
+            .map { $0.map { ProductImageListSectionItem.image($0) } }
+            .map { [ProductImageListSection.image(images: $0)] }
+            .bind(to: node.productScrollNode.collectionNode.rx.items(dataSource: rxDataSource))
+            .disposed(by: disposeBag)
         
         reactor.state.map { $0.isLikeProduct }
             .map { $0 ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart") }
@@ -193,7 +197,7 @@ extension ProductDetailViewController: ASCollectionDelegate {
     
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         return ASSizeRange(
-            min: CGSize(width: 0, height: 0),
+            min: CGSize(width: width, height: 300),
             max: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         )
     }
@@ -216,25 +220,3 @@ extension ProductDetailViewController: ASCollectionDelegate {
         targetContentOffset.pointee = offset
     }
 }
-
-extension ProductDetailViewController: ASCollectionDataSource {
-    func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-        return 1
-    }
-        
-    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return images.count
-    }
-        
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return { [weak self] in
-            let item = self?.images[indexPath.row]
-            let cell = ProductImageCell(image: item!).then {
-                $0.imageNode.style.preferredSize = CGSize(width: width, height: 300)
-            }
-            return cell
-        }
-    }
-}
-
-

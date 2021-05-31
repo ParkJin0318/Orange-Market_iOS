@@ -26,6 +26,9 @@ class ProfileNode: ASDisplayNode {
         super.init()
         self.automaticallyManagesSubnodes = true
     }
+}
+
+extension ProfileNode {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let profileLayout = self.profileLayoutSpec()
